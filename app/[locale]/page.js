@@ -1,7 +1,7 @@
 import { getTranslations } from "@/lib/getTranslations";
 
 export default async function Home({ params }) {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations(locale);
 
   return (
