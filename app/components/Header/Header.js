@@ -1,6 +1,6 @@
 import { getTranslations } from "@/lib/getTranslations";
 import Link from "next/link";
-import LanguageSwitcher from "../LanguageSwitcher";
+import LanguageSwitcher from "./LanguageSwitcher/LanguageSwitcher";
 
 export default async function Header({ params }) {
   const { locale } = await params;

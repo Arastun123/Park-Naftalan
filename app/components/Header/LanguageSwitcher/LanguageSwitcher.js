@@ -8,13 +8,11 @@ export default function LanguageSwitcher() {
   const changeLocale = (newLocale) => {
     const segments = pathname.split("/");
 
-    // Handle edge case where current path is just `/`
     if (!segments[1]) {
       router.push(`/${newLocale}`);
       return;
     }
 
-    // Replace first segment (locale)
     if (["az", "en", "ru"].includes(segments[1])) {
       segments[1] = newLocale;
     } else {

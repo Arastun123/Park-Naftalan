@@ -5,8 +5,8 @@ export default async function Home({ params }) {
   const t = await getTranslations(locale);
 
   return (
-    <main>
+    <div>
       <h1>{t.Home}</h1>
-    </main>
+    </div>
   );
 }

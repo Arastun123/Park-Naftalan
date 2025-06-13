@@ -6,7 +6,7 @@ export default async function LocaleLayout({ children, params }) {
     <html lang={local}>
       <body>
         <Header params={params} />
-        {children}
+        <main>{children}</main>
         <footer>footer</footer>
       </body>
     </html>

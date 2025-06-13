@@ -6,9 +6,9 @@ export default async function AboutPage({ params }) {
   const t = await getTranslations(locale);
   const data = await getDatas("Naftalan", locale);
   return (
-    <main>
+    <div>
       <h1>{data.title}</h1>
       <p>{data.extract} </p>
-    </main>
+    </div>
   );
 }

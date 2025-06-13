@@ -5,8 +5,8 @@ export default async function ContactPage({ params }) {
   const data = await getDatas("Naftalan", locale);
 
   return (
-    <main>
+    <div>
       <h1>{data.title}</h1>
-    </main>
+    </div>
   );
 }
