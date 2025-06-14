@@ -1,4 +1,4 @@
-import Header from "../components/Header/Header";
+import Header from "@/components/Header";
 import '@/styles/global.module.scss';
 import '@/styles/reset.css';
 import '@/styles//global.module.scss';

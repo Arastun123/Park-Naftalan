@@ -11,12 +11,18 @@
   padding: 8px 16px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  .reverse {
+    transform: rotate(180deg);
+    transition: transform 0.5s;
+  }
 }
 
 .dropdownMenu {
   position: absolute;
   top: 110%;
-  left: 0;
+  left: -10px;
   background-color: $mainBlueBack;
   color: $whiteTxt;
   min-width: 100px;

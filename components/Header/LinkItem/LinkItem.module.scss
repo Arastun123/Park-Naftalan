@@ -1,7 +1,8 @@
+@import "@/styles/vairable.scss";
 .navitem {
-  font-family: "Inter";
+  font-family: $inter;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   color: #ffffff;
   margin: 0 15px;

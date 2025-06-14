@@ -1,18 +1,18 @@
 export default function ArrowDown() {
   return (
     <svg
-      width="10"
+      width="11"
       height="7"
-      viewBox="0 0 10 7"
+      viewBox="0 0 11 7"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M8.92871 1.5L4.92871 5.5L0.928711 1.5"
+        d="M9.5 1.5L5.5 5.5L1.5 1.5"
         stroke="white"
-        stroke-width="1.33333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.33333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -2,6 +2,8 @@
 import { usePathname, useRouter } from "next/navigation";
 import style from "./styles.module.scss";
 import { useState, useEffect } from "react";
+import { ArrowDown } from "@/components/Svg";
+import Button from "@/components/Button";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
@@ -25,9 +27,12 @@ export default function LanguageSwitcher() {
 
   return (
     <div className={style.languageDropdown}>
-      <button className={style.toggleButton} onClick={() => setOpen(!open)}>
+      <Button className={style.toggleButton} onClick={() => setOpen(!open)}>
         {locale}
-      </button>
+        <span className={open ? style.reverse : ""}>
+          <ArrowDown />
+        </span>
+      </Button>
       {open && (
         <ul className={style.dropdownMenu}>
           <li onClick={() => changeLocale("az")}>AZ</li>

@@ -1,14 +1,5 @@
 @import "./vairable";
 
-$desktop-breakpoint: 1140px;
-$tablet-breakpoint: 1024px;
-$mobile-breakpoint: 768px;
-
-$container-desktop: 1310px;
-$container-tablet: 879px;
-
-
-
 @mixin respond($breakpoint) {
   @if $breakpoint == tablet {
     @media (max-width: #{$tablet-breakpoint}) {
