@@ -1,4 +1,7 @@
 import Header from "../components/Header/Header";
+import '@/styles/global.module.scss';
+import '@/styles/reset.css';
+import '@/styles//global.module.scss';
 
 export default async function LocaleLayout({ children, params }) {
   const { local } = await params;

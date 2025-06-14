@@ -1,0 +1,41 @@
+@import "@/styles/vairable";
+.languageDropdown {
+  position: relative;
+}
+
+.toggleButton {
+  color: $whiteTxt;
+  font-family: $poppins;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: $mainBlueBack;
+  color: $whiteTxt;
+  min-width: 100px;
+  z-index: 100;
+
+  li {
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: $inter;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: $whiteTxt;
+    padding: 10px;
+    text-align: center;
+    border-left: 5px solid transparent;
+    &:hover {
+      background-color: $btnColor;
+      border-left: 5px solid #fff;
+    }
+  }
+}

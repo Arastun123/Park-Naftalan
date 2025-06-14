@@ -1,0 +1,38 @@
+@import "./vairable";
+
+$desktop-breakpoint: 1140px;
+$tablet-breakpoint: 1024px;
+$mobile-breakpoint: 768px;
+
+$container-desktop: 1310px;
+$container-tablet: 879px;
+
+
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (max-width: #{$tablet-breakpoint}) {
+      @content;
+    }
+  } @else if $breakpoint == mobile {
+    @media (max-width: #{$mobile-breakpoint}) {
+      @content;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: $container-desktop;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @include respond(tablet) {
+    max-width: $container-tablet;
+  }
+
+  @include respond(mobile) {
+    max-width: 100%;
+    padding: 0 12px;
+  }
+}

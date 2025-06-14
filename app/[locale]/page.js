@@ -1,4 +1,8 @@
 import { getTranslations } from "@/lib/getTranslations";
+import Calendar from "../components/Calendar/Calendar";
+import '@/styles/global.module.scss';
+import '@/styles/reset.css';
+import '@/styles//global.module.scss';
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -6,7 +10,8 @@ export default async function Home({ params }) {
 
   return (
     <div>
-      <h1>{t.Home}</h1>
+      {/* <h1>{t.Home}</h1> */}
+      {/* <Calendar locale={locale}/> */}
     </div>
   );
 }

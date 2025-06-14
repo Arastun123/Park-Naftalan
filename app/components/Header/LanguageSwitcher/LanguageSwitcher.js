@@ -1,33 +1,40 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
+import style from "./styles.module.scss";
+import { useState, useEffect } from "react";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [locale, setLocale] = useState("AZ");
+
+  useEffect(() => {
+    const segments = pathname.split("/");
+    const currentLocale = segments[1] || "az";
+    setLocale(currentLocale.toUpperCase());
+  }, [pathname]);
 
   const changeLocale = (newLocale) => {
     const segments = pathname.split("/");
-
-    if (!segments[1]) {
-      router.push(`/${newLocale}`);
-      return;
-    }
-
-    if (["az", "en", "ru"].includes(segments[1])) {
-      segments[1] = newLocale;
-    } else {
-      segments.unshift(newLocale);
-    }
-
+    segments[1] = newLocale;
     const newPath = segments.join("/");
     router.push(newPath);
+    setOpen(false);
   };
 
   return (
-    <div>
-      <button onClick={() => changeLocale("az")}>AZ</button>
-      <button onClick={() => changeLocale("en")}>EN</button>
-      <button onClick={() => changeLocale("ru")}>RU</button>
+    <div className={style.languageDropdown}>
+      <button className={style.toggleButton} onClick={() => setOpen(!open)}>
+        {locale}
+      </button>
+      {open && (
+        <ul className={style.dropdownMenu}>
+          <li onClick={() => changeLocale("az")}>AZ</li>
+          <li onClick={() => changeLocale("en")}>EN</li>
+          <li onClick={() => changeLocale("ru")}>RU</li>
+        </ul>
+      )}
     </div>
   );
 }

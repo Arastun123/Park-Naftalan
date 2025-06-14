@@ -1,7 +1,9 @@
 {
-    "Home":"Home",
-    "Contact":"Contact",
-    "Rooms":"Rooms",
-    "About":"About",
-    "SpecialOffers":"Special Offers"
+  "Home": "Home",
+  "Contact": "Contact",
+  "Rooms": "Rooms",
+  "About": "About",
+  "Spa": "Spa və sağlamlıq",
+  "Naftalan": "Naftalan müalicəsi",
+  "SpecialOffers": "Special Offers"
 }
