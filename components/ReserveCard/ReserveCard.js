@@ -53,7 +53,9 @@ export default function ReserveCard() {
           </div>
         )}
       </div>
-      <Button className={styles.reserveBtn}>Rezervasiya et</Button>
+      <div>
+        <Button className={styles.reserveBtn}>Rezervasiya et</Button>
+      </div>
     </div>
   );
 }

@@ -20,12 +20,12 @@
     backdrop-filter: blur(18px);
     border-bottom: 1px solid #ffffff7d;
     padding: 6px 0;
-
+    width: 100%;
     .menu {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 64px;
+      // padding: 0 64px;
 
       .links {
         display: flex;

@@ -20,9 +20,5 @@ export default function Calendar({ locale }) {
   };
   const [width] = getWindowSize();
   const selectedLocale = localeMap[locale] || az;
-  return (
-    <div>
-      <CustomDateRange onChange={handleDateChange} />
-    </div>
-  );
+  return <CustomDateRange onChange={handleDateChange} selectedLocale={selectedLocale} />;
 }

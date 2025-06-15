@@ -1,10 +1,13 @@
+"use client";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import styles from "./style.module.scss";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
+import getWindowSize from "@/lib/getWindowsize"; 
 
-export default function CustomDateRange({ onChange }) {
-  const [range, setRange] = useState([null, null]); // [the first date, the last date]
+export default function CustomDateRange({ onChange, selectedLocale }) {
+  const [range, setRange] = useState([null, null]);
+  const [width] = getWindowSize();
 
   function handleSelect(date) {
     const [start, end] = range;
@@ -18,21 +21,49 @@ export default function CustomDateRange({ onChange }) {
     }
   }
 
+  const startDate = range[0] || new Date();
+
+  const nextMonthDate = new Date(startDate);
+  nextMonthDate.setMonth(startDate.getMonth() + 1);
+
   return (
     <div className={styles.wrapper}>
-      <Calendar
-        selectRange={true}
-        onClickDay={handleSelect}
-        value={range}
-        tileClassName={({ date }) => {
-          const [start, end] = range;
-          if (start && !end && date.getTime() === start.getTime())
-            return styles.selected;
-          if (start && end && date >= start && date <= end)
-            return styles.inRange;
-          return null;
-        }}
-      />
+      <p>Giris cixis</p>
+      <div className={styles.line}></div>
+      <div className={styles.calendars}>
+        <Calendar
+          selectRange={true}
+          onClickDay={handleSelect}
+          value={range}
+          tileClassName={({ date }) => {
+            const [start, end] = range;
+            if (start && !end && date.getTime() === start.getTime())
+              return styles.selected;
+            if (start && end && date >= start && date <= end)
+              return styles.inRange;
+            return null;
+          }}
+          className={styles.calendar}
+        />
+
+        {width >= 1024 && (
+          <Calendar
+            selectRange={false}
+            value={range}
+            activeStartDate={nextMonthDate}
+            tileClassName={({ date }) => {
+              const [start, end] = range;
+              if (start && !end && date.getTime() === start.getTime())
+                return styles.selected;
+              if (start && end && date >= start && date <= end)
+                return styles.inRange;
+              return null;
+            }}
+            onClickDay={handleSelect}
+            className={styles.calendar}
+          />
+        )}
+      </div>
     </div>
   );
 }
