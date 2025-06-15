@@ -1,19 +1,11 @@
-"use client";
-
-import styles from "./Button.module.scss";
-
 export default function Button({
   onClick,
   children,
-  className = "",
+  className,
   type = "button",
 }) {
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={`${styles.button} ${className}`}
-    >
+    <button type={type} onClick={onClick} className={className}>
       {children}
     </button>
   );

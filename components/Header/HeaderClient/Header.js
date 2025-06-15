@@ -1,84 +1,97 @@
 "use client";
+import { useState } from "react";
+
 import { Bar, Person } from "../../Svg";
 import Button from "../../Button";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LinkItem from "../LinkItem/LinkItem";
 import Logo from "../Logo";
-import styles from "../Header.module.scss";
-import { useState } from "react";
+
 import Close from "@/components/Svg/Close";
 import ArrowFlow from "@/components/Svg/ArrowFlow";
+
+import global from "@/styles/global.module.scss";
+import styles from "../Header.module.scss";
+import ReserveCard from "@/components/ReserveCard/ReserveCard";
 
 export default function HeaderClient({ locale, t }) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const toggleMenu = () => {
     setMobileMenu((mobileMenu) => !mobileMenu);
+    console.log();
   };
 
   return (
-    <>
+    <div className={styles.header}>
+      <div className={styles.bckImg}>
+        <img
+          src="./headermain.png"
+          alt="Hotel facade at night"
+          priority="true"
+        />
+      </div>
+
       <nav className={styles.nav}>
-        <div className={`${styles.menu} conatiner`}>
-          <Button onClick={() => toggleMenu()} className={styles.toggleMenu}>
-            {!mobileMenu ? <Bar /> : <Close />}
+        <div className={`${styles.menu} ${global.container}`}>
+          <Button
+            onClick={toggleMenu}
+            className={styles.toggleMenu}
+            aria-label="Toggle navigation"
+          >
+            {mobileMenu ? <Close /> : <Bar />}
           </Button>
 
-          <LinkItem slug="#">{<Logo />}</LinkItem>
+          <LinkItem slug="/" ariaLabel="Home">
+            <Logo />
+          </LinkItem>
 
           <div className={styles.links}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-            <LinkItem slug={`/${locale}/about`}>{t?.Otaqlar}</LinkItem>
-            <LinkItem slug={`/${locale}/about`}>{t?.Naftalan}</LinkItem>
-            <LinkItem slug={`/${locale}/about`}>{t?.Spa}</LinkItem>
-            <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
+            <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+            <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+            <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
           </div>
 
-          <div className={styles.leftSide}>
+          <div className={styles.icons}>
             <LanguageSwitcher />
             <Person />
           </div>
-          {mobileMenu && (
-            <div className={styles.mobileMenu}>
-              <div>
-                <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Otaqlar}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Naftalan}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Spa}</LinkItem>
-                <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-              </div>
+        </div>
 
-              <div className={styles.icons}>
-                <LinkItem slug={`/${locale}/about`}>
-                  <Person />
-                </LinkItem>
-                <LinkItem slug={`/${locale}/about`}>
-                  <Person />
-                </LinkItem>
-                <LinkItem slug={`/${locale}/about`}>
-                  <Person />
-                </LinkItem>
-                <LinkItem slug={`/${locale}/about`}>
-                  <Person />
-                </LinkItem>
-              </div>
-              <div>
-                <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Otaqlar}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Naftalan}</LinkItem>
-                <LinkItem slug={`/${locale}/about`}>{t?.Spa}</LinkItem>
-                <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-              </div>
+        {mobileMenu && (
+          <div className={styles.mobileMenu}>
+            <div className={styles.drawerColumns}>
+              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
             </div>
-          )}
-        </div>
-      </nav>
-      <div>
-        <h1>ffhflrgsrdfg</h1>
-        <div>
 
-        <ArrowFlow />
-        </div>
+            <div className={styles.drawerIcons}>
+              <Person />
+              <Person />
+              <Person />
+              <Person />
+              <Person />
+              <Person />
+            </div>
+          </div>
+        )}
+      </nav>
+
+      <div className={styles.reserve}>
+        <p>
+          Otağını indi rezerv et,
+          <br />
+          rahatlığın dadını çıxar!
+        </p>
+        <span>
+          <ArrowFlow className={styles.arrow} />
+        </span>
+        <ReserveCard className={styles.reserveCard} />
       </div>
-    </>
+    </div>
   );
 }
