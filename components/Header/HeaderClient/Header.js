@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Bar, Person } from "../../Svg";
 import Button from "../../Button/Button";
@@ -16,31 +17,45 @@ import ReserveCard from "@/components/ReserveCard/ReserveCard";
 
 export default function HeaderClient({ locale, t }) {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const pathname = usePathname();
   const toggleMenu = () => {
     setMobileMenu((mobileMenu) => !mobileMenu);
   };
 
-  return (
-    <div className={styles.header}>
-      <div className={styles.bckImg}>
-        <img src="./header.png" alt="Hotel facade at night" priority="true" />
+  const showFullHeader = ["/az", "/ru", "en"].includes(pathname);
+
+  const NavContent = (
+    <nav className={styles.nav}>
+      <div className={`${styles.menu} ${global.container}`}>
+        <Button
+          onClick={toggleMenu}
+          className={styles.toggleMenu}
+          aria-label="Toggle navigation"
+        >
+          {mobileMenu ? <Close /> : <Bar />}
+        </Button>
+
+        <LinkItem slug="/" ariaLabel="Home">
+          <Logo />
+        </LinkItem>
+
+        <div className={styles.links}>
+          <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+          <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+          <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+          <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+          <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+        </div>
+
+        <div className={styles.icons}>
+          <LanguageSwitcher />
+          <Person />
+        </div>
       </div>
 
-      <nav className={styles.nav}>
-        <div className={`${styles.menu} ${global.container}`}>
-          <Button
-            onClick={toggleMenu}
-            className={styles.toggleMenu}
-            aria-label="Toggle navigation"
-          >
-            {mobileMenu ? <Close /> : <Bar />}
-          </Button>
-
-          <LinkItem slug="/" ariaLabel="Home">
-            <Logo />
-          </LinkItem>
-
-          <div className={styles.links}>
+      {mobileMenu && (
+        <div className={styles.mobileMenu}>
+          <div className={styles.drawerColumns}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
             <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
             <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
@@ -48,47 +63,46 @@ export default function HeaderClient({ locale, t }) {
             <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
           </div>
 
-          <div className={styles.icons}>
-            <LanguageSwitcher />
+          <div className={styles.drawerIcons}>
+            <Person />
+            <Person />
+            <Person />
+            <Person />
+            <Person />
             <Person />
           </div>
         </div>
+      )}
+    </nav>
+  );
+  if (showFullHeader) {
+    return (
+      <div
+        className={styles.header}
+        style={{ height: "100vh", width: "100%", position: "relative" }}
+      >
+        <div className={styles.bckImg}>
+          <img src="./header.png" alt="Hotel facade at night" priority="true" />
+        </div>
 
-        {mobileMenu && (
-          <div className={styles.mobileMenu}>
-            <div className={styles.drawerColumns}>
-              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
-            </div>
+        {NavContent}
 
-            <div className={styles.drawerIcons}>
-              <Person />
-              <Person />
-              <Person />
-              <Person />
-              <Person />
-              <Person />
-            </div>
+        <div className={styles.reserve}>
+          <p className={styles.reserveTitle}>
+            Otağını indi rezerv et,
+            <br />
+            rahatlığın dadını çıxar!
+          </p>
+          <span>
+            <ArrowFlow className={styles.arrow} />
+          </span>
+          <div>
+            <ReserveCard className={styles.reserveCard} />
           </div>
-        )}
-      </nav>
-
-      <div className={styles.reserve}>
-        <p className={styles.reserveTitle}>
-          Otağını indi rezerv et,
-          <br />
-          rahatlığın dadını çıxar!
-        </p>
-        <span>
-          <ArrowFlow className={styles.arrow} />
-        </span>
-        <div>
-          <ReserveCard className={styles.reserveCard} />
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return NavContent;
 }

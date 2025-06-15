@@ -11,7 +11,6 @@ export default async function Home({ params }) {
     <div>
       {/* <h1>{t.Home}</h1> */}
       {/* <Calendar locale={locale}/> */}
-      
     </div>
   );
 }
