@@ -2,8 +2,11 @@
 import { useState } from "react";
 import { DateRange } from "react-date-range";
 import { az, enUS, ru } from "date-fns/locale";
-import "react-date-range/dist/styles.css"; // main css
-import "react-date-range/dist/theme/default.css"; // theme css
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import getWindowSize from "@/lib/getWindowsize";
+import styles from "./style.module.scss";
+import CustomDateRange from "./CustomDateRange";
 
 const localeMap = {
   az,
@@ -12,28 +15,14 @@ const localeMap = {
 };
 
 export default function Calendar({ locale }) {
-  const [range, setRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  const handleDateChange = ({ startDate, endDate }) => {
+    console.log("Selected Dates:", startDate, endDate);
+  };
+  const [width] = getWindowSize();
   const selectedLocale = localeMap[locale] || az;
-
   return (
     <div>
-      <DateRange
-        editableDateInputs={true}
-        onChange={(item) => setRange([item.selection])}
-        moveRangeOnFirstSelection={false}
-        ranges={range}
-        months={2}
-        direction="horizontal"
-        locale={selectedLocale}
-        showMonthAndYearPickers={false}
-        weekdayDisplayFormat="EEEEEE"
-      />
+      <CustomDateRange onChange={handleDateChange} />
     </div>
   );
 }

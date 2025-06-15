@@ -1,50 +1,59 @@
 "use client";
 import { useState } from "react";
-import Button from "../Button";
 import Calendar from "../Calendar/Calendar";
 import { ArrowDown } from "../Svg";
+import Button from "../Button/Button";
 
 import styles from "./styel.module.scss";
-function Dropdown({ name, children }) {
-  const [open, setOpen] = useState(false);
+import RoomSelector from "../RoomSelector/RoomSelector";
 
-  const handleOpen = () => {
-    setOpen((prev) => !prev);
-    console.log("clicked");
-  };
-
-  return (
-    <div>
-      <Button onClick={handleOpen} type="button" className={styles.trigger}>
-        {name}
-        <span>
-          <ArrowDown color="#0d2126" />
-        </span>
-      </Button>
-      {open && children}
-    </div>
-  );
-}
 export default function ReserveCard() {
-  const handleOpen = () => {
-    // setOpen((prev) => !prev);
-    console.log("clicked");
-  };
+  const [openType, setOpenType] = useState(null);
+
   return (
     <div className={styles.reserveCard}>
-      <div>
-        <h4 className={styles.boxTitle}>Giriş/Çıxış tarixləri</h4>
-        <Dropdown name="Tarix seç">
-          <Calendar />
-        </Dropdown>
+      <div className={styles.inputBox}>
+        <div className={styles.maniBox}>
+          <h4 className={styles.boxTitle}>Giriş/Çıxış tarixləri</h4>
+          <Button
+            onClick={() =>
+              setOpenType(openType === "calendar" ? null : "calendar")
+            }
+            className={styles.trigger}
+          >
+            Tarix seç{" "}
+            <span>
+              <ArrowDown />
+            </span>
+          </Button>
+        </div>
+        {openType === "calendar" && (
+          <div className={styles.dropdownCard}>
+            <Calendar />
+          </div>
+        )}
       </div>
-      <div>
-        <h4 className={styles.boxTitle}>Otaq sayı</h4>
-        <Dropdown name="Otaq seç">
-          <Calendar />
-        </Dropdown>
+
+      <div className={styles.inputBox}>
+        <div className={styles.maniBox}>
+          <h4 className={styles.boxTitle}>Otaq sayı</h4>
+          <Button
+            onClick={() => setOpenType(openType === "room" ? null : "room")}
+            className={styles.trigger}
+          >
+            Otaq seç{" "}
+            <span>
+              <ArrowDown />
+            </span>
+          </Button>
+        </div>
+        {openType === "room" && (
+          <div className={styles.dropdownCard}>
+            <RoomSelector />
+          </div>
+        )}
       </div>
-      <Button> Rezervasiya et</Button>
+      <Button className={styles.reserveBtn}>Rezervasiya et</Button>
     </div>
   );
 }

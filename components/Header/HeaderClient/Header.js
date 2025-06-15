@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import { Bar, Person } from "../../Svg";
-import Button from "../../Button";
+import Button from "../../Button/Button";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LinkItem from "../LinkItem/LinkItem";
 import Logo from "../Logo";
@@ -18,17 +18,12 @@ export default function HeaderClient({ locale, t }) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const toggleMenu = () => {
     setMobileMenu((mobileMenu) => !mobileMenu);
-    console.log();
   };
 
   return (
     <div className={styles.header}>
       <div className={styles.bckImg}>
-        <img
-          src="./headermain.png"
-          alt="Hotel facade at night"
-          priority="true"
-        />
+        <img src="./header.png" alt="Hotel facade at night" priority="true" />
       </div>
 
       <nav className={styles.nav}>
@@ -82,7 +77,7 @@ export default function HeaderClient({ locale, t }) {
       </nav>
 
       <div className={styles.reserve}>
-        <p>
+        <p className={styles.reserveTitle}>
           Otağını indi rezerv et,
           <br />
           rahatlığın dadını çıxar!
@@ -90,7 +85,9 @@ export default function HeaderClient({ locale, t }) {
         <span>
           <ArrowFlow className={styles.arrow} />
         </span>
-        <ReserveCard className={styles.reserveCard} />
+        <div>
+          <ReserveCard className={styles.reserveCard} />
+        </div>
       </div>
     </div>
   );

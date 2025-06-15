@@ -1,0 +1,57 @@
+@import "../../styles/vairable.scss";
+
+.roomCard {
+  padding: 10px;
+  background: $whiteTxt;
+  border-radius: 6px;
+  color: $blueTxt;
+  font-family: $inter;
+  font-size: 16px;
+  font-weight: 400;
+  width: 250px;
+  .cardTitle {
+    font-weight: 700;
+    color: $blueTxt;
+  }
+  .counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+  .btnBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .counterBtn {
+      margin: 10px;
+      border: 2px solid $blueTxt;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .leftEndBtn {
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    align-items: end;
+    font-family: $inter;
+    font-weight: 400;
+    font-size: 12px;
+    .more {
+      line-height: 133%;
+      color: $linkColor;
+      margin: 10px;
+    }
+    .submit {
+      background: $mainBlueBack;
+      border-radius: 16px;
+      color: $whiteTxt;
+      padding: 5px 15px;
+    }
+  }
+}

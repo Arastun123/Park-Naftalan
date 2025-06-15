@@ -3,7 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import style from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { ArrowDown } from "@/components/Svg";
-import Button from "@/components/Button";
+import Button from "@/components/Button/Button";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
