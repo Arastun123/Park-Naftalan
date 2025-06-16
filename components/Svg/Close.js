@@ -1,7 +1,7 @@
 export default function Close() {
   return (
     <svg
-      width="30"
+      width="34"
       height="26"
       viewBox="0 0 30 26"
       fill="none"

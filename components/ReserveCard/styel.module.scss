@@ -50,9 +50,9 @@
   }
   .dropdownCard {
     position: absolute;
-    max-width: 60%;
+    width: 600px;
     @media (max-width: 1024px) {
-      max-width: 100%;
+      width: 100%;
     }
     bottom: 100%;
     left: 0;

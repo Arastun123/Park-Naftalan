@@ -16,7 +16,6 @@
   width: 100%;
   max-width: $container-desktop;
   margin: 0 auto;
-  padding: 0 16px;
 
   @include respond(tablet) {
     max-width: $container-tablet;
@@ -28,31 +27,4 @@
   }
 }
 
-/* calendar override styles */
-.rdrCalendarWrapper {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.rdrMonthAndYearWrapper {
-  display: none; /* Ay və il başlığını gizlət */
-}
-
-.rdrWeekDay {
-  color: #003366;
-  font-weight: 600;
-}
-
-.rdrDayToday .rdrDayNumber span {
-  border: 1px solid #00aaff;
-  border-radius: 50%;
-}
-
-.rdrDaySelected,
-.rdrDayStartPreview,
-.rdrDayEndPreview {
-  background-color: #00aaff !important;
-  color: white !important;
-}
+ 

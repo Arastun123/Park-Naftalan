@@ -1,0 +1,48 @@
+@import "../../styles/vairable.scss";
+.section {
+  .sectionTitle {
+    color: $blackTxt;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: $inter;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: max-content;
+    &::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: #000;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    @media (max-width: 1024px) {
+      font-size: 24px;
+    }
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+  .btnContainer {
+    width: max-content;
+    margin: 60px auto;
+    .btn {
+      font-family: $poppins;
+      font-weight: 400;
+      font-size: 12px;
+      background: $mainBlueBack;
+      color: $whiteTxt;
+      padding: 10px 60px;
+      border-radius: 6px;
+    }
+  }
+  &::after {
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background: $mainBlueBack;
+    display: block;
+  }
+}

@@ -7,3 +7,4 @@ export { default as Close } from "./Close";
 export { default as Person } from "./Person";
 export { default as Minus } from "./Minus";
 export { default as Plus } from "./Plus";
+export { default as Dott } from "./Dott";
