@@ -22,7 +22,7 @@ export default function HeaderClient({ locale, t }) {
     setMobileMenu((mobileMenu) => !mobileMenu);
   };
 
-  const showFullHeader = ["/az", "/ru", "en"].includes(pathname);
+  const showFullHeader = ["/az", "/ru", "/en"].includes(pathname);
 
   const NavContent = (
     <nav className={styles.nav}>
@@ -97,7 +97,7 @@ export default function HeaderClient({ locale, t }) {
             <ArrowFlow className={styles.arrow} />
           </span>
           <div>
-            <ReserveCard className={styles.reserveCard} />
+            <ReserveCard className={styles.reserveCard} locale={locale}/>
           </div>
         </div>
       </div>

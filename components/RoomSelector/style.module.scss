@@ -9,6 +9,9 @@
   font-size: 16px;
   font-weight: 400;
   width: 250px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   .cardTitle {
     font-weight: 700;
     color: $blueTxt;
@@ -18,6 +21,11 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+    p {
+      font-family: $inter;
+      font-weight: 400;
+      font-size: 14px;
+    }
   }
   .btnBox {
     display: flex;
@@ -27,8 +35,10 @@
       margin: 10px;
       border: 2px solid $blueTxt;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
+      max-width: 30px;
+      max-height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;

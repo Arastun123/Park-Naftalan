@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import styles from "./styel.module.scss";
 import RoomSelector from "../RoomSelector/RoomSelector";
 
-export default function ReserveCard() {
+export default function ReserveCard({ locale }) {
   const [openType, setOpenType] = useState(null);
 
   return (
@@ -29,7 +29,7 @@ export default function ReserveCard() {
         </div>
         {openType === "calendar" && (
           <div className={styles.dropdownCard}>
-            <Calendar />
+            <Calendar locale={locale} />
           </div>
         )}
       </div>

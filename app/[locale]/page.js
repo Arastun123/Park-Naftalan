@@ -9,8 +9,7 @@ export default async function Home({ params }) {
 
   return (
     <div>
-      {/* <h1>{t.Home}</h1> */}
-      {/* <Calendar locale={locale}/> */}
+      <h1>{t.Home}</h1>
     </div>
   );
 }
