@@ -182,7 +182,7 @@ function CustomCalendar({
   );
 }
 
-export default function CustomDateRange({ onChange, locale }) {
+export default function CustomDateRange({ onChange, locale, t }) {
   const [width] = getWindowSize();
   const isMobile = width < 1024;
 
@@ -202,6 +202,7 @@ export default function CustomDateRange({ onChange, locale }) {
           isMobile={isMobile}
           isSecondCalendar={false}
           localeString={locale}
+          t={t}
         />
         {!isMobile && (
           <CustomCalendar
@@ -210,6 +211,7 @@ export default function CustomDateRange({ onChange, locale }) {
             isMobile={false}
             isSecondCalendar={true}
             localeString={locale}
+            t={t}
           />
         )}
       </div>

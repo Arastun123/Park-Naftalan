@@ -2,7 +2,9 @@
 .about {
   margin: 20px 0;
   div {
-    display: flex;
+    @media (min-width: 768px) {
+      display: flex;
+    }
     margin-bottom: 20px;
   }
 
@@ -17,5 +19,29 @@
     @media (max-width: 768px) {
       font-size: 20px;
     }
+  }
+}
+
+.rooms {
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: auto;
+    gap: 15px;
+  }
+
+  margin: 10px 0;
+  padding: 0 10px;
+  text-align: center;
+  
+
+  img {
+    width: 100%;
+    @media (max-width: 768px) {
+      margin: 10px auto;
+    }
+    object-fit: cover;
+    display: block;
   }
 }

@@ -7,21 +7,21 @@ import Button from "../Button/Button";
 import styles from "./styel.module.scss";
 import RoomSelector from "../RoomSelector/RoomSelector";
 
-export default function ReserveCard({ locale }) {
+export default function ReserveCard({ locale, t }) {
   const [openType, setOpenType] = useState(null);
 
   return (
     <div className={styles.reserveCard}>
       <div className={styles.inputBox}>
         <div className={styles.maniBox}>
-          <h4 className={styles.boxTitle}>Giriş/Çıxış tarixləri</h4>
+          <h4 className={styles.boxTitle}>{t?.Check}</h4>
           <Button
             onClick={() =>
               setOpenType(openType === "calendar" ? null : "calendar")
             }
             className={styles.trigger}
           >
-            Tarix seç{" "}
+            {t?.ChooseDate}
             <span>
               <ArrowDown />
             </span>
@@ -29,19 +29,19 @@ export default function ReserveCard({ locale }) {
         </div>
         {openType === "calendar" && (
           <div className={styles.dropdownCard}>
-            <Calendar locale={locale} />
+            <Calendar locale={locale} t={t} />
           </div>
         )}
       </div>
 
       <div className={styles.inputBox}>
         <div className={styles.maniBox}>
-          <h4 className={styles.boxTitle}>Otaq sayı</h4>
+          <h4 className={styles.boxTitle}>{t?.RoomCount}</h4>
           <Button
             onClick={() => setOpenType(openType === "room" ? null : "room")}
             className={styles.trigger}
           >
-            Otaq seç{" "}
+            {t?.ChooseRoom}
             <span>
               <ArrowDown />
             </span>
@@ -54,7 +54,7 @@ export default function ReserveCard({ locale }) {
         )}
       </div>
       <div>
-        <Button className={styles.reserveBtn}>Rezervasiya et</Button>
+        <Button className={styles.reserveBtn}>{t?.Reserv}</Button>
       </div>
     </div>
   );

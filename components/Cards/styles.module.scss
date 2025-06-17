@@ -1,0 +1,42 @@
+@import "../../styles/vairable.scss";
+
+.card {
+  @media (min-width: 768px) {
+    height: 550px;
+  }
+  font-family: $inter;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
+  img {
+    width: 100%;
+    @media (min-width: 768px) {
+      max-width: 320px;
+      height: 320px;
+    }
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 24px;
+    color: $blackTxt;
+    margin: 12px 0 8px;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000a6;
+    line-height: 1.4;
+  }
+}

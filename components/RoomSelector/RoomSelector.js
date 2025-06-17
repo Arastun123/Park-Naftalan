@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
 import Button from "../Button/Button";
-import { Minus } from "../Svg";
+import { Minus, Plus } from "../Svg";
 
 function Counter({ name }) {
   const [count, setCount] = useState(0);
@@ -41,7 +41,7 @@ function Counter({ name }) {
           onClick={() => handleCount("increase")}
           className={styles.counterBtn}
         >
-          +
+          <Plus/>
         </Button>
       </div>
     </div>
@@ -50,12 +50,12 @@ function Counter({ name }) {
 export default function RoomSelector({ t, params }) {
   return (
     <div className={styles.roomCard}>
-      <p className={styles.cardTitle}>Otaq 1</p>
-      <Counter name="Yetişkin" />
-      <Counter name="Uşaq" />
+      <p className={styles.cardTitle}>{t?.Room} 1</p>
+      <Counter name={t?.Adult} />
+      <Counter name={t?.Child} />
       <div className={styles.leftEndBtn}>
-        <Button className={styles.more}>Otaq əlavə et</Button>
-        <Button className={styles.submit}>Təsdiq et</Button>
+        <Button className={styles.more}>{t?.AddRoom}</Button>
+        <Button className={styles.submit}>{t?.Submit}</Button>
       </div>
     </div>
   );
