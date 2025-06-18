@@ -1,6 +1,7 @@
-import Header from "@/components/Header"; 
-import '@/styles/reset.css';
-import '@/styles/global.module.scss';
+import Header from "@/components/Header";
+import "@/styles/reset.css";
+import "@/styles/global.module.scss";
+import Footer from "@/components/Footer/Footer";
 
 export default async function LocaleLayout({ children, params }) {
   const { local } = await params;
@@ -9,7 +10,7 @@ export default async function LocaleLayout({ children, params }) {
       <body>
         <Header params={params} />
         <main>{children}</main>
-        <footer>footer</footer>
+        <Footer params={params} locale={local} />
       </body>
     </html>
   );

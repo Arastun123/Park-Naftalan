@@ -77,52 +77,74 @@
         }
       }
     }
-
     .mobileMenu {
-      height: 100dvh;
-      position: fixed;
-      inset: 0;
-      z-index: 99;
-      top: 0;
-      margin-top: 70px;
-      background: $mainBlueBack;
-      color: $whiteTxt;
-      padding: 32px 40px;
-      overflow-y: auto;
-      gap: 20px;
+      display: none;
+    }
 
-      .closeBtn {
-        position: absolute;
-        top: 24px;
-        left: 24px;
-        background: transparent;
-      }
-      @media (max-width: 1024px) {
-        .drawerColumns {
-          flex: 1;
-          margin-top: 80px;
+    @media (max-width: 1024px) {
+      .mobileMenu {
+        display: block;
+        height: 100dvh;
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        top: 0;
+        margin-top: 70px;
+        background: $mainBlueBack;
+        color: $whiteTxt;
+        padding: 32px 40px;
+        overflow-y: auto;
+        gap: 20px;
 
-          a {
-            display: block;
-            margin: 24px 0;
-            font-family: $inter;
-            font-size: 18px;
-            font-weight: 600;
-            color: $whiteTxt;
+        .closeBtn {
+          position: absolute;
+          top: 24px;
+          left: 24px;
+          background: transparent;
+        }
+        @media (min-width: 769px) {
+          .fRight {
+            float: right;
+          }
+          .fLeft {
+            float: left;
           }
         }
+        @media (max-width: 1024px) {
+          .drawerColumns {
+            flex: 1;
 
-        .drawerIcons {
-          width: 100%;
-          margin: 40px auto 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 24px;
+            a {
+              display: block;
+              margin: 24px 0;
+              font-family: $inter;
+              font-size: 18px;
+              font-weight: 600;
+              color: $whiteTxt;
+            }
+          }
 
-          a svg {
-            width: 20px;
-            height: 20px;
+          .drawerIcons {
+            width: 100%;
+            margin: 40px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+
+            a svg {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .drawerIcons :global(svg) {
+            border: 1px solid #fff;
+            border-radius: 50%;
+            padding: 8px;
+            width: 16px;
+            height: 16px;
+            box-sizing: content-box;
           }
         }
       }
@@ -154,20 +176,5 @@
       margin-top: 48px;
       max-width: 980px;
     }
-  }
-}
-
-.drawerColumns {
-  order: 1;
-  @media (min-width: 769px) {
-    order: 0;
-  }
-}
-.drawerIcons {
-  order: 2;
-  @media (min-width: 769px) {
-    width: auto;
-    order: 0;
-    justify-content: flex-end;
   }
 }

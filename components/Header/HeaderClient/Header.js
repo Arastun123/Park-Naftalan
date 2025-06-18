@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { Bar, Person } from "../../Svg";
+import { Bar, Facebook, Person, Phone, Youtube, Instagram } from "../../Svg";
 import Button from "../../Button/Button";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LinkItem from "../LinkItem/LinkItem";
@@ -36,7 +36,7 @@ export default function HeaderClient({ locale, t }) {
         </Button>
 
         <LinkItem slug="/" ariaLabel="Home">
-          <Logo />
+          <Logo width="97" height="69" />
         </LinkItem>
 
         <div className={styles.links}>
@@ -55,7 +55,7 @@ export default function HeaderClient({ locale, t }) {
 
       {mobileMenu && (
         <div className={styles.mobileMenu}>
-          <div className={styles.drawerColumns}>
+          <div className={`${styles.drawerColumns} ${styles.fRight}`}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
             <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
             <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
@@ -63,13 +63,26 @@ export default function HeaderClient({ locale, t }) {
             <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
           </div>
 
+          <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
+            <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+            <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+            <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+            <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+          </div>
           <div className={styles.drawerIcons}>
-            <Person />
-            <Person />
-            <Person />
-            <Person />
-            <Person />
-            <Person />
+            <LinkItem slug="/">
+              <Instagram />
+            </LinkItem>
+            <LinkItem slug="/">
+              <Facebook />
+            </LinkItem>
+            <LinkItem slug="/">
+              <Youtube />
+            </LinkItem>
+            <LinkItem slug="/">
+              <Phone />
+            </LinkItem>
           </div>
         </div>
       )}

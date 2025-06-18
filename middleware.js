@@ -9,6 +9,7 @@ export function middleware(request) {
   if (
     PUBLIC_FILE.test(pathname) ||
     pathname.startsWith("/api") ||
+    pathname.startsWith("/admin") ||
     locales.some((locale) => pathname.startsWith(`/${locale}`))
   ) {
     return;

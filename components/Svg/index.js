@@ -8,3 +8,7 @@ export { default as Person } from "./Person";
 export { default as Minus } from "./Minus";
 export { default as Plus } from "./Plus";
 export { default as Dott } from "./Dott";
+export { default as Instagram } from "./Instagram";
+export { default as Facebook } from "./Facebook";
+export { default as Youtube } from "./Youtube";
+export { default as Phone } from "./Phone";
