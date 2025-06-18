@@ -9,7 +9,7 @@ const localeMap = {
   ru,
 };
 
-export default function Calendar({ locale }) {
+export default function Calendar({ locale, t }) {
   const handleDateChange = ({ startDate, endDate, t, locale }) => {
     console.log("Selected Dates:", startDate, endDate);
   };

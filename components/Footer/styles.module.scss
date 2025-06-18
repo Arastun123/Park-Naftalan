@@ -22,6 +22,17 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    text-align: center;
+  }
+  .links {
+    @media (max-width: 769px) {
+      width: 100%;
+      display: block;
+      a {
+        display: block;
+        text-align: start;
+      }
+    }
   }
 
   .icons :global(svg) {
@@ -57,8 +68,8 @@
   }
   .bottom {
     order: 3;
-    width: 100%;
-
+    width: 95%;
+    margin: 0 auto;
     div {
       width: 70%;
       margin: auto;
@@ -68,7 +79,8 @@
     }
     p,
     a {
-      padding: 15px 10px;
+      // padding: 15px 10px;
+      margin: 15px 10px;
       font-family: $inter;
       font-weight: 400;
       font-size: 12px;

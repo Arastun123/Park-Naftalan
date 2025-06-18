@@ -21,12 +21,13 @@
   "October": "Oktyabr",
   "November": "Noyabr",
   "December": "Dekabr",
-  "Check":"Giriş/Çıxış tarixləri",
-  "RoomCount":"Otaq sayı",
-  "Adult":"Yetişkin",
-  "Child":"Uşaq",
-  "AddRoom":"Otaq əlavə et",
-  "Submit":"Təsdiq et",
+  "Check": "Giriş {arrow} Çıxış tarixləri",
+  "RoomCount": "Otaq sayı",
+  "Adult": "Yetişkin",
+  "Child": "Uşaq",
+  "AddRoom": "Otaq əlavə et",
+  "Submit": "Təsdiq et",
   "ChooseDate": "Tarix seç",
-  "ChooseRoom": "Otaq seç"
+  "ChooseRoom": "Otaq seç",
+  "Developed": "Saytın hazırlandı"
 }

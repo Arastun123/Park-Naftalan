@@ -16,6 +16,7 @@
   width: 100%;
   max-width: $container-desktop;
   margin: 0 auto;
+  padding: 0 15px;
 
   @include respond(tablet) {
     max-width: $container-tablet;
@@ -25,5 +26,3 @@
     max-width: 100%;
   }
 }
-
- 

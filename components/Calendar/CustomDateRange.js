@@ -190,9 +190,7 @@ export default function CustomDateRange({ onChange, locale, t }) {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div>
-          <span>Giriş</span>
-          <span>→</span>
-          <span>Çıxış</span>
+          <span>{t?.Check}</span> 
         </div>
       </div>
       <div className={styles.calendars}>
