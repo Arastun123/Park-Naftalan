@@ -29,5 +29,41 @@
   "Submit": "Submit",
   "ChooseDate": "Choose Date",
   "ChooseRoom": "Choose Room",
-  "Developed": "Developed by"
+  "Developed": "Developed by",
+  "RoomTitles": {
+    "FamilySuite": "Family Suite – Family Comfort and Spacious Living",
+    "ParkSuite": "Park Suite – Spaciousness, Elegance, and Exclusive Comfort",
+    "DeluxeSuite": "Deluxe Suite – Harmony of Luxury and Comfort",
+    "StandardRoom": "Standard Room – The Address of Comfort and Peace"
+  },
+  "RoomDescriptions": {
+    "FamilySuite": "Our Family Suite rooms, ideal for family vacations, stand out with their spacious area and functional design.",
+    "ParkSuite": "Park Suite rooms, one of the highest-level categories in our sanatorium, stand out with their large area and excellent facilities.",
+    "DeluxeSuite": "Deluxe Suites are distinguished by their elegant design, functional layout, and modern equipment, offering an unforgettable vacation experience.",
+    "StandardRoom": "We offer 18 Standard rooms designed for the comfort of our guests, equipped with all necessary amenities."
+  },
+  "Structure": {
+    "FamilySuite": "bedroom + living room",
+    "ParkSuite": "Separate rest and sleeping zones",
+    "DeluxeSuite": "Separate rest and sleeping zones",
+    "StandardRoom": "Sleeping area"
+  },
+  "Equipment": {
+    "DoubleLuxuryBedWithExtra": "Luxury double bed and extra bed options",
+    "SoftFurniture": "Soft furniture set",
+    "AC": "Air conditioner",
+    "Safe": "Safe",
+    "TV": "Television",
+    "Kettle": "Electric kettle",
+    "WiFi": "High-speed Wi-Fi",
+    "Fridge": "Refrigerator",
+    "BathroomWithShower": "Spacious bathroom with shower cabin",
+    "BathroomWithAccessories": "Spacious bathroom, shower cabin and hygiene accessories",
+    "PremiumBathroom": "Spacious bathroom, shower cabin and premium hygiene products",
+    "Desk": "Work desk",
+    "DoubleAndSingleBed": "Luxury double and single bed",
+    "LuxuryBedWithExtra": "Luxury double bed (extra bed available for a fee)",
+    "SingleOrDoubleBed": "Comfortable double or single bed",
+    "DailyCleaning": "Daily cleaning service"
+  }
 }

@@ -17,17 +17,22 @@ export default async function AboutPage({ params }) {
           <p>İstirahət mərkəzi</p>
         </div>
         <div className={styles.mainContent}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur. Vitae habitant sed purus
-            urna pretium. Hendrerit elit aliquam consectetur sagittis tellus
-            accumsan consectetur dui. Pellentesque vitae suspendisse viverra
-            pellentesque viverra. Fermentum egestas eget cursus convallis.
-            Porttitor nam pretium lacus imperdiet. Molestie donec adipiscing
-            integer ac aliquet faucibus quam pharetra. Posuere tempor diam quis
-            viverra leo. In lacus eleifend donec facilisi diam. Tortor convallis
-            neque blandit quis molestie elementum pellentesque condimentum eros.
-          </p>
-          <img src="../headermain.png" alt="Park Naftalan" />
+          <div className={styles.imageBox}>
+            <img src="../headermain.png" alt="Park Naftalan" />
+          </div>
+          <div className={styles.txt}>
+            <p>
+              2022-ci ildən fəaliyyətə başlayan Park Naftalan Sanatoriya
+              Kompleksi 1 hektara yaxın ərazidə yerləşir və iki altımərtəbəli
+              korpusdan ibarətdir. Mərkəzdə ümumilikdə 114 komfortlu otaq
+              mövcuddur və 240 nəfərədək qonağın yerləşdirilməsi
+              mümkündür.Kompleks müasir tibbi və texniki avadanlıqlarla təchiz
+              olunmuşdur. Qonaqlara milli və Avropa mətbəxinin ləziz təamları
+              təqdim olunan restoran, istirahət üçün isə Lobby bar xidmət
+              göstərir.
+            </p>
+            <p> Müalicə bölməsi geniş spektrli prosedurları ilə seçilir.</p>
+          </div>
         </div>
       </section>
       <section>

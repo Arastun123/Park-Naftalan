@@ -16,13 +16,17 @@
   width: 100%;
   max-width: $container-desktop;
   margin: 0 auto;
-  padding: 0 15px;
+  div {
+    padding: 0 10px;
+  }
 
   @include respond(tablet) {
     max-width: $container-tablet;
+    padding: 0;
   }
 
   @include respond(mobile) {
     max-width: 100%;
+    padding: 0;
   }
 }

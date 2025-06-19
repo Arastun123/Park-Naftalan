@@ -1,15 +1,19 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import style from "./styles.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowDown } from "@/components/Svg";
 import Button from "@/components/Button/Button";
+import useClickOutSide from "@/lib/useClickOutSide";
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [locale, setLocale] = useState("AZ");
+  const containerRef = useRef(null);
+
+  useClickOutSide(containerRef, () => setOpen(false));
 
   useEffect(() => {
     const segments = pathname.split("/");
@@ -26,7 +30,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className={style.languageDropdown}>
+    <div className={style.languageDropdown} ref={containerRef}>
       <Button className={style.toggleButton} onClick={() => setOpen(!open)}>
         {locale}
         <span className={open ? style.reverse : ""}>

@@ -9,7 +9,7 @@ export default async function LocaleLayout({ children, params }) {
     <html lang={local}>
       <body>
         <Header params={params} />
-        <main>{children}</main>
+        <main style={{ position: 'relative', zIndex: 0 }}>{children}</main>
         <Footer params={params} locale={local} />
       </body>
     </html>

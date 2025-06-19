@@ -29,7 +29,7 @@
   background-color: $mainBlueBack;
   color: $whiteTxt;
   min-width: 100px;
-  z-index: 100;
+  z-index: 1000;
 
   li {
     cursor: pointer;
@@ -42,6 +42,7 @@
     padding: 10px;
     text-align: center;
     border-left: 5px solid transparent;
+    z-index: 100;
     &:hover {
       background-color: $btnColor;
       border-left: 5px solid #fff;

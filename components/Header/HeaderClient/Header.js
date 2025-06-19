@@ -24,8 +24,9 @@ export default function HeaderClient({ locale, t }) {
 
   const showFullHeader = ["/az", "/ru", "/en"].includes(pathname);
 
-  const NavContent = (
+  const renderNavContent = () => (
     <nav className={styles.nav}>
+      {" "}
       <div className={`${styles.menu} ${global.container}`}>
         <Button
           onClick={toggleMenu}
@@ -52,7 +53,6 @@ export default function HeaderClient({ locale, t }) {
           <Person />
         </div>
       </div>
-
       {mobileMenu && (
         <div className={styles.mobileMenu}>
           <div className={`${styles.drawerColumns} ${styles.fRight}`}>
@@ -88,6 +88,7 @@ export default function HeaderClient({ locale, t }) {
       )}
     </nav>
   );
+
   if (showFullHeader) {
     return (
       <div
@@ -98,7 +99,7 @@ export default function HeaderClient({ locale, t }) {
           <img src="./header.png" alt="Hotel facade at night" priority="true" />
         </div>
 
-        {NavContent}
+        {renderNavContent()}
 
         <div className={styles.reserve}>
           <p className={styles.reserveTitle}>
@@ -117,5 +118,5 @@ export default function HeaderClient({ locale, t }) {
     );
   }
 
-  return NavContent;
+  return renderNavContent();
 }

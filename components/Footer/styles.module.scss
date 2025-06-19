@@ -21,10 +21,10 @@
     gap: 32px;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     text-align: center;
   }
   .links {
+    flex-wrap: wrap;
     @media (max-width: 769px) {
       width: 100%;
       display: block;
