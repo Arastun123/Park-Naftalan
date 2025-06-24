@@ -1,5 +1,5 @@
 import Video from "@/components/Video/VIdeo";
-import { getDatas } from "@/lib/getDatas";
+import { getDatas } from "@/lib/handleApiActions";
 import { getTranslations } from "@/lib/getTranslations";
 import global from "@/styles/global.module.scss";
 import styles from "@/styles/about.module.scss";

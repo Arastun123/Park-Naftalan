@@ -180,8 +180,11 @@
     color: $whiteTxt;
     max-width: 700px;
     line-height: 1.15;
+    padding: 0 10px;
   }
-
+  span {
+    padding: 0 10px;
+  }
   .arrow {
     margin-top: 24px;
   }
