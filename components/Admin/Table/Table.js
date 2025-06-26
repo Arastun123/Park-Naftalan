@@ -1,10 +1,12 @@
 "use client";
-import Button from "@/components/Button/Button";
-import LinkItem from "@/components/Header/LinkItem/LinkItem";
-import { deleteData } from "@/lib/handleApiActions";
-import table from "@/styles/table.module.scss";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+import Button from "@/components/Button/Button";
+import table from "@/styles/table.module.scss";
+
 export default function Table({ data, th, handleDelete, createSlug }) {
+  const router = useRouter()
   return (
     <table className={table.table}>
       <thead className={table.thead}>
@@ -18,7 +20,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
           <th className={table.th}>
             <Link
               className={`${table.actionBtn} ${table.create}`}
-              href={createSlug}
+              href={`${createSlug}/create`}
             >
               Create
             </Link>
@@ -30,7 +32,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
           <tr key={i} className={table.trHover}>
             <td className={table.td}>{row.name}</td>
             <td className={table.td}>
-              <Button className={`${table.actionBtn} ${table.edit}`}>
+              <Button className={`${table.actionBtn} ${table.edit}`} onClick={() => router.push(`${createSlug}/${row.id}/${row.language}`)}>
                 Edit
               </Button>
               <Button

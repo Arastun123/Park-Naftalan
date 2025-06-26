@@ -1,6 +1,6 @@
 @import "../../styles/vairable.scss";
 .section {
-  padding: 0 15px;
+  margin: 15px 0;
   .sectionTitle {
     color: $blackTxt;
     font-weight: 700;
@@ -27,6 +27,9 @@
     @media (max-width: 768px) {
       font-size: 20px;
     }
+  }
+  @media (max-width: 768px) {
+    padding: 0 15px;
   }
   .sectionTitleOneLine {
     display: block;

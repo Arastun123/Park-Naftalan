@@ -5,9 +5,7 @@ import SideBar from "@/components/Admin/SideBar/SideBar";
 export default async function Home() {
   return (
     <div>
-      <div>
-        <SideBar />
-      </div>
+      <div>Main Page</div>
     </div>
   );
 }

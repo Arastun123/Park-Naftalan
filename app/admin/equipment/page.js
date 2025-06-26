@@ -23,10 +23,16 @@ export default function Equipment() {
 
   const handleDelete = async (id) => {
     const res = await deleteData("Equipment", id);
+    console.log(typeof res.status);
+    res.status === 204
+      ? alert("Proses uğurla başa çatdı")
+      : alert("Xəta baş verdi");
     if (res) {
       fetchDatas();
     }
   };
+
+  const handleEdit = async (id) => {}
 
   return (
     <div className={global.container}>
@@ -35,7 +41,7 @@ export default function Equipment() {
         th={th}
         modelName="Equipment"
         handleDelete={handleDelete}
-        createSlug="equipment/create"
+        createSlug="equipment"
       />
     </div>
   );

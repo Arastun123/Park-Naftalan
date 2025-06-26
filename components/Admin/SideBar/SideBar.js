@@ -9,14 +9,14 @@ export default function SideBar() {
         <Logo />
       </div>
       <div className={`${styles.menu} ${styles.after}`}>
-        <LinkItem slug="admin/reservasion">Rezervasiya</LinkItem>
-        <LinkItem slug="admin/slider">Ana səhifə başlıq şəkili</LinkItem>
-        <LinkItem slug="admin/about">Haqqımızda</LinkItem>
-        <LinkItem slug="admin/rooms">Otaqlar</LinkItem>
-        <LinkItem slug="admin/contact">Əlaqə məlumatları</LinkItem>
-        <LinkItem slug="admin/naftalan">Naftalan</LinkItem>
-        <LinkItem slug="admin/spa">Spa</LinkItem>
-        <LinkItem slug="admin/equipment">Equipment</LinkItem>
+        <LinkItem slug="/admin/reservasion">Rezervasiya</LinkItem>
+        <LinkItem slug="/admin/slider">Ana səhifə başlıq şəkili</LinkItem>
+        <LinkItem slug="/admin/about">Haqqımızda</LinkItem>
+        <LinkItem slug="/admin/rooms">Otaqlar</LinkItem>
+        <LinkItem slug="/admin/contact">Əlaqə məlumatları</LinkItem>
+        <LinkItem slug="/admin/naftalan">Naftalan</LinkItem>
+        <LinkItem slug="/admin/spa">Spa</LinkItem>
+        <LinkItem slug="/admin/equipment">Equipment</LinkItem>
         
       </div>
       <LinkItem slug="admin/contact">Əsas sayta kec</LinkItem>
