@@ -1,4 +1,4 @@
-.form input {
+.form input, .form textarea {
   margin: 10px;
   border: 1px solid #eee;
   padding: 10px;
@@ -17,4 +17,23 @@
 }
 .create {
   background: green;
+}
+
+.btns {
+  margin: 10px 0;
+  button {
+    background: #4e4ee7;
+  }
+  .selected {
+    background-color: #4caf50;
+    color: white;
+  }
+}
+
+.dFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 10px 0;
 }

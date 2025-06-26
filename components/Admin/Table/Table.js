@@ -6,7 +6,7 @@ import Button from "@/components/Button/Button";
 import table from "@/styles/table.module.scss";
 
 export default function Table({ data, th, handleDelete, createSlug }) {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <table className={table.table}>
       <thead className={table.thead}>
@@ -27,24 +27,39 @@ export default function Table({ data, th, handleDelete, createSlug }) {
           </th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((row, i) => (
-          <tr key={i} className={table.trHover}>
-            <td className={table.td}>{row.name}</td>
-            <td className={table.td}>
-              <Button className={`${table.actionBtn} ${table.edit}`} onClick={() => router.push(`${createSlug}/${row.id}/${row.language}`)}>
-                Edit
-              </Button>
-              <Button
-                className={`${table.actionBtn} ${table.delete}`}
-                onClick={() => handleDelete(row.id)}
-              >
-                Delete
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      {data !== "" ? (
+        <tbody>
+          {data.map((row, i) => (
+            <tr key={i} className={table.trHover}>
+              {th.map((item) => (
+                <td key={item} className={table.td}>
+                  {row[item]}
+                </td>
+              ))}
+              <td className={table.td}>
+                <Button
+                  className={`${table.actionBtn} ${table.edit}`}
+                  onClick={() => {
+                    createSlug === "equipment"
+                      ? router.push(`${createSlug}/${row.id}/${row.language}`)
+                      : router.push(`${createSlug}/${row.id}`);
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className={`${table.actionBtn} ${table.delete}`}
+                  onClick={() => handleDelete(row.id)}
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      ) : (
+        <h2>Hazırda yaradılmış məlumat yoxdur zəhmət olmasa əlavə edin</h2>
+      )}
     </table>
   );
 }
