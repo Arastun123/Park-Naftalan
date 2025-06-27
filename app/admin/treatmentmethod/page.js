@@ -7,11 +7,11 @@ import Table from "@/components/Admin/Table/Table";
 import global from "@/styles/global.module.scss";
 import "@/styles/reset.css";
 
-export default function treatmentMethod() {
+export default function TreatmentMethod() {
   const [data, setData] = useState([]);
-  const model = "Room";
+  const model = "treatmentMethod";
 
-  const th = ["category", "area", "price", "member"];
+  const th = ["name", "description"];
 
   useEffect(() => {
     fetchDatas();

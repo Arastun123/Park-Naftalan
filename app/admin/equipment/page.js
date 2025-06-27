@@ -32,13 +32,11 @@ export default function Equipment() {
     }
   };
 
-  const handleEdit = async (id) => {}
-
   return (
     <div className={global.container}>
       <Table
         data={data}
-        th={th} 
+        th={th}
         handleDelete={handleDelete}
         createSlug="equipment"
       />

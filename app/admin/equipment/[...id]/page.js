@@ -24,7 +24,7 @@ export default function createEquipment() {
 
   useEffect(() => {
     fetchDatas();
-  }, [isEdit]);
+  }, [isEdit === "create"]);
 
   const handleSubmit = async () => {
     const payload = {
@@ -33,12 +33,12 @@ export default function createEquipment() {
         name,
       })),
     };
-    const res = isEdit
-      ? await updateData("Equipment", id, payload)
-      : await createData("Equipment", payload);
+    const res =
+      isEdit === "create"
+        ? await updateData("Equipment", id, payload)
+        : await createData("Equipment", payload);
 
-    console.log(res);
-    if (!isEdit) {
+    if (isEdit === "create") {
       if (res.statusText === "OK") {
         alert("Proses uğurla başa çatdı");
         router.back();
@@ -53,7 +53,7 @@ export default function createEquipment() {
   };
 
   const fetchDatas = async () => {
-    if (isEdit) {
+    if (isEdit === "create") {
       const data = await getDataByid("Equipment", id, language);
       if (data)
         setValues((prev) => ({
@@ -66,7 +66,7 @@ export default function createEquipment() {
   return (
     <div className={global.container}>
       <form className={admin.form}>
-        {!isEdit ? (
+        {(isEdit === "create") === "create" ? (
           <>
             {[
               { lang: "en", code: 0 },

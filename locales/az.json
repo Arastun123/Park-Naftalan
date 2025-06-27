@@ -30,40 +30,7 @@
   "ChooseDate": "Tarix seç",
   "ChooseRoom": "Otaq seç",
   "Developed": "Saytın hazırlandı",
-  "RoomTitles": {
-    "FamilySuite": "Family Suite",
-    "ParkSuite": "Park Suite ",
-    "DeluxeSuite": "Deluxe Suite ",
-    "StandardRoom": "Standart Tipli OtaqlarF"
-  },
-  "RoomDescriptions": {
-    "FamilySuite": "Sanatoriyamızda ailəvi istirahət üçün ideal şərait yaradan Family Suite tipli otaqlar, həm geniş sahəsi, həm də funksional quruluşu ilə fərqlənir.",
-    "ParkSuite": "Sanatoriyamızın ən yüksək səviyyəli otaq kateqoriyalarından olan Park Suite otaqları, geniş sahəsi və mükəmməl şəraiti ilə seçilir.",
-    "DeluxeSuite": "Deluxe Suite otaqları, zərif dizaynı, funksional planlaması və müasir avadanlıqları ilə seçilərək qonaqlarımıza unudulmaz bir istirahət təcrübəsi təqdim edir.",
-    "StandardRoom": "Sanatoriyamızda qonaqların rahatlığı üçün nəzərdə tutulmuş 18 ədəd Standart tipli otaq mövcuddur."
-  },
-  "Structure": {
-    "FamilySuite": "yataq otağı + istirahət otağı",
-    "ParkSuite": "Ayrı-istirahət və yataq zonaları",
-    "DeluxeSuite": "Ayrı-istirahət və yataq zonaları",
-    "StandardRoom": "Yataq zonası"
-  },
-  "Equipment": {
-    "DoubleLuxuryBedWithExtra": "Lüks ikinəfərlik çarpayı və əlavə yataq imkanları",
-    "SoftFurniture": "Yumşaq mebel dəsti",
-    "AC": "Kondisioner",
-    "Safe": "Seyf",
-    "TV": "Televizor",
-    "Kettle": "Elektrikli çaydan",
-    "WiFi": "Yüksək sürətli Wi-Fi",
-    "Fridge": "Soyuducu",
-    "BathroomWithShower": "Geniş sanitar qovşaq və duş kabinəsi",
-    "BathroomWithAccessories": "Geniş sanitar qovşaq, duş kabinəsi və gigiyenik aksesuarlar",
-    "PremiumBathroom": "Geniş sanitar qovşaq, duş kabinəsi və premium gigiyenik vasitələr",
-    "Desk": "İş masası",
-    "DoubleAndSingleBed": "Lüks iki nəfərlik və bir nəfərli çarpayı",
-    "LuxuryBedWithExtra": "Lüks ikinəfərlik çarpayı (ödənişli əlavə çarpayı qoyula bilər)",
-    "SingleOrDoubleBed": "Rahat ikinəfərlik və ya tək nəfərlik çarpayı",
-    "DailyCleaning": "Gündəlik otaq təmizliyi"
-  }
+  "Area": "Sahə",
+  "Price": "Qiymət",
+  "Guest": "Qonaq sayı"
 }

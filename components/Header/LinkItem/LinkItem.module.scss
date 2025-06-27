@@ -7,3 +7,21 @@
   color: #ffffff;
   margin: 0 15px;
 }
+.reserveBtn {
+  align-self: flex-end;
+  z-index: 1;
+  margin: 0 14px;
+  padding: 10px 0;
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    height: 1px;
+    background: $blueTxt;
+    @media (min-width: 1024px) {
+      width: 150px;
+    }
+  }
+}

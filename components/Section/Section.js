@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import Button from "../Button/Button";
+import Link from "next/link";
 
 export default function Section({
   children,
@@ -8,6 +9,7 @@ export default function Section({
   oneLine,
   t,
   locale,
+  slug,
 }) {
   const title = (
     <div className={styles.sectionTitle}>
@@ -15,7 +17,6 @@ export default function Section({
     </div>
   );
 
-  
   return (
     <section className={`${styles.section} ${className}`}>
       {oneLine && title}
@@ -25,7 +26,9 @@ export default function Section({
         {children}
       </div>
       <div className={styles.btnContainer}>
-        <Button className={styles.btn}>{t?.SeeMore}</Button>
+        <Link className={styles.btn} href={`/${locale}/${slug}`}>
+          {t?.SeeMore}
+        </Link>
       </div>
     </section>
   );

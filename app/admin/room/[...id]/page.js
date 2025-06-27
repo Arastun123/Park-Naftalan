@@ -50,12 +50,11 @@ export default function createRoom() {
       })),
     };
 
-    const res = isEdit
+    const res = !isEdit
       ? await updateData("Room", id, payload)
       : await createData("Room", payload);
 
-    console.log(res);
-    if (!isEdit) {
+    if (isEdit) {
       if (res.statusText === "OK") {
         alert("Proses uğurla başa çatdı");
         router.back();
@@ -71,9 +70,9 @@ export default function createRoom() {
       }
     }
   };
-
+  console.log(isEdit);
   const fetchDatas = async () => {
-    if (isEdit) {
+    if (!isEdit) {
       const data = await getDataByid("Room", id);
       if (data) {
         const newTranslations = { ...values.translations };

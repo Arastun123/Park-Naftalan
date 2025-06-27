@@ -40,3 +40,112 @@
     line-height: 1.4;
   }
 }
+
+.reserveBtn {
+  width: 100%;
+  // align-self: flex-end;
+  z-index: 1;
+  margin: 15px 0;
+  padding: 10px 0;
+  font-family: $inter;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  color: $blackTxt;
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: $blueTxt;
+  }
+}
+
+.roomGrid {
+  margin-top: 10%;
+  @media (max-width: 768px) {
+    margin-top: 20%;
+  }
+
+  .roomCard {
+    background-color: #fcf4e8;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+    margin: 20px 0;
+
+    .image {
+      flex: 1;
+      display: flex;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
+
+    .desc {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+          width: 100%;
+          max-width: 30%;
+          flex: 1 1 30%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    &:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column !important;
+
+      .image {
+        width: 100%;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  h2 {
+    font-family: $inter;
+    font-weight: 600;
+    font-size: 34px;
+    color: blackTxt;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    font-family: $inter;
+    font-weight: 400;
+    font-size: 20px;
+    color: blackTxt;
+    margin: 10px 0;
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+}
