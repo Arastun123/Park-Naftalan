@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getDatas } from "@/lib/handleApiActions";
 import styles from "./styles.module.scss";
 import Button from "../Button/Button";
+import Loading from "../Loading";
 
 export default function RoomCard({ t, locale }) {
   const lanCode = useMemo(() => {
@@ -31,45 +32,50 @@ export default function RoomCard({ t, locale }) {
 
     fetchDatas();
   }, [locale]);
-  console.log(rooms);
 
   return (
     <div className={styles.roomGrid}>
-      {rooms.map((item) => {
-        const currentTranslation = item.translations.find(
-          (t) => t.language === lanCode
-        )
-        return (
-          <div key={`${item?.id}-${locale}`} className={styles.roomCard}>
-            <div className={styles.image}>
-              <img
-                src={item?.picture || "/parkSuite.png"}
-                alt={item?.category || "Room image"}
-              />
-            </div>
-            <div className={styles.desc}>
-              <h2>{item.category}</h2>
-              <p>
-                {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ |{" "}
-                {t?.Guest}: {item?.member}
-              </p>
-              <p>{currentTranslation?.description}</p>
-              <Button slug="rooms" className={styles.reserveBtn}>
-                {t?.SeeMore}
-              </Button>
-              <div className={styles.images}>
-                {[1, 2, 3].map((_, idx) => (
+      {rooms.length > 0 ? (
+        <>
+          {rooms.map((item) => {
+            const currentTranslation = item.translations.find(
+              (t) => t.language === lanCode
+            );
+            return (
+              <div key={`${item?.id}-${locale}`} className={styles.roomCard}>
+                <div className={styles.image}>
                   <img
-                    key={idx}
                     src={item?.picture || "/parkSuite.png"}
                     alt={item?.category || "Room image"}
                   />
-                ))}
+                </div>
+                <div className={styles.desc}>
+                  <h2>{item.category}</h2>
+                  <p>
+                    {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ |{" "}
+                    {t?.Guest}: {item?.member}
+                  </p>
+                  <p>{currentTranslation?.description}</p>
+                  <Button slug="rooms" className={styles.reserveBtn}>
+                    {t?.SeeMore}
+                  </Button>
+                  <div className={styles.images}>
+                    {[1, 2, 3].map((_, idx) => (
+                      <img
+                        key={idx}
+                        src={item?.picture || "/parkSuite.png"}
+                        alt={item?.category || "Room image"}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
+        </>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }

@@ -36,7 +36,7 @@ export default function HeaderClient({ locale, t }) {
           {mobileMenu ? <Close /> : <Bar />}
         </Button>
 
-        <LinkItem slug="/" ariaLabel="Home">
+        <LinkItem slug={`/${locale}`} ariaLabel="Home">
           <Logo width="97" height="69" />
         </LinkItem>
 

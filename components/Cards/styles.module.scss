@@ -7,8 +7,10 @@
   font-family: $inter;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  // align-items: center;
+  // text-align: center;
+  // background: #f7f7f7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
   box-sizing: border-box;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -32,18 +34,25 @@
     color: $blackTxt;
     margin: 12px 0 8px;
   }
-
+  .icon span {
+    margin: 0 10px;
+  }
   p {
     font-weight: 600;
     font-size: 20px;
     color: #000000a6;
     line-height: 1.4;
+    text-align: start;
+  }
+  .price{
+    font-size: 16px;
+    margin: 10px 0;
   }
 }
 
 .reserveBtn {
   width: 100%;
-  // align-self: flex-end;
+
   z-index: 1;
   margin: 15px 0;
   padding: 10px 0;

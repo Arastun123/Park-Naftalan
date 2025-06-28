@@ -1,16 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getAznToUsdRate, getDatas } from "@/lib/handleApiActions";
 
-import "@/styles/reset.css";
-import global from "@/styles/global.module.scss";
-import styles from "@/styles/index.module.scss";
 import Section from "@/components/Section/Section";
 import Card from "@/components/Cards/Card";
-import { getDatas } from "@/lib/handleApiActions";
-export default function RoomSection({ name, oneLine, t, locale }) {
+
+import "@/styles/reset.css";
+import styles from "@/styles/index.module.scss";
+export default function RoomSection({ t, locale, showBtn }) {
   const [rooms, setRooms] = useState([]);
+  const [rate, setRate] = useState(1);
+
   useEffect(() => {
     fetchDatas();
+    // loadCurrencyRate();
   }, [rooms]);
 
   const fetchDatas = async () => {
@@ -18,6 +21,11 @@ export default function RoomSection({ name, oneLine, t, locale }) {
     setRooms(rooms);
   };
 
+  // function loadCurrencyRate() {
+  //   getAznToUsdRate().then((rate) => {
+  //     setRate(rate);
+  //   });
+  // }
   return (
     <Section
       name={t?.Rooms}
@@ -25,15 +33,20 @@ export default function RoomSection({ name, oneLine, t, locale }) {
       t={t}
       locale={locale}
       slug="rooms"
+      showBtn={showBtn}
     >
       <div className={styles.rooms}>
         {rooms.map((item, i) => (
           <Card
-            src={"./header.png"}
-            name={item.category}
+            slug={`/rooms/${item.id}`}
+            src={"/DSC_0610.png"}
+            name={item?.category}
             t={t}
             locale={locale}
-            key={`${item.name}_${i}`}
+            key={`${item?.name}_${i}`}
+            member={item?.member}
+            priceAZN={item?.price}
+            priceUSD={(item?.price * rate).toFixed(0)}
           />
         ))}
       </div>

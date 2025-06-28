@@ -1,4 +1,4 @@
-export default function Video() {
+export default function Video({src}) {
   return (
     <div
       style={{
@@ -16,7 +16,7 @@ export default function Video() {
         }}
       >
         <iframe
-          src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1"
+          src={src}
           title="YouTube video"
           allow="autoplay; encrypted-media"
           allowFullScreen

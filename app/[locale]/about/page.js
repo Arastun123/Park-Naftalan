@@ -10,7 +10,7 @@ export default async function AboutPage({ params }) {
   // const data = await getDatas("Naftalan", locale);
   return (
     <div className={`${global.container} ${styles.about}`}>
-      <Video />
+      <Video src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1" />
       <section>
         <div className={styles.title}>
           <h2>Park Naftalan</h2>

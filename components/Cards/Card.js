@@ -1,11 +1,22 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
-export default function Card({ src, name, t, locale }) {
+import { Person } from "../Svg";
+export default function Card({ src, name, member, priceAZN, priceUSD, slug }) {
   return (
-    <Link href="/" className={styles.card}>
+    <Link href={slug} className={styles.card}>
       <img src={src} alt={name} />
       <h2>{name}</h2>
-      {/* <p>{desc}</p> */}
+      <div className={styles.icon}>
+        {Array.from({ length: +member }).map((_, index) => (
+          <span key={index}>
+            <Person color="#000" />
+          </span>
+        ))}
+      </div>
+      <p>Qiymət 2 nəfərlik otaqda 1 nəfər üçün nəzərdə tutulub</p>
+      <p className={styles.price}>
+        {priceAZN}₼ / {priceUSD} $
+      </p>
     </Link>
   );
 }

@@ -1,0 +1,52 @@
+@import "../../styles/vairable.scss";
+// @media (max-width: 768px) {
+//   font-size: 20px;
+// }
+
+.detail {
+  margin-top: 10%;
+
+  @media (max-width: 768px) {
+    margin-top: 30%;
+  }
+
+  padding: 2rem;
+  color: $blueTxt;
+  font-family: $inter;
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .info {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+    .row {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  .desc {
+    margin-bottom: 2rem;
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+  }
+
+  .video {
+    margin: 2rem 0;
+  }
+
+  .form {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+}

@@ -5,12 +5,11 @@ import styles from "@/styles/index.module.scss";
 import Section from "@/components/Section/Section";
 
 import RoomSection from "@/components/Home/RoomSection";
+import { getAznToUsdRate } from "@/lib/handleApiActions";
 
 export default async function Home({ params }) {
-
   const { locale } = await params;
   const t = await getTranslations(locale);
-
 
   return (
     <div className={global.container}>
@@ -28,7 +27,13 @@ export default async function Home({ params }) {
           consequat nullam id proin. Est risus lobortis lectus amet mattis odio.
         </p>
       </Section>
-      <RoomSection name={t?.Rooms} oneLine={true} t={t} locale={locale} />
+      <RoomSection
+        name={t?.Rooms}
+        oneLine={true}
+        t={t}
+        locale={locale}
+        showBtn={true}
+      />
     </div>
   );
 }

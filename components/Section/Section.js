@@ -10,6 +10,7 @@ export default function Section({
   t,
   locale,
   slug,
+  showBtn,
 }) {
   const title = (
     <div className={styles.sectionTitle}>
@@ -25,11 +26,13 @@ export default function Section({
 
         {children}
       </div>
-      <div className={styles.btnContainer}>
-        <Link className={styles.btn} href={`/${locale}/${slug}`}>
-          {t?.SeeMore}
-        </Link>
-      </div>
+      {showBtn && (
+        <div className={styles.btnContainer}>
+          <Link className={styles.btn} href={`/${locale}/${slug}`}>
+            {t?.SeeMore}
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

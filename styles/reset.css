@@ -32,9 +32,7 @@ ol {
 
 img,
 picture,
-video,
-canvas,
-svg {
+video {
   display: block;
   max-width: 100%;
 }
