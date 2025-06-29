@@ -50,7 +50,6 @@ export default function HeaderClient({ locale, t }) {
 
         <div className={styles.icons}>
           <LanguageSwitcher />
-          <Person />
         </div>
       </div>
       {mobileMenu && (

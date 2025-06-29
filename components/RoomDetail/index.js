@@ -10,10 +10,11 @@ import { Person } from "../Svg";
 import Video from "../Video/VIdeo";
 import Loading from "../Loading";
 import { constructFrom } from "date-fns";
-// import ReservationForm from "../ReservationForm"; // Əgər varsa əlavə et
+ 
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);
+  const [rooms, setRooms] = useState(null);
   const [equipment, setEquipment] = useState([]);
 
   const params = useParams();
@@ -30,6 +31,8 @@ export default function RoomDetail({ t, locale }) {
 
   const fetchDatas = async () => {
     const data = await getDataByid("Room", id);
+    const rooms = await getDatas("Room");
+    setRooms(rooms);
     if (data) {
       setRoom(data);
     }
@@ -43,9 +46,6 @@ export default function RoomDetail({ t, locale }) {
   const matchedEquipments = equipment.filter(
     (item) => room.equipmentIds.includes(item.id) && item.language === lanCode
   );
-  console.log(matchedEquipments);
-  // console.log(equipment);
-  // console.log(room);
 
   const selectedTranslation = room.translations?.find(
     (t) => t.language === lanCode
@@ -105,11 +105,6 @@ export default function RoomDetail({ t, locale }) {
               />
             </div>
           )}
-        </div>
-
-        <div className={style.form}>
-          <h2>Make a Reservation</h2>
-          <p>Reservation form here...</p>
         </div>
       </div>
     </div>

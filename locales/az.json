@@ -21,7 +21,7 @@
   "October": "Oktyabr",
   "November": "Noyabr",
   "December": "Dekabr",
-  "Check": "Giriş {arrow} Çıxış tarixləri",
+  "Check": "Giriş/Çıxış tarixləri",
   "RoomCount": "Otaq sayı",
   "Adult": "Yetişkin",
   "Child": "Uşaq",
@@ -33,5 +33,18 @@
   "Area": "Sahə",
   "Price": "Qiymət",
   "Guest": "Qonaq sayı",
-  "Service":"Xidmətlər"
+  "Service":"Xidmətlər",
+  "Success":"Məlumat uğurla göndərildi!",
+  "Error":"Uğursuz cəhd! Zəhmət olmasa yenidən cəhd edin.",
+  "BackError":"Xəta baş verdi. Zəhmət olmasa daha sonra cəhd edin.",
+  "FillInput":"Xahiş edirik, bütün sahələri düzgün doldurun.",
+  "DayCount":"Gün sayı",
+  "Name":"Adınız",
+  "Surname":"Soyadınız",
+  "Email": "Email",
+  "Phone":"Əlaqə nömrəsi",
+  "roomFor":"otaq",
+  "dayFor":"gün",
+  "priceIs":"üçün qiymət",
+  "priceEnd":"edir"
 }

@@ -21,7 +21,7 @@
   "October": "October",
   "November": "November",
   "December": "December",
-  "Check": "Check-in {arrow} Check-out Dates",
+  "Check": "Check-in/Check-out Dates",
   "RoomCount": "Number of Rooms",
   "Adult": "Adult",
   "Child": "Child",
@@ -33,5 +33,18 @@
   "Area": "Area",
   "Price": "Price",
   "Guest": "Guest",
-  "Service": "Service"
+  "Service": "Service",
+  "Success": "Information sent successfully!",
+  "Error": "Failed attempt! Please try again.",
+  "BackError": "An error occurred. Please try again later.",
+  "FillInput": "Please fill in all fields correctly.",
+  "DayCount": "Day Count",
+  "Name": "Your Name",
+  "Surname": "Your Surname",
+  "Email": "Email",
+  "Phone": "Phone Number",
+  "roomFor": "room",
+  "dayFor": "day",
+  "priceIs": "for price",
+  "priceEnd": "is"
 }

@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./style.module.scss";
-import getWindowSize from "@/lib/getWindowsize";
 import { ArrowLeft, ArrowRight } from "../Svg";
 
 function CustomCalendar({
@@ -13,7 +12,7 @@ function CustomCalendar({
   localeString,
 }) {
   const [range, setRange] = useState([null, null]);
-  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const [activeStartDate, setActiveStartDate] = useState(null); // ✅ delay initialization
 
   useEffect(() => {
     const today = new Date();
@@ -25,12 +24,10 @@ function CustomCalendar({
     const [start, end] = range;
     if (!start || (start && end)) {
       setRange([date, null]);
-
       onChange?.({ startDate: date, endDate: null });
     } else {
       const newRange = date >= start ? [start, date] : [date, start];
       setRange(newRange);
-
       onChange?.({ startDate: newRange[0], endDate: newRange[1] });
     }
   }
@@ -100,35 +97,28 @@ function CustomCalendar({
     (date) => {
       const month = date.getMonth();
       const year = date.getFullYear();
-      const monthName =
-        months[localeString]?.[month] ||
-        date.toLocaleString(localeString, { month: "long" });
+      const fallbackMonths = months[localeString] || months["az-AZ"];  
+
+      const monthName = fallbackMonths[month];
 
       return `${monthName} ${year}`;
     },
     [localeString]
   );
-
   const formatWeekdayShort = useCallback(
     (internalLocale, date) => {
-      if (!(date instanceof Date) || isNaN(date.getTime())) {
-        return "";
-      }
-
+      if (!(date instanceof Date) || isNaN(date.getTime())) return "";
       const dayIndex = date.getDay();
-
       const azWeekdays = ["B", "Ç.A", "Ç", "C.A", "C", "Ş", "B"];
-
-      if (localeString === "az-AZ") {
-        return azWeekdays[dayIndex];
-      }
-
+      if (localeString === "az-AZ") return azWeekdays[dayIndex];
       return new Intl.DateTimeFormat(localeString, { weekday: "short" }).format(
         date
       );
     },
     [localeString]
   );
+
+  if (!activeStartDate) return null;
 
   return (
     <div className={styles.customCalendarWrapper}>
@@ -183,14 +173,26 @@ function CustomCalendar({
 }
 
 export default function CustomDateRange({ onChange, locale, t }) {
-  const [width] = getWindowSize();
+  const [width, setWidth] = useState(0);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const updateWidth = () => setWidth(window.innerWidth);
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    setHasMounted(true);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
   const isMobile = width < 1024;
+
+  if (!hasMounted) return null;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div>
-          <span>{t?.Check}</span> 
+          <span>{t?.Check}</span>
         </div>
       </div>
       <div className={styles.calendars}>

@@ -9,10 +9,8 @@ const localeMap = {
   ru,
 };
 
-export default function Calendar({ locale, t }) {
-  const handleDateChange = ({ startDate, endDate, t, locale }) => {
-    console.log("Selected Dates:", startDate, endDate);
-  };
+export default function Calendar({ locale, t , handleDateChange}) {
+  
 
   const selectedLocale = localeMap[locale] || az;
 

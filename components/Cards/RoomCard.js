@@ -5,6 +5,7 @@ import { getDatas } from "@/lib/handleApiActions";
 import styles from "./styles.module.scss";
 import Button from "../Button/Button";
 import Loading from "../Loading";
+import { useRouter } from "next/navigation";
 
 export default function RoomCard({ t, locale }) {
   const lanCode = useMemo(() => {
@@ -12,6 +13,7 @@ export default function RoomCard({ t, locale }) {
     if (locale === "az") return 1;
     return 2;
   }, [locale]);
+  const router = useRouter();
 
   const [rooms, setRooms] = useState([]);
 
@@ -56,7 +58,10 @@ export default function RoomCard({ t, locale }) {
                     {t?.Guest}: {item?.member}
                   </p>
                   <p>{currentTranslation?.description}</p>
-                  <Button slug="rooms" className={styles.reserveBtn}>
+                  <Button
+                    onClick={() => router.push(`rooms/${item.id}`)}
+                    className={styles.reserveBtn}
+                  >
                     {t?.SeeMore}
                   </Button>
                   <div className={styles.images}>

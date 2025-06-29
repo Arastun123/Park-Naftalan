@@ -1,26 +1,29 @@
-//colors
-// background
+ 
 $mainBlueBack: #2f3c4b;
 $btnColor: #084587;
-//text
+ 
 $whiteTxt: #fff;
 $blueTxt: #0d2126;
 $linkColor: #4076c1;
 $greyTxt: #828282;
 $blackTxt: #000;
-// fontFamily
+$primary-color: #0d6efd; 
+$text-color-dark: #333;
+$text-color-light: #6c757d;
+$border-color: #e0e0e0;
+$focus-color: #80bdff; 
+$success-color: #28a744;
+$error-color: #dc3545;
+$shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-medium: 0 6px 18px rgba(0, 0, 0, 0.1);
+
 
 $inter: "Inter", sans-serif;
 $sans: "Work Sans", sans-serif;
 $poppins: "Poppins", sans-serif; 
 
 
-// :root {
-//   --font-family: "Inter", sans-serif;
-//   --second-family: "Work Sans", sans-serif;
-//   --third-family: "Poppins", sans-serif;
-// }
-
+ 
 $desktop-breakpoint: 1140px;
 $tablet-breakpoint: 1024px;
 $mobile-breakpoint: 768px;
