@@ -42,9 +42,8 @@ export default function HeaderClient({ locale, t }) {
 
         <div className={styles.links}>
           <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-          <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+          <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
           <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-          <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
           <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
         </div>
 

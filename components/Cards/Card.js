@@ -6,16 +6,15 @@ export default function Card({ src, name, member, priceAZN, priceUSD, slug }) {
     <Link href={slug} className={styles.card}>
       <img src={src} alt={name} />
       <h2>{name}</h2>
-      <div className={styles.icon}>
+      {/* <div className={styles.icon}>
         {Array.from({ length: +member }).map((_, index) => (
           <span key={index}>
             <Person color="#000" />
           </span>
         ))}
-      </div>
-      <p>Qiymət 2 nəfərlik otaqda 1 nəfər üçün nəzərdə tutulub</p>
+      </div> */}
       <p className={styles.price}>
-        {priceAZN}₼ / {priceUSD} $
+        {priceAZN} ₼ / {priceUSD} $
       </p>
     </Link>
   );

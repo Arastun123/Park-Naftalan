@@ -1,18 +1,16 @@
-/* components/LoadingPage.module.css */
-
 .loaderWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ffffff;
+  background: #f9f7f2; 
 }
 
 .spinner {
   width: 60px;
   height: 60px;
-  border: 8px solid #f3f3f3;
+  border: 8px solid #f9f7f2;
   border-top: 8px solid #3498db;
   border-radius: 50%;
   animation: spin 1s linear infinite;

@@ -1,16 +1,17 @@
 "use client";
-
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+
 import { getDataByid, getDatas } from "@/lib/handleApiActions";
 
 import ImageSlider from "../ImageSlider";
-import style from "./style.module.scss";
-import { Person } from "../Svg";
 import Video from "../Video/VIdeo";
 import Loading from "../Loading";
-import { constructFrom } from "date-fns";
- 
+
+import { Person } from "../Svg";
+
+import style from "./style.module.scss";
+import Button from "../Button/Button";
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);
@@ -51,6 +52,7 @@ export default function RoomDetail({ t, locale }) {
     (t) => t.language === lanCode
   );
 
+  console.log(matchedEquipments);
   const images = [
     "/DSC_0610.png",
     "/DSC_0618.png",
@@ -60,52 +62,70 @@ export default function RoomDetail({ t, locale }) {
 
   return (
     <div className={style.detail}>
-      <h1>{room?.category}</h1>
-
-      <ImageSlider images={images} />
-      <div className={style.contentArea}>
-        <div>
-          <div className={style.info}>
-            <div className={style.row}>
-              <span> {t?.Area}:</span> <strong>{room?.area} m²</strong>
-            </div>
-            <div className={style.row}>
-              <span> {t?.Price}:</span> <strong>{room?.price} AZN</strong>
-            </div>
-            <div className={style.row}>
-              <span> {t?.Guest}:</span>{" "}
-              <strong>
-                {Array.from({ length: +room?.member }).map((_, index) => (
-                  <span key={index}>
-                    <Person color="#000" />
-                  </span>
-                ))}
-              </strong>
-            </div>
-          </div>
-
-          <div className={style.desc}>
-            <p>{selectedTranslation?.description}</p>
-            <h2>{t?.Service}</h2>
-            <p>{selectedTranslation?.service}</p>
-            <ul>
-              {matchedEquipments.map((item) => (
-                <li key={`${item.id}-${item.language}`}>• {item.name}</li>
-              ))}
-            </ul>
-          </div>
-
-          {room?.youtubeVideoLink && (
-            <div className={style.video}>
-              <Video
-                src={
-                  room?.youtubeVideoLink ||
-                  "https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1"
-                }
-              />
-            </div>
-          )}
+      <div className={style.head}>
+        <div className={style.top}>
+          <h1>{room?.category}</h1>
+          <p>Rahatlıq və Sakitliyin Ünvanı</p>
         </div>
+        <div className={style.dFlex}>
+          <p>
+            Hər bir otaq zövqlə dizayn edilmiş və istirahətinizin maksimum
+            komfortla təmin olunması üçün bütün zəruri şəraitlə təchiz
+            olunmuşdur.
+          </p>
+          <Button
+            onClick={() => router.push(`rooms/${item.id}`)}
+            className={style.reserveBtn}
+          >
+            {t?.SeeMore}
+          </Button>
+        </div>
+      </div>
+      <img src="/park suite 1.png" alt={room?.category} />
+      <p className={style.centerText}>
+        Rahat ikinəfərlik və ya tək nəfərlik çarpayı
+      </p>
+      <p>
+        {room?.area} m <sup>2</sup>
+      </p>
+      <div className={style.images}>
+        <div className={style.rightSide}>
+          <img src="/park suite 1.png" alt={room?.category} />
+        </div>
+        <div className={style.lefttSide}>
+          <div className={style.imageWithText}>
+            <img src="/park suite 1.png" alt={room?.category} />
+            <div className={style.text}>
+              <p>
+                Bu otaqlar, istər müalicə məqsədli, istərsə də ümumi istirahət
+                üçün gələn qonaqlarımızın ehtiyaclarına tam cavab verir. Rahat
+                mühit, təmiz hava və sakitlik sizə xoş istirahət və enerji ilə
+                dolu bir təcrübə bəxş edəcək.
+              </p>
+              <Button
+                onClick={() => router.push(`rooms/${item.id}`)}
+                className={style.reserveBtn}
+              >
+                {t?.SeeMore}
+              </Button>
+            </div>
+          </div>
+          <div>
+            <img src="/park suite 1.png" alt={room?.category} />
+          </div>
+        </div>
+      </div>
+      <h2>Təchizatlar</h2>
+      <ul className={style.equipments}>
+        {matchedEquipments.map((item) => (
+          <li key={`${item.id}-${item.language}`}>
+            • {item?.name}
+          </li>
+        ))}
+      </ul>
+      <div className={style.video}>
+        <p>Otağı vizual olaraq kəşf et</p>
+        <Video src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1" />
       </div>
     </div>
   );

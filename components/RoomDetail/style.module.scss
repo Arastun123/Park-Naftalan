@@ -7,43 +7,198 @@
     margin-top: 30%;
   }
 
-  padding: 2rem;
-  color: $blueTxt;
+  padding: 0 15px;
+  color: $mainBlueBack;
   font-family: $inter;
+  font-weight: 400;
   h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 60px;
+
+    @media (min-width: $tablet-breakpoint) {
+      font-size: 96px;
+    }
+  }
+  h2 {
+    font-size: 34px;
+    text-align: center;
+    color: #000;
+    text-align: center;
+  }
+  p {
+    font-family: $inter;
+    font-size: 20px;
+    color: #000;
+    @media (min-width: $tablet-breakpoint) {
+      font-size: 34px;
+    }
+  }
+  .top {
+    margin-bottom: 20px;
+    h1 {
+      width: 100%;
+      text-align: start;
+    }
+    p {
+      width: 100%;
+      text-align: end;
+      font-size: 24px;
+
+      @media (min-width: $tablet-breakpoint) {
+        font-size: 48px;
+      }
+    }
+  }
+  img {
+    margin: 50px 0;
+    padding: 0 10px;
   }
 
-  .info {
+  .centerText {
+    margin: 20px auto;
+    text-align: center;
+  }
+  .dFlex {
     display: flex;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-    @media (max-width: 768px) {
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    p {
+      font-size: 20px;
+    }
+    @media (max-width: $tablet-breakpoint) {
+      p {
+        flex: 1;
+        @media (max-width: $mobile-breakpoint) {
+          font-size: 14px;
+        }
+      }
+      button {
+        flex: 2;
+      }
+    }
+  }
+
+  .reserveBtn {
+    width: 100%;
+    z-index: 1;
+    margin: 15px 0;
+    padding: 10px 0;
+    font-family: $inter;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+    color: $blackTxt;
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: $blueTxt;
+    }
+  }
+
+  .images {
+    display: flex;
+    img {
+      margin: 0;
+      padding: 0;
+    }
+    gap: 10px;
+    margin: 20px 0;
+
+    @media (max-width: $mobile-breakpoint) {
       flex-direction: column;
     }
-    .row {
+
+    .rightSide {
+      flex: 1;
       display: flex;
-      gap: 0.5rem;
-      font-size: 1rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .lefttSide {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .imageWithText {
+        display: flex;
+        flex: 1;
+        gap: 10px;
+        margin: 0 0 10px 0;
+        @media (max-width: $tablet-breakpoint) {
+          flex-direction: column;
+        }
+        img {
+          width: 60%;
+          height: 100%;
+          object-fit: cover;
+          @media (max-width: $tablet-breakpoint) {
+            width: 100%;
+          }
+        }
+
+        .text {
+          width: 40%;
+          @media (max-width: $tablet-breakpoint) {
+            width: 100%;
+          }
+          height: 100%;
+          box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+          padding: 0 12px;
+
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+
+      > div:last-child {
+        flex: 1;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
     }
   }
-
-  .desc {
-    margin-bottom: 2rem;
-    h2 {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-    }
+  .equipments {
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #16375c69;
+    padding: 20px 15px;
+    margin: 10px auto;
   }
-
   .video {
-    margin: 2rem 0;
-  }
+    position: relative;
 
-  .form {
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    p {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      display: block;
+      z-index: 100;
+      font-family: var(--font-family);
+      font-weight: 400;
+      font-size: 34px;
+      text-align: center;
+      color: #fff;
+      @media (max-width: $mobile-breakpoint) {
+        font-size: 20px;
+      }
+    }
   }
 }

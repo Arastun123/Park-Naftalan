@@ -16,8 +16,7 @@ body {
 
 body {
   line-height: 1.5;
-  background-color: #fff;
-  color: #000;
+  background: #f9f7f2;
 }
 
 a {
@@ -25,8 +24,7 @@ a {
   color: inherit;
 }
 
-ul,
-ol {
+ul {
   list-style: none;
 }
 
