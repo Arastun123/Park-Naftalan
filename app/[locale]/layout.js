@@ -5,12 +5,14 @@ import Footer from "@/components/Footer/Footer";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TopReservation from "@/components/TopReservation";
 
 export default async function LocaleLayout({ children, params }) {
   const { local } = await params;
   return (
     <html lang={local}>
       <body>
+       
         <Header params={params} />
         <main style={{ position: "relative", zIndex: 0 }}>{children}</main>
         <Footer params={params} locale={local} />

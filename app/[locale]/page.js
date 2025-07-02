@@ -6,6 +6,7 @@ import Section from "@/components/Section/Section";
 
 import RoomSection from "@/components/Home/RoomSection";
 import { getAznToUsdRate } from "@/lib/handleApiActions";
+import WriteUs from "@/components/WriteUs";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -34,6 +35,7 @@ export default async function Home({ params }) {
         locale={locale}
         showBtn={true}
       />
+      <WriteUs />
     </div>
   );
 }

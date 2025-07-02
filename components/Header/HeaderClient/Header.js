@@ -14,6 +14,7 @@ import ArrowFlow from "@/components/Svg/ArrowFlow";
 import global from "@/styles/global.module.scss";
 import styles from "../Header.module.scss";
 import ReserveCard from "@/components/ReserveCard/ReserveCard";
+import TopReservation from "@/components/TopReservation";
 
 export default function HeaderClient({ locale, t }) {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -25,66 +26,74 @@ export default function HeaderClient({ locale, t }) {
   const showFullHeader = ["/az", "/ru", "/en"].includes(pathname);
 
   const renderNavContent = () => (
-    <nav className={styles.nav}>
-      {" "}
-      <div className={`${styles.menu} ${global.container}`}>
-        <Button
-          onClick={toggleMenu}
-          className={styles.toggleMenu}
-          aria-label="Toggle navigation"
-        >
-          {mobileMenu ? <Close /> : <Bar />}
-        </Button>
-
-        <LinkItem slug={`/${locale}`} ariaLabel="Home">
-          <Logo width="97" height="69" />
-        </LinkItem>
-
-        <div className={styles.links}>
-          <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-          <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-          <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-          <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
-        </div>
-
-        <div className={styles.icons}>
-          <LanguageSwitcher />
+    <>
+      <div className={styles.top}>
+        <div className={global.container}>
+          <TopReservation t={t} locale={locale} />
         </div>
       </div>
-      {mobileMenu && (
-        <div className={styles.mobileMenu}>
-          <div className={`${styles.drawerColumns} ${styles.fRight}`}>
-            <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-            <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-            <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-            <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
-          </div>
+      <nav className={styles.nav}>
+        <div className={global.container}>
+          <div className={styles.menu}>
+            <Button
+              onClick={toggleMenu}
+              className={styles.toggleMenu}
+              aria-label="Toggle navigation"
+            >
+              {mobileMenu ? <Close /> : <Bar />}
+            </Button>
 
-          <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
-            <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-            <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-            <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-            <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
-          </div>
-          <div className={styles.drawerIcons}>
-            <LinkItem slug="/">
-              <Instagram />
+            <LinkItem slug={`/${locale}`} ariaLabel="Home">
+              <Logo width="97" height="69" />
             </LinkItem>
-            <LinkItem slug="/">
-              <Facebook />
-            </LinkItem>
-            <LinkItem slug="/">
-              <Youtube />
-            </LinkItem>
-            <LinkItem slug="/">
-              <Phone />
-            </LinkItem>
+
+            <div className={styles.links}>
+              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+              <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+            </div>
+
+            <div className={styles.icons}>
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
-      )}
-    </nav>
+        {mobileMenu && (
+          <div className={styles.mobileMenu}>
+            <div className={`${styles.drawerColumns} ${styles.fRight}`}>
+              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+            </div>
+
+            <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
+              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+            </div>
+            <div className={styles.drawerIcons}>
+              <LinkItem slug="/">
+                <Instagram />
+              </LinkItem>
+              <LinkItem slug="/">
+                <Facebook />
+              </LinkItem>
+              <LinkItem slug="/">
+                <Youtube />
+              </LinkItem>
+              <LinkItem slug="/">
+                <Phone />
+              </LinkItem>
+            </div>
+          </div>
+        )}
+      </nav>
+    </>
   );
 
   if (showFullHeader) {

@@ -11,6 +11,7 @@ const Input = ({
   placeholder,
   min,
   className,
+  ...rest
 }) => {
   return (
     <div className={`${styles.inputWrapper} ${hasError ? styles.error : ""}`}>
@@ -24,8 +25,8 @@ const Input = ({
         placeholder={placeholder}
         min={min}
         className={`${styles.inputField} ${className || ""}`}
-      /> 
-      {/* {hasError && <span className={styles.errorMessage}>Bu sahə vacibdir.</span>} */}
+        {...rest}
+      />
     </div>
   );
 };
