@@ -1,21 +1,9 @@
 @import "./styles/vairable.scss";
 
-//   @media (max-width: 768px) {
-//     .txt {
-//       font-size: 20px;
-//     }
-//     h2 {
-//       font-size: 34px;
-//     }
-//   }
-
 .form {
-  margin: 10% 10px 10px 10px;
+  margin: 15% 10px 10px 10px;
 
   @media (max-width: 768px) {
     margin: 30% 10px 10px 10px;
   }
-//  div {
-//     border: 1px solid #b1b5c3;
-//   }
 }

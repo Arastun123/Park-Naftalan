@@ -48,5 +48,7 @@
   "priceIs": "за цену",
   "priceEnd": "составляет",
   "writeUs": "Contact Us",
-  "reservation": "Забронировать"
+  "reservation": "Забронировать",
+  "message": "Дополнительная заметка",
+  "messagePlaceholder": "Ваша дополнительная заметка ..."
 }

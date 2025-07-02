@@ -47,7 +47,8 @@
   "dayFor": "day",
   "priceIs": "for price",
   "priceEnd": "is",
-  "writeUs":"Contact Us",
-  "reservation":"Reservation"
-
+  "writeUs": "Contact Us",
+  "reservation": "Reservation",
+  "message": "Additional note",
+  "messagePlaceholder": "Your additional note ..."
 }

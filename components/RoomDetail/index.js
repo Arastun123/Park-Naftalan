@@ -1,23 +1,20 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import { getDataByid, getDatas } from "@/lib/handleApiActions";
 
-import ImageSlider from "../ImageSlider";
 import Video from "../Video/VIdeo";
 import Loading from "../Loading";
-
-import { Person } from "../Svg";
 
 import style from "./style.module.scss";
 import Button from "../Button/Button";
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);
-  const [rooms, setRooms] = useState(null);
-  const [equipment, setEquipment] = useState([]);
 
+  const [equipment, setEquipment] = useState([]);
+  const router = useRouter();
   const params = useParams();
   const id = params.id;
 
@@ -32,8 +29,7 @@ export default function RoomDetail({ t, locale }) {
 
   const fetchDatas = async () => {
     const data = await getDataByid("Room", id);
-    const rooms = await getDatas("Room");
-    setRooms(rooms);
+
     if (data) {
       setRoom(data);
     }
@@ -74,10 +70,12 @@ export default function RoomDetail({ t, locale }) {
             olunmuşdur.
           </p>
           <Button
-            onClick={() => router.push(`rooms/${item.id}`)}
+            onClick={() =>
+              router.push(`/${locale}/reservations/${room?.category}`)
+            }
             className={style.reserveBtn}
           >
-            {t?.SeeMore}
+            {t?.reservation}
           </Button>
         </div>
       </div>
@@ -100,13 +98,17 @@ export default function RoomDetail({ t, locale }) {
                 Bu otaqlar, istər müalicə məqsədli, istərsə də ümumi istirahət
                 üçün gələn qonaqlarımızın ehtiyaclarına tam cavab verir. Rahat
                 mühit, təmiz hava və sakitlik sizə xoş istirahət və enerji ilə
-                dolu bir təcrübə bəxş edəcək.
+                dolu bir təcrübə bəxş edəcək. Bu otaqlar, istər müalicə
+                məqsədli, istərsə də ümumi istirahət üçün gələn qonaqlarımızın
+                ehtiyaclarına tam cavab verir. Rahat mühit, təmiz hava və
+                sakitlik sizə xoş istirahət və enerji ilə dolu bir təcrübə bəxş
+                edəcək.
               </p>
               <Button
-                onClick={() => router.push(`rooms/${item.id}`)}
+                onClick={() => router.push(`/${locale}/reservations`)}
                 className={style.reserveBtn}
               >
-                {t?.SeeMore}
+                {t?.reservation}
               </Button>
             </div>
           </div>
@@ -118,9 +120,7 @@ export default function RoomDetail({ t, locale }) {
       <h2>Təchizatlar</h2>
       <ul className={style.equipments}>
         {matchedEquipments.map((item) => (
-          <li key={`${item.id}-${item.language}`}>
-            • {item?.name}
-          </li>
+          <li key={`${item.id}-${item.language}`}>• {item?.name}</li>
         ))}
       </ul>
       <div className={style.video}>

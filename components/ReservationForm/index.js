@@ -17,6 +17,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     email: "",
     phone: "",
     date: "",
+    message: "",
     dayCount: 1,
     roomCount: 1,
   });
@@ -100,7 +101,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         - Gün sayı: ${finalData.dayCount}
         - Tarix: ${finalData.date || "Seçilməyib"}
         - Otaq sayı: ${finalData.roomCount || 1}
-        - Qonaq Sayı: ${finalData.guest || 1}
+        - Əlavə qeyd: ${finalData.message || 1}
         - Ümumi Qiymət: ${price} ₼
       `;
 
@@ -118,6 +119,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             email: "",
             phone: "",
             date: "",
+            message: "",
             dayCount: 1,
             roomCount: 1,
           });
@@ -235,12 +237,26 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               hasError={errors.phone}
               placeholder={t?.phonePlaceholder || t?.Phone}
             />
+            <div
+              className={`${styles.textareaWrapper} ${
+                errors.message ? styles.error : ""
+              }`}
+            >
+              <label htmlFor="message">{t?.message}</label>
+              <textarea
+                id="message"
+                name="əlavə qeyd"
+                rows="5"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder={t?.messagePlaceholder}
+              />
+            </div>
 
             <div className={styles.priceSubmitWrapper}>
               <p className={styles.priceInfo}>
-                {formData.roomCount} {selectedRoom} {t?.roomFor }
+                {formData.roomCount} {selectedRoom} {t?.roomFor}{' '}
                 {formData.dayCount} {t?.dayFor}
-                <br />
                 {t?.priceIs} {t?.priceEnd}
                 <span className={styles.totalPrice}> {price} ₼</span>
               </p>

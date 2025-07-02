@@ -48,5 +48,7 @@
   "priceIs":"üçün qiymət",
   "priceEnd":"edir",
   "writeUs":"Bizimlə əlaqəyə keçin",
-  "reservation":"Rezervasiya"
+  "reservation":"Rezervasiya",
+  "message":"Əlavə qeydiniz",
+  "messagePlaceholder":"Əlavə qeydiniz ..."
 }

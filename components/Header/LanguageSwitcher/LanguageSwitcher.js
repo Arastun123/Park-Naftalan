@@ -25,7 +25,9 @@ export default function LanguageSwitcher() {
     const segments = pathname.split("/");
     segments[1] = newLocale;
     const newPath = segments.join("/");
-    router.push(newPath);
+    router.replace(newPath, {
+      shallow: true,
+    });
     setOpen(false);
   };
 

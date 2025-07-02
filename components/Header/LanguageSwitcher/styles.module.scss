@@ -1,6 +1,7 @@
 @import "@/styles/vairable";
 .languageDropdown {
   position: relative;
+  z-index: 1020;
 }
 
 .toggleButton {
