@@ -52,7 +52,7 @@ export default async function Home({ params }) {
       </Section>
 
       <div className={global.container}>
-        <WriteUs />
+        <WriteUs t={t} locale={locale}/>
       </div>
     </>
   );

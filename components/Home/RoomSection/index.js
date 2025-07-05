@@ -2,14 +2,13 @@
 import { useEffect, useState, useRef } from "react";
 import { getAznToUsdRate, getDatas } from "@/lib/handleApiActions";
 
-import Section from "@/components/Section/Section";
-
 import "@/styles/reset.css";
 import styles from "@/styles/index.module.scss";
 import Button from "@/components/Button/Button";
 import { ArrowLeft, ArrowRight } from "@/components/Svg";
 import Link from "next/link";
 import Loading from "@/components/Loading";
+import useScrollCarousel from "@/helper/corusel";
 
 function Card({ src, name, slug }) {
   return (
@@ -26,10 +25,13 @@ export default function RoomSection({ t, locale, showBtn }) {
 
   const carouselRef = useRef(null);
 
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const [activeIndex, setActiveIndex] = useState(0);
+  const {
+    canScrollLeft,
+    canScrollRight,
+    activeIndex,
+    scrollCarousel,
+    scrollToDot,
+  } = useScrollCarousel(carouselRef, rooms);
 
   useEffect(() => {
     const fetchRoomsData = async () => {
@@ -38,98 +40,6 @@ export default function RoomSection({ t, locale, showBtn }) {
     };
     fetchRoomsData();
   }, []);
-
-  useEffect(() => {
-    const carouselElement = carouselRef.current;
-
-    const checkScroll = () => {
-      if (carouselElement && rooms.length > 0) {
-        const { scrollLeft, scrollWidth, clientWidth } = carouselElement;
-
-        const firstCard = carouselElement.children[0];
-        if (firstCard) {
-          const itemWidth = firstCard.offsetWidth + 15;
-          const newIndex = Math.round(scrollLeft / itemWidth);
-          setActiveIndex(newIndex);
-        }
-
-        setCanScrollLeft(true);
-        setCanScrollRight(true);
-      }
-    };
-
-    checkScroll();
-    if (carouselElement) {
-      carouselElement.addEventListener("scroll", checkScroll);
-      let resizeTimeout;
-      const handleResize = () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(checkScroll, 150);
-      };
-      window.addEventListener("resize", handleResize);
-    }
-
-    return () => {
-      if (carouselElement) {
-        carouselElement.removeEventListener("scroll", checkScroll);
-      }
-      window.removeEventListener("resize", checkScroll);
-    };
-  }, [rooms]);
-
-  const scrollCarousel = (direction) => {
-    if (carouselRef.current && rooms.length > 0) {
-      const carouselElement = carouselRef.current;
-      const firstCard = carouselElement.children[0];
-
-      if (!firstCard) return;
-
-      const itemWidth = firstCard.offsetWidth + 15;
-
-      if (direction === "left") {
-        if (carouselElement.scrollLeft === 0) {
-          carouselElement.scrollTo({
-            left: (rooms.length - 1) * itemWidth,
-            behavior: "smooth",
-          });
-        } else {
-          carouselElement.scrollBy({
-            left: -itemWidth,
-            behavior: "smooth",
-          });
-        }
-      } else {
-        const scrollAtEnd =
-          carouselElement.scrollLeft + carouselElement.clientWidth >=
-          carouselElement.scrollWidth - 5;
-
-        if (scrollAtEnd) {
-          carouselElement.scrollTo({
-            left: 0,
-            behavior: "smooth",
-          });
-        } else {
-          carouselElement.scrollBy({
-            left: itemWidth,
-            behavior: "smooth",
-          });
-        }
-      }
-    }
-  };
-
-  const scrollToDot = (index) => {
-    if (carouselRef.current && rooms.length > 0) {
-      const firstCard = carouselRef.current.children[0];
-      if (firstCard) {
-        const itemWidth = firstCard.offsetWidth + 15;
-        carouselRef.current.scrollTo({
-          left: index * itemWidth,
-          behavior: "smooth",
-        });
-      }
-    }
-  };
 
   if (!rooms || rooms.length === 0) {
     return <Loading />;
@@ -140,8 +50,11 @@ export default function RoomSection({ t, locale, showBtn }) {
       <div className={styles.roomsContainer}>
         <Button
           onClick={() => scrollCarousel("left")}
-          className={styles.carouselNavButton}
+          className={`${styles.carouselNavButton} ${
+            !canScrollLeft ? styles.disabled : ""
+          }`}
           aria-label="Scroll left"
+          disabled={!canScrollLeft}
         >
           <ArrowLeft />
         </Button>
@@ -159,8 +72,11 @@ export default function RoomSection({ t, locale, showBtn }) {
 
         <Button
           onClick={() => scrollCarousel("right")}
-          className={styles.carouselNavButton}
+          className={`${styles.carouselNavButton} ${
+            !canScrollRight ? styles.disabled : ""
+          }`}
           aria-label="Scroll right"
+          disabled={!canScrollRight}
         >
           <ArrowRight />
         </Button>

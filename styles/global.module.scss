@@ -94,3 +94,17 @@
     border: none;
   }
 }
+.medical {
+  font-family: v$inter;
+  font-weight: 600;
+  font-size: 34px;
+  color: #000;
+  text-align: center;
+  @media (max-width: 1024px) {
+    font-size: 24px;
+  }
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+

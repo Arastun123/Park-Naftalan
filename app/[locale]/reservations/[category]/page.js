@@ -20,13 +20,6 @@ export default async function Reservations({ params }) {
           currentRoom={category}
         />
       </div>
-      <RoomSection
-        name={t?.Rooms}
-        oneLine={true}
-        t={t}
-        locale={locale}
-        showBtn={false}
-      />
     </div>
   );
 }

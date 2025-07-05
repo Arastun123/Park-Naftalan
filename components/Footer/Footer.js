@@ -17,15 +17,10 @@ export default async function Footer({ params }) {
         </LinkItem>
         <div className={styles.links}>
           <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-          <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+          <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
           <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-          <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-          <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
-          <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-          <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-          <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-          <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-          <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+          <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
+          <LinkItem slug={`/${locale}/reservations`}>{t?.Reservation}</LinkItem>
         </div>
         <SocialMediaIcon />
         <div className={styles.bottom}>

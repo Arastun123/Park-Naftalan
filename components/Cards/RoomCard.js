@@ -35,52 +35,51 @@ export default function RoomCard({ t, locale }) {
     fetchDatas();
   }, [locale]);
 
+  if (!rooms || rooms.length === 0) {
+    return <Loading />;
+  }
   return (
     <div className={styles.roomGrid}>
-      {rooms.length > 0 ? (
-        <>
-          {rooms.map((item) => {
-            const currentTranslation = item.translations.find(
-              (t) => t.language === lanCode
-            );
-            return (
-              <div key={`${item?.id}-${locale}`} className={styles.roomCard}>
-                <div className={styles.image}>
-                  <img
-                    src={item?.picture || "/parkSuite.png"}
-                    alt={item?.category || "Room image"}
-                  />
-                </div>
-                <div className={styles.desc}>
-                  <h2>{item.category}</h2>
-                  <p>
-                    {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ |{" "}
-                    {t?.Guest}: {item?.member}
-                  </p>
-                  <p>{currentTranslation?.description}</p>
-                  <Button
-                    onClick={() => router.push(`rooms/${item.id}`)}
-                    className={styles.reserveBtn}
-                  >
-                    {t?.SeeMore}
-                  </Button>
-                  <div className={styles.images}>
-                    {[1, 2, 3].map((_, idx) => (
-                      <img
-                        key={idx}
-                        src={item?.picture || "/parkSuite.png"}
-                        alt={item?.category || "Room image"}
-                      />
-                    ))}
-                  </div>
+      <>
+        {rooms.map((item) => {
+          const currentTranslation = item.translations.find(
+            (t) => t.language === lanCode
+          );
+          return (
+            <div key={`${item?.id}-${locale}`} className={styles.roomCard}>
+              <div className={styles.image}>
+                <img
+                  src={item?.picture || "/parkSuite.png"}
+                  alt={item?.category || "Room image"}
+                />
+              </div>
+              <div className={styles.desc}>
+                <h2>{item.category}</h2>
+                <p>
+                  {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ |{" "}
+                  {t?.Guest}: {item?.member}
+                </p>
+                <p>{currentTranslation?.description}</p>
+                <Button
+                  onClick={() => router.push(`rooms/${item.id}`)}
+                  className={styles.reserveBtn}
+                >
+                  {t?.SeeMore}
+                </Button>
+                <div className={styles.images}>
+                  {[1, 2, 3].map((_, idx) => (
+                    <img
+                      key={idx}
+                      src={item?.picture || "/parkSuite.png"}
+                      alt={item?.category || "Room image"}
+                    />
+                  ))}
                 </div>
               </div>
-            );
-          })}
-        </>
-      ) : (
-        <Loading />
-      )}
+            </div>
+          );
+        })}
+      </>
     </div>
   );
 }

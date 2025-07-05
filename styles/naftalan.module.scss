@@ -1,0 +1,74 @@
+@import "./styles/vairable.scss";
+.medical {
+  .coruselContainer {
+    .cards {
+      @include flex($direction: row, $align: stretch, $justify: flex-start);
+      height: auto;
+      width: 100%;
+
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 15px;
+      padding-bottom: 10px;
+      flex-grow: 1;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      .card {
+        flex-shrink: 0;
+        max-width: 90vw;
+        height: 656px;
+        border-radius: 8px;
+        overflow: hidden;
+        img {
+          width: 100%;
+          max-height: 550px;
+        }
+        p {
+          font-family: $inter;
+          font-weight: 400;
+          font-size: 34px;
+          text-align: center;
+          color: #000;
+          @media (max-width: 1024px) {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+
+    .carouselNavButtons {
+      @include flex($direction: row, $align: center, $justify: center);
+      gap: 40px;
+      margin: 10px 0;
+      button {
+        border-radius: 50%;
+        border: 1px solid $mainBlueBack;
+        padding: 16px 16px;
+        &:hover {
+          background: $mainBlueBack;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  h3 {
+    font-family: v$inter;
+    font-weight: 600;
+    font-size: 34px;
+    color: #000;
+    text-align: center;
+    @media (max-width: 1024px) {
+      font-size: 24px;
+    }
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+}

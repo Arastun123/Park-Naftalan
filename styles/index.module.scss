@@ -21,6 +21,7 @@
     }
   }
 }
+
 .section {
   max-width: 1310px;
   margin: 40px auto;
@@ -188,5 +189,13 @@
         transform: scale(1.2);
       }
     }
+  }
+}
+
+.form {
+  margin: 15% 10px 10px 10px;
+
+  @media (max-width: 768px) {
+    margin: 30% 10px 10px 10px;
   }
 }
