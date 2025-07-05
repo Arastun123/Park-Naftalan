@@ -1,0 +1,99 @@
+@import "../../styles/vairable.scss";
+
+.formColumn {
+  flex: 1;
+  min-width: 300px;
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+.formTitle {
+  font-family: $inter;
+  font-size: 28px;
+  font-weight: 700;
+
+  margin-bottom: 30px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+.contactForm {
+  @include flex($direction: column, $align: stretch, $justify: flex-start);
+  gap: 20px;
+}
+
+.twoColumnInputs {
+  @include flex($direction: row, $align: flex-start, $justify: space-between);
+  gap: 20px;
+
+  > div {
+    flex: 1;
+  }
+
+  @media (max-width: 576px) {
+    @include flex($direction: column, $align: flex-start);
+    gap: 15px;
+  }
+}
+
+.inputWrapper,
+.textareaWrapper {
+  label {
+    display: block;
+    font-family: $inter;
+    color: $text-color-light;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid $border-color;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-family: $inter;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+  }
+
+  &.error textarea {
+    border-color: $error-color;
+  }
+}
+
+.submitBtn {
+  color: #2f3c4b;
+  font-weight: 600;
+  padding: 14px 45px;
+  border: 1px solid #2f3c4b;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: $poppins;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: max-content;
+  margin-top: 10px;
+
+  &:active {
+    transform: translateY(1px);
+  }
+  &:hover {
+    background: #2f3c4b;
+    color: #fff;
+  }
+}

@@ -3,8 +3,8 @@ import { getTranslations } from "@/lib/getTranslations";
 import LinkItem from "../Header/LinkItem/LinkItem";
 import Logo from "../Header/Logo";
 import styles from "./styles.module.scss";
-import global from "@/styles/global.module.scss";
-import { Facebook, Phone, Youtube, Instagram } from "../Svg";
+import global from "@/styles/global.module.scss"; 
+import SocialMediaIcon from "../SocailMediaIcons";
 
 export default async function Footer({ params }) {
   const { locale } = await params;
@@ -27,20 +27,7 @@ export default async function Footer({ params }) {
           <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
           <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
         </div>
-        <div className={styles.icons}>
-          <LinkItem slug="/">
-            <Instagram />
-          </LinkItem>
-          <LinkItem slug="/">
-            <Facebook />
-          </LinkItem>
-          <LinkItem slug="/">
-            <Youtube />
-          </LinkItem>
-          <LinkItem slug="/">
-            <Phone />
-          </LinkItem>
-        </div>
+        <SocialMediaIcon />
         <div className={styles.bottom}>
           <p>
             Hotel Plaza Athenee SAS Société par Actions Simplifiées au capital

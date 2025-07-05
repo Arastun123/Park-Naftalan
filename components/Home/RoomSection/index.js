@@ -9,6 +9,7 @@ import styles from "@/styles/index.module.scss";
 import Button from "@/components/Button/Button";
 import { ArrowLeft, ArrowRight } from "@/components/Svg";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 function Card({ src, name, slug }) {
   return (
@@ -24,9 +25,9 @@ export default function RoomSection({ t, locale, showBtn }) {
   const [rate, setRate] = useState(1);
 
   const carouselRef = useRef(null);
-  
-  const [canScrollLeft, setCanScrollLeft] = useState(false);  
-  const [canScrollRight, setCanScrollRight] = useState(true);  
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -47,18 +48,17 @@ export default function RoomSection({ t, locale, showBtn }) {
 
         const firstCard = carouselElement.children[0];
         if (firstCard) {
-          const itemWidth = firstCard.offsetWidth + 15; 
+          const itemWidth = firstCard.offsetWidth + 15;
           const newIndex = Math.round(scrollLeft / itemWidth);
           setActiveIndex(newIndex);
         }
 
-        
-        setCanScrollLeft(true);  
-        setCanScrollRight(true);  
+        setCanScrollLeft(true);
+        setCanScrollRight(true);
       }
     };
 
-    checkScroll();  
+    checkScroll();
     if (carouselElement) {
       carouselElement.addEventListener("scroll", checkScroll);
       let resizeTimeout;
@@ -82,38 +82,33 @@ export default function RoomSection({ t, locale, showBtn }) {
       const carouselElement = carouselRef.current;
       const firstCard = carouselElement.children[0];
 
-      if (!firstCard) return;  
+      if (!firstCard) return;
 
-      const itemWidth = firstCard.offsetWidth + 15;  
+      const itemWidth = firstCard.offsetWidth + 15;
 
       if (direction === "left") {
         if (carouselElement.scrollLeft === 0) {
-           
           carouselElement.scrollTo({
             left: (rooms.length - 1) * itemWidth,
             behavior: "smooth",
           });
         } else {
-          
           carouselElement.scrollBy({
             left: -itemWidth,
             behavior: "smooth",
           });
         }
       } else {
-        
         const scrollAtEnd =
           carouselElement.scrollLeft + carouselElement.clientWidth >=
           carouselElement.scrollWidth - 5;
 
         if (scrollAtEnd) {
-         
           carouselElement.scrollTo({
             left: 0,
             behavior: "smooth",
           });
         } else {
-          
           carouselElement.scrollBy({
             left: itemWidth,
             behavior: "smooth",
@@ -123,7 +118,6 @@ export default function RoomSection({ t, locale, showBtn }) {
     }
   };
 
-  
   const scrollToDot = (index) => {
     if (carouselRef.current && rooms.length > 0) {
       const firstCard = carouselRef.current.children[0];
@@ -138,7 +132,7 @@ export default function RoomSection({ t, locale, showBtn }) {
   };
 
   if (!rooms || rooms.length === 0) {
-    return <p>{t?.noRoomsAvailable || "Otaqlar mövcud deyil."}</p>;
+    return <Loading />;
   }
 
   return (

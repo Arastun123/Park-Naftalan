@@ -163,16 +163,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           <div className={styles.formGroup}>
             <SelectBox
               optionData={roomOptions}
-              name={t?.roomSelect || t?.ChooseRoom}
+              name={t?.ChooseRoom}
               value={selectedRoom}
               onChange={handleRoomSelect}
               hasError={errors.selectedRoom}
-              label={t?.roomSelectLabel || t?.ChooseRoom}
+              label={t?.ChooseRoom}
             />
             <Input
               type="number"
               name="roomCount"
-              label={t?.roomCountLabel || t?.RoomCount}
+              label={t?.RoomCount}
               value={formData.roomCount}
               onChange={handleChange}
               hasError={errors.roomCount}
@@ -180,11 +180,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             />
             <SelectBox
               optionData={[1, 2, 3, 4, 5, 6]}
-              name={t?.guestCount || t?.Guest}
+              name={t?.Guest}
               value={guest}
               onChange={(e) => setGuest(Number(e.target.value))}
               hasError={errors.guest}
-              label={t?.guestCountLabel || t?.Guest}
+              label={t?.Guest}
             />
           </div>
 
@@ -192,7 +192,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             <Input
               type="number"
               name="dayCount"
-              label={t?.dayCountLabel || t?.DayCount}
+              label={t?.DayCount}
               value={formData.dayCount}
               onChange={handleChange}
               hasError={errors.dayCount}
@@ -201,20 +201,20 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             <Input
               type="text"
               name="name"
-              label={t?.nameLabel || t?.Name}
+              label={t?.Name}
               value={formData.name}
               onChange={handleChange}
               hasError={errors.name}
-              placeholder={t?.namePlaceholder || t?.Name}
+              placeholder={t?.Name}
             />
             <Input
               type="text"
               name="surname"
-              label={t?.surnameLabel || t?.Surname}
+              label={t?.Surname}
               value={formData.surname}
               onChange={handleChange}
               hasError={errors.surname}
-              placeholder={t?.surnamePlaceholder || t?.Surname}
+              placeholder={t?.Surname}
             />
           </div>
 
@@ -226,7 +226,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               value={formData.email}
               onChange={handleChange}
               hasError={errors.email}
-              placeholder={t?.emailPlaceholder || t?.Email}
+              placeholder={t?.Email}
             />
             <Input
               type="tel"
@@ -235,29 +235,29 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               value={formData.phone}
               onChange={handleChange}
               hasError={errors.phone}
-              placeholder={t?.phonePlaceholder || t?.Phone}
+              placeholder={t?.Phone}
             />
             <div
               className={`${styles.textareaWrapper} ${
                 errors.message ? styles.error : ""
               }`}
             >
-              <label htmlFor="message">{t?.message}</label>
+              <label htmlFor="message">{t?.Message}</label>
               <textarea
                 id="message"
                 name="əlavə qeyd"
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder={t?.messagePlaceholder}
+                placeholder={t?.MessagePlaceholder}
               />
             </div>
 
             <div className={styles.priceSubmitWrapper}>
               <p className={styles.priceInfo}>
-                {formData.roomCount} {selectedRoom} {t?.roomFor}{' '}
-                {formData.dayCount} {t?.dayFor}
-                {t?.priceIs} {t?.priceEnd}
+                {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
+                {formData.dayCount} {t?.DayFor}
+                {t?.PriceIs} {t?.PriceEnd}
                 <span className={styles.totalPrice}> {price} ₼</span>
               </p>
               <Input

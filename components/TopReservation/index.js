@@ -6,7 +6,7 @@ export default function TopReservation({ t, locale }) {
     <div className={styles.wrapper}>
       <p>64А Р.Зульфикаров, Naftalan 4600</p>
       <div>
-        <LinkItem slug={`/${locale}/reservations`}>{t?.reservation}</LinkItem>
+        <LinkItem slug={`/${locale}/reservations`}>{t?.Reservation}</LinkItem>
         <LinkItem slug={`/${locale}/reservations`}>
           <Phone />
         </LinkItem>

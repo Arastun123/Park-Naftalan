@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-import { Bar, Facebook, Person, Phone, Youtube, Instagram } from "../../Svg";
+import { Bar} from "../../Svg";
 import Button from "../../Button/Button";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LinkItem from "../LinkItem/LinkItem";
@@ -15,6 +15,7 @@ import global from "@/styles/global.module.scss";
 import styles from "../Header.module.scss";
 import ReserveCard from "@/components/ReserveCard/ReserveCard";
 import TopReservation from "@/components/TopReservation";
+import SocialMediaIcon from "@/components/SocailMediaIcons";
 
 export default function HeaderClient({ locale, t }) {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -27,11 +28,11 @@ export default function HeaderClient({ locale, t }) {
 
   const renderNavContent = () => (
     <>
-      <div className={styles.top}>
+      {/* <div className={styles.top}>
         <div className={global.container}>
           <TopReservation t={t} locale={locale} />
         </div>
-      </div>
+      </div> */}
       <nav className={styles.nav}>
         <div className={global.container}>
           <div className={styles.menu}>
@@ -51,7 +52,7 @@ export default function HeaderClient({ locale, t }) {
               <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
               <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
               <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
 
             <div className={styles.icons}>
@@ -66,7 +67,7 @@ export default function HeaderClient({ locale, t }) {
               <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
               <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
               <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
 
             <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
@@ -74,22 +75,9 @@ export default function HeaderClient({ locale, t }) {
               <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
               <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
               <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/restaurants`}>{t?.Contact}</LinkItem>
+              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
-            <div className={styles.drawerIcons}>
-              <LinkItem slug="/">
-                <Instagram />
-              </LinkItem>
-              <LinkItem slug="/">
-                <Facebook />
-              </LinkItem>
-              <LinkItem slug="/">
-                <Youtube />
-              </LinkItem>
-              <LinkItem slug="/">
-                <Phone />
-              </LinkItem>
-            </div>
+            <SocialMediaIcon />
           </div>
         )}
       </nav>

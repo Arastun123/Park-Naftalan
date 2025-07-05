@@ -43,12 +43,20 @@
   "Surname": "Ваша фамилия",
   "Email": "Электронная почта",
   "Phone": "Номер телефона",
-  "roomFor": "комната",
-  "dayFor": "день",
-  "priceIs": "за цену",
-  "priceEnd": "составляет",
-  "writeUs": "Contact Us",
-  "reservation": "Забронировать",
-  "message": "Дополнительная заметка",
-  "messagePlaceholder": "Ваша дополнительная заметка ..."
+  "RoomFor": "комната",
+  "DayFor": "день",
+  "PriceIs": "за цену",
+  "PriceEnd": "составляет",
+  "WriteUs": "Contact Us",
+  "Reservation": "Забронировать",
+  "Message": "Дополнительная заметка",
+  "MessagePlaceholder": "Ваша дополнительная заметка ...",
+  "ContactUs": "Связаться с нами",
+  "Address": "Адрес",
+  "SocialMedia": "Социальные сети",
+  "SubmitanInquiry": "Отправить заявку",
+  "FullNamePlaceholder": "Ваше имя и фамилия",
+  "FullName": "Имя Фамилия",
+  "NoRoomsAvailable": "Номеров нет в наличии."
+
 }

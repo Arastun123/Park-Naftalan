@@ -1,0 +1,61 @@
+@import "../../styles/vairable.scss";
+
+.contact {
+  margin-top: 10%;
+  margin-bottom: 10px;
+  font-family: $inter;
+  padding: 0 10px;
+  @include flex($direction: row, $align: stretch, $justify: space-between);
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    margin-top: 25%;
+    @include flex($direction: column, $align: stretch, $justify: center);
+  }
+
+  .left,
+  .right {
+    flex: 1;
+  }
+
+  .linksWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .linkGroup {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 113%;
+    color: #000;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+      font-size: 34px;
+    }
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.58);
+  }
+
+  a {
+    font-weight: 400;
+    font-size: 20px;
+    color: #000;
+    display: block;
+    margin: 10px 0;
+  }
+
+  svg path {
+    fill: #000;
+  }
+}
