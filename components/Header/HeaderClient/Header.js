@@ -117,9 +117,9 @@ export default function HeaderClient({ locale, t }) {
           <span>
             <ArrowFlow className={styles.arrow} />
           </span>
-          <div>
+          {/* <div>
             <ReserveCard className={styles.reserveCard} locale={locale} t={t} />
-          </div>
+          </div> */}
         </div>
       </div>
     );

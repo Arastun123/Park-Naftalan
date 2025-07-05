@@ -143,5 +143,9 @@
     &:active {
       transform: translateY(1px);
     }
+    &:hover {
+      background: #2f3c4b;
+      color: #fff;
+    }
   }
 }

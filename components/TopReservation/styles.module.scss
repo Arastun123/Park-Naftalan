@@ -1,18 +1,25 @@
 @import "../../styles/vairable.scss";
 .wrapper {
   @include flex($direction: row, $align: center, $justify: space-between);
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 0 20px;
   width: 100%;
-
   color: #fff;
   font-family: $inter;
   font-weight: 400;
   font-size: 14px;
 
+  div {
+    @include flex($direction: row, $align: center, $justify: flex-start);
+  }
   a {
     padding: 15px 40px;
     background: #2f3c4b;
     border-radius: 12px;
     font-size: 14px;
+    @media (max-width: 400px) {
+      padding: 15px 20px;
+    }
   }
 }

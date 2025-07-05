@@ -21,27 +21,172 @@
     }
   }
 }
+.section {
+  max-width: 1310px;
+  margin: 40px auto;
+  @media (max-width: 1024px) {
+    padding-left: 5px;
+  }
+  .roomSection {
+    max-width: 1310px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 0 20px;
 
-.rooms {
-  @media (min-width: 768px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    height: auto;
-    gap: 15px;
+    @media (min-width: 1024px) {
+      margin-right: 0;
+      margin-left: auto;
+    }
+    .roomsContainer {
+      width: 100%;
+
+      @include flex($direction: row, $align: center, $justify: center);
+      gap: 15px;
+      @media (max-width: 768px) {
+        gap: 10px;
+        padding: 0 5px;
+      }
+    }
   }
 
-  margin: 10px 0;
-  padding: 0 10px;
-  text-align: center;
-  
-
-  img {
+  .rooms {
+    @include flex($direction: row, $align: stretch, $justify: flex-start);
+    height: auto;
     width: 100%;
-    @media (max-width: 768px) {
-      margin: 10px auto;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 15px;
+    padding-bottom: 10px;
+    flex-grow: 1;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
-    object-fit: cover;
-    display: block;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .card {
+      flex-shrink: 0;
+      max-width: 100vw;
+      max-height: 400px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: $shadow-medium;
+      background-color: $whiteTxt;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        aspect-ratio: 16 / 9;
+      }
+
+      p {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        backdrop-filter: blur(49.20000076293945px);
+        background: rgba(0, 207, 203, 0.1);
+        border-radius: 24px;
+        color: #fff;
+        padding: 10px 30px;
+        text-align: center;
+        cursor: pointer;
+        font-family: $inter;
+        font-size: 34px;
+        font-weight: 500;
+        white-space: nowrap;
+        @media (max-width: 1024px) {
+          font-size: 24px;
+          padding: 10px 20px;
+          right: 30px;
+        }
+        @media (max-width: 768px) {
+          font-size: 14px;
+          padding: 10px 10px;
+          right: 10px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        max-width: 100vw;
+
+        img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 16 / 9;
+        }
+      }
+      @media (max-width: 768px) {
+        width: 100vw;
+      }
+    }
+  }
+
+  .carouselNavButton {
+    @include flex($align: center, $justify: center);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    flex-shrink: 0;
+    padding: 20px 20px;
+    @media (max-width: 1024px) {
+      padding: 10px 10px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    border: 1px solid #2f3c4b;
+    border-radius: 18px;
+    padding: 16px 24px;
+    path {
+      fill: $mainBlueBack;
+    }
+    &:hover {
+      background-color: $mainBlueBack;
+      svg path {
+        fill: $text-color-light;
+      }
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: $greyTxt;
+      transition: fill 0.2s ease;
+    }
+  }
+
+  .carouselPagination {
+    @include flex($direction: row, $align: center, $justify: center);
+    margin-top: 20px;
+    gap: 10px;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $border-color;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+      &.active {
+        background-color: $mainBlueBack;
+        transform: scale(1.2);
+      }
+    }
   }
 }

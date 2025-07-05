@@ -45,6 +45,10 @@
       color: $whiteTxt;
       padding: 10px 60px;
       border-radius: 6px;
+      &:hover {
+        color: $mainBlueBack;
+        background: #f9f7f2;
+      }
     }
   }
   &::after {
