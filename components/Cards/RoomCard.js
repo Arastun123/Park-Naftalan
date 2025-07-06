@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { getDatas } from "@/lib/handleApiActions";
-import styles from "./styles.module.scss";
+
 import Button from "../Button/Button";
 import Loading from "../Loading";
-import { useRouter } from "next/navigation";
+
+import styles from "./styles.module.scss";
 
 export default function RoomCard({ t, locale }) {
   const lanCode = useMemo(() => {
@@ -50,7 +53,7 @@ export default function RoomCard({ t, locale }) {
               <div className={styles.image}>
                 <img
                   src={item?.picture || "/parkSuite.png"}
-                  alt={item?.category || "Room image"}
+                  alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
                 />
               </div>
               <div className={styles.desc}>
@@ -71,7 +74,7 @@ export default function RoomCard({ t, locale }) {
                     <img
                       key={idx}
                       src={item?.picture || "/parkSuite.png"}
-                      alt={item?.category || "Room image"}
+                     alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
                     />
                   ))}
                 </div>

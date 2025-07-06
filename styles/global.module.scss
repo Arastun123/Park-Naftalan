@@ -32,13 +32,6 @@
   }
 }
 
-.dFlex {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  flex-direction: row;
-}
-
 .reserveBtn {
   width: 100%;
 
@@ -108,3 +101,38 @@
   }
 }
 
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 100vh;
+  img {
+    width: 70%;
+    margin: 0 10px;
+  }
+  input {
+    margin: 15px 0;
+  }
+
+  .submitBtn {
+    background-color: $mainBlueBack;
+    color: $whiteTxt;
+    font-weight: 600;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: 100%;
+
+    &:hover {
+      background-color: darken($primary-color, 8%);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}

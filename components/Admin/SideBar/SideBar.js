@@ -14,8 +14,8 @@ export default function SideBar() {
         <LinkItem slug="/admin/about">Haqqımızda</LinkItem>
         <LinkItem slug="/admin/contact">Əlaqə məlumatları</LinkItem>
         <LinkItem slug="/admin/treatmentmethod">Naftalan Müalicəsi</LinkItem>
-        <LinkItem slug="/admin/spa">Spa</LinkItem>
-        <LinkItem slug="/admin/equipment">Equipment</LinkItem>
+     
+        <LinkItem slug="/admin/equipment">Təhcizat</LinkItem>
         <LinkItem slug="/admin/room">Otaqlar</LinkItem>
         
       </div>

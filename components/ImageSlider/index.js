@@ -20,7 +20,7 @@ export default function ImageSlider({ images }) {
         <SwiperSlide key={index}>
           <img
             src={src}
-            alt={`Slide ${index}`}
+            alt={`Park Naftalan Sanatoriyası ${index}`}
             style={{ width: "100%", height: "auto" }}
           />
         </SwiperSlide>

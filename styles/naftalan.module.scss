@@ -22,7 +22,7 @@
       .card {
         flex-shrink: 0;
         max-width: 90vw;
-        height: 656px;
+        max-height: 656px;
         border-radius: 8px;
         overflow: hidden;
         img {
@@ -52,7 +52,6 @@
         padding: 16px 16px;
         &:hover {
           background: $mainBlueBack;
-          color: #fff;
         }
       }
     }

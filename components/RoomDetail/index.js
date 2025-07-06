@@ -79,7 +79,10 @@ export default function RoomDetail({ t, locale }) {
           </Button>
         </div>
       </div>
-      <img src="/park suite 1.png" alt={room?.category} />
+      <img
+        src="/park suite 1.png"
+        alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
+      />
       <p className={style.centerText}>
         Rahat ikinəfərlik və ya tək nəfərlik çarpayı
       </p>
@@ -88,11 +91,19 @@ export default function RoomDetail({ t, locale }) {
       </p>
       <div className={style.images}>
         <div className={style.rightSide}>
-          <img src="/park suite 1.png" alt={room?.category} />
+          <img
+            src="/park suite 1.png"
+            alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
+            title={`Park Naftalan Otağı - ${room?.category}`}
+          />
         </div>
         <div className={style.lefttSide}>
           <div className={style.imageWithText}>
-            <img src="/park suite 1.png" alt={room?.category} />
+            <img
+              src="/park suite 1.png"
+              alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
+              title={`Park Naftalan Otağı - ${room?.category}`}
+            />
             <div className={style.text}>
               <p>
                 Bu otaqlar, istər müalicə məqsədli, istərsə də ümumi istirahət
@@ -113,7 +124,11 @@ export default function RoomDetail({ t, locale }) {
             </div>
           </div>
           <div>
-            <img src="/park suite 1.png" alt={room?.category} />
+            <img
+              src="/park suite 1.png"
+              alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
+              title={`Park Naftalan Otağı - ${room?.category}`}
+            />
           </div>
         </div>
       </div>

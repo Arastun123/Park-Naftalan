@@ -1,9 +1,10 @@
 import Link from "next/link";
-import ContactForm from "../ContactForm";
-import WriteUs from "../WriteUs";
-import styles from "./styles.module.scss";
+
 import Map from "../Map";
+import ContactForm from "../ContactForm";
 import SocialMediaIcon from "../SocailMediaIcons";
+
+import styles from "./styles.module.scss";
 
 export default async function Contact({ locale, t }) {
   return (

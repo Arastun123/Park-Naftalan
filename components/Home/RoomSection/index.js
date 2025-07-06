@@ -13,7 +13,7 @@ import useScrollCarousel from "@/helper/corusel";
 function Card({ src, name, slug }) {
   return (
     <Link href={slug} className={styles.card}>
-      <img src={src} alt={name} />
+      <img src={src} alt={`Park Naftalan Sanatoriyası - ${name}`} />
       <p>{name}</p>
     </Link>
   );

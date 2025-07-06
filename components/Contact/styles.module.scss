@@ -29,11 +29,11 @@
     margin-bottom: 20px;
   }
 
+  font-weight: 400;
+  color: #000;
   h2 {
-    font-weight: 400;
     font-size: 60px;
     line-height: 113%;
-    color: #000;
     margin-bottom: 20px;
 
     @media (max-width: 768px) {
@@ -42,15 +42,12 @@
   }
 
   p {
-    font-weight: 400;
     font-size: 20px;
-    color: rgba(0, 0, 0, 0.58);
+    color: #00000094;
   }
 
   a {
-    font-weight: 400;
     font-size: 20px;
-    color: #000;
     display: block;
     margin: 10px 0;
   }

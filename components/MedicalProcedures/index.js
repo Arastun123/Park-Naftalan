@@ -1,21 +1,18 @@
 "use client";
 import { useEffect, useState, useRef, useMemo } from "react";
-import { getAznToUsdRate, getDatas } from "@/lib/handleApiActions";
+import { getDatas } from "@/lib/handleApiActions";
 
-import Section from "@/components/Section/Section";
-
-import "@/styles/reset.css";
 import styles from "@/styles/naftalan.module.scss";
 import Button from "@/components/Button/Button";
 import { ArrowLeft, ArrowRight } from "@/components/Svg";
-import Link from "next/link";
+ 
 import Loading from "@/components/Loading";
 import useScrollCarousel from "@/helper/corusel";
 
-function Card({ src, name, slug, stil }) {
+function Card({ src, name, stil }) {
   return (
     <div className={stil}>
-      <img src={src || "/placeholder.svg?height=400&width=350"} alt={name} />
+      <img src={src || "/placeholder.svg?height=400&width=350"} alt={`Park Naftalan Sanatoriyası - ${name}`} />
       <p>{name}</p>
     </div>
   );
@@ -102,7 +99,6 @@ export default function MedicalProcedures({ t, locale }) {
           </Button>
         </div>
       </div>
-     
     </div>
   );
 }

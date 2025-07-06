@@ -4,7 +4,7 @@ import { Person } from "../Svg";
 export default function Card({ src, name, member, priceAZN, priceUSD, slug }) {
   return (
     <Link href={slug} className={styles.card}>
-      <img src={src} alt={name} />
+      <img src={src} alt={`Park Naftalan Sanatoriyası-${name}`} />
       <h2>{name}</h2>
       {/* <div className={styles.icon}>
         {Array.from({ length: +member }).map((_, index) => (

@@ -91,7 +91,7 @@ export default function HeaderClient({ locale, t }) {
         style={{ height: "100vh", width: "100%", position: "relative" }}
       >
         <div className={styles.bckImg}>
-          <img src="./header.png" alt="Hotel facade at night" priority="true" />
+          <img src="./header.png" alt="Park Naftalan Sanatoriyası" priority="true" />
         </div>
 
         {renderNavContent()}
