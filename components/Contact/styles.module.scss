@@ -19,9 +19,11 @@
   }
 
   .linksWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
+    @include flex($direction: column, $align: start, $justify: space-between);
+
     height: 100%;
   }
 

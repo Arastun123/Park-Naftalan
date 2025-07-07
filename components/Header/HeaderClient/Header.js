@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { Bar} from "../../Svg";
+import { Bar } from "../../Svg";
 import Button from "../../Button/Button";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LinkItem from "../LinkItem/LinkItem";
@@ -23,6 +23,10 @@ export default function HeaderClient({ locale, t }) {
   const toggleMenu = () => {
     setMobileMenu((mobileMenu) => !mobileMenu);
   };
+
+  useEffect(() => {
+    setMobileMenu(false);
+  }, [pathname]);
 
   const showFullHeader = ["/az", "/ru", "/en"].includes(pathname);
 
@@ -60,26 +64,25 @@ export default function HeaderClient({ locale, t }) {
             </div>
           </div>
         </div>
-        {mobileMenu && (
-          <div className={styles.mobileMenu}>
-            <div className={`${styles.drawerColumns} ${styles.fRight}`}>
-              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-            </div>
-
-            <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
-              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-            </div>
-            <SocialMediaIcon />
+        <div
+          className={`${styles.mobileMenu} ${mobileMenu ? styles.active : ""}`}
+        >
+          <div className={`${styles.drawerColumns} ${styles.fRight}`}>
+            <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+            <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
+            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+            <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           </div>
-        )}
+
+          {/* <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
+              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
+              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
+              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
+            </div> */}
+          <SocialMediaIcon />
+        </div>
       </nav>
     </>
   );
@@ -91,7 +94,11 @@ export default function HeaderClient({ locale, t }) {
         style={{ height: "100vh", width: "100%", position: "relative" }}
       >
         <div className={styles.bckImg}>
-          <img src="./header.png" alt="Park Naftalan Sanatoriyası" priority="true" />
+          <img
+            src="./header.png"
+            alt="Park Naftalan Sanatoriyası"
+            priority="true"
+          />
         </div>
 
         {renderNavContent()}

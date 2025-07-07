@@ -1,0 +1,15 @@
+import Link from "next/link";
+import { Phone } from "../Svg";
+import styles from "@/styles/global.module.scss";
+export default function FixedButtons({locale}) {
+  return (
+    <div className={styles.fixedBtns}>
+      <Link href="tel:05555555" className={styles.fixedBtn}>
+        <Phone />
+      </Link>
+      <Link href={`/${locale}/reservations`} className={styles.fixedBtn}>
+        <Phone />
+      </Link>
+    </div>
+  );
+}

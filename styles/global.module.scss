@@ -16,6 +16,7 @@
   width: 100%;
   max-width: $container-desktop;
   margin: 0 auto;
+  position: relative;
 
   div {
     padding: 0 5px;
@@ -56,9 +57,8 @@
 .drawerIcons {
   width: 100%;
   margin: 40px auto 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex($direction: row, $align: center, $justify: center);
+
   gap: 24px;
 
   a svg {
@@ -102,9 +102,8 @@
 }
 
 .form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex($align: center, $justify: center);
+
   gap: 10px;
   height: 100vh;
   img {
@@ -133,6 +132,23 @@
 
     &:active {
       transform: translateY(1px);
+    }
+  }
+}
+
+.fixedBtns {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1010;
+  @include flex($direction: column, $align: stretch, $justify: flex-start);
+  .fixedBtn {
+    margin: 10px 0;
+    padding: 20px 20px;
+    background: $btnColor;
+    border-radius: 50%;
+    svg path {
+      fill: #fff;
     }
   }
 }

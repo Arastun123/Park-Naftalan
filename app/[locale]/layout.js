@@ -5,6 +5,7 @@ import "@/styles/global.module.scss";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FixedButtons from "@/components/FixedButtons";
 
 const keywordsAZ = [
   "Naftalan",
@@ -143,6 +144,7 @@ export default async function LocaleLayout({ children, params }) {
         <Header params={params} />
         <main style={{ position: "relative", zIndex: 0 }}>{children}</main>
         <Footer params={params} />
+        <FixedButtons locale={locale} />
         <ToastContainer
           position="top-center"
           autoClose={4000}

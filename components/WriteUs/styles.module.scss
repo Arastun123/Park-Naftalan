@@ -115,10 +115,10 @@
   }
 
   .submitBtn {
-    color: #2f3c4b;
+    color: $mainBlueBack;
     font-weight: 600;
     padding: 14px 45px;
-    border: 1px solid #2f3c4b;
+    border: 1px solid $mainBlueBack;
     border-radius: 12px;
     cursor: pointer;
     font-size: $poppins;
@@ -131,7 +131,7 @@
       transform: translateY(1px);
     }
     &:hover {
-      background: #2f3c4b;
+      background: $mainBlueBack;
       color: #fff;
     }
   }

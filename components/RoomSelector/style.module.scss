@@ -17,9 +17,11 @@
     color: $blueTxt;
   }
   .counter {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    @include flex($direction: row, $align: center, $justify: space-between);
+
     margin: 10px 0;
     p {
       font-family: $inter;
@@ -28,9 +30,11 @@
     }
   }
   .btnBox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    @include flex($direction: row, $align: center, $justify: space-between);
+
     .counterBtn {
       margin: 10px;
       border: 2px solid $blueTxt;
@@ -39,16 +43,18 @@
       height: 20px;
       max-width: 30px;
       max-height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      @include flex($direction: row, $align: center, $justify: center);
     }
   }
   .leftEndBtn {
-    display: flex;
-    justify-content: end;
-    flex-direction: column;
-    align-items: end;
+    // display: flex;
+    // justify-content: end;
+    // flex-direction: column;
+    // align-items: end;
+    @include flex($direction: column, $align: end, $justify: end);
     font-family: $inter;
     font-weight: 400;
     font-size: 12px;

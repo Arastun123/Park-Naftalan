@@ -1,10 +1,14 @@
+@import "../../styles/vairable.scss";
+
 .loaderWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  @include flex($direction: column, $align: center, $justify: center);
+
   height: 100vh;
-  background: #f9f7f2; 
+  background: #f9f7f2;
 }
 
 .spinner {
