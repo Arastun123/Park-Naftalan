@@ -143,9 +143,12 @@
   z-index: 1010;
   @include flex($direction: column, $align: stretch, $justify: flex-start);
   .fixedBtn {
-    margin: 10px 0;
-    padding: 20px 20px;
-    background: $btnColor;
+    width: 60px;
+    height: 60px;
+    margin: 10px auto;
+    text-align: center;
+    padding: 20px;
+    background: $blueTxt;
     border-radius: 50%;
     svg path {
       fill: #fff;
