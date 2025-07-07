@@ -5,6 +5,7 @@ import Link from "next/link";
 import Button from "@/components/Button/Button";
 import table from "@/styles/table.module.scss";
 import { logoutAdmin } from "@/lib/handleApiActions";
+import { useMemo } from "react";
 
 export default function Table({ data, th, handleDelete, createSlug }) {
   const router = useRouter();
@@ -14,14 +15,29 @@ export default function Table({ data, th, handleDelete, createSlug }) {
     router.push("/admin");
   };
 
+
+  const idColorMap = useMemo(() => {
+    const colors = ["color1", "color2", "color3", "color4", "color5"];
+    const map = {};
+    let colorIndex = 0;
+    data.forEach((item) => {
+      const id = item.id;
+      if (!map[id]) {
+        map[id] = colors[colorIndex % colors.length];
+        colorIndex++;
+      }
+    });
+    return map;
+  }, [data]);
+
   return (
     <>
-      <Button
+      {/* <Button
         onClick={() => handleLogout()}
         className={`${table.actionBtn} ${table.delete}`}
       >
         Logout
-      </Button>
+      </Button> */}
       <table className={table.table}>
         <thead className={table.thead}>
           <tr>
@@ -43,8 +59,11 @@ export default function Table({ data, th, handleDelete, createSlug }) {
         </thead>
         {data !== "" ? (
           <tbody>
-            {data.map((row, i) => (
-              <tr key={i} className={table.trHover}>
+            {[...data].reverse().map((row, i) => (
+              <tr
+                key={i}
+                className={`${table.trHover} ${table[idColorMap[row.id]]}`}
+              >
                 {th.map((item) => (
                   <td key={item} className={table.td}>
                     {row[item]}

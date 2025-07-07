@@ -13,7 +13,9 @@ export default function SideBar() {
         <LinkItem slug="/admin/slider">Ana səhifə başlıq şəkili</LinkItem>
         <LinkItem slug="/admin/about">Haqqımızda</LinkItem>
         <LinkItem slug="/admin/contact">Əlaqə məlumatları</LinkItem>
+        <LinkItem slug="/admin/Illness">Xəstəliklər</LinkItem>
         <LinkItem slug="/admin/treatmentmethod">Naftalan Müalicəsi</LinkItem>
+        <LinkItem slug="/admin/treatmentCategory">Müalicə Növü</LinkItem>
      
         <LinkItem slug="/admin/equipment">Təhcizat</LinkItem>
         <LinkItem slug="/admin/room">Otaqlar</LinkItem>

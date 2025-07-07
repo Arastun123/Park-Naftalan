@@ -9,7 +9,7 @@ import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 import {
   createData,
-  getDataByid,
+  getDataById,
   getDatas,
   updateData,
 } from "@/lib/handleApiActions";
@@ -19,7 +19,7 @@ export default function createRoom() {
   const router = useRouter();
   const id = params.id;
 
-  const isEdit = !!id && id !== "create";
+  const isEdit = id === "create";
   const [equipment, setEquipment] = useState([]);
   const [values, setValues] = useState({
     category: "",
@@ -30,9 +30,27 @@ export default function createRoom() {
     youtubeVideoLink: "",
     equipmentIds: [],
     translations: {
-      0: { service: "", description: "" },
-      1: { service: "", description: "" },
-      2: { service: "", description: "" },
+      1: {
+        service: "",
+        description: "",
+        miniDescription: "",
+        title: "",
+        miniTitle: "",
+      },
+      2: {
+        service: "",
+        description: "",
+        miniDescription: "",
+        title: "",
+        miniTitle: "",
+      },
+      3: {
+        service: "",
+        description: "",
+        miniDescription: "",
+        title: "",
+        miniTitle: "",
+      },
     },
   });
 
@@ -47,6 +65,9 @@ export default function createRoom() {
         language: Number(lang),
         service: item.service,
         description: item.description,
+        miniDescription: item.miniDescription,
+        title: item.title,
+        miniTitle: item.miniTitle,
       })),
     };
 
@@ -59,7 +80,7 @@ export default function createRoom() {
         alert("Proses uğurla başa çatdı");
         router.back();
       } else {
-        alert(res.statusText);
+        alert(res.status);
       }
     } else {
       if (res.status === 204) {
@@ -73,13 +94,16 @@ export default function createRoom() {
   console.log(isEdit);
   const fetchDatas = async () => {
     if (!isEdit) {
-      const data = await getDataByid("Room", id);
+      const data = await getDataById("Room", id);
       if (data) {
         const newTranslations = { ...values.translations };
         data.translations.forEach((t) => {
           newTranslations[t.language] = {
             service: t.service || "",
             description: t.description || "",
+            miniDescription: t.miniDescription || "",
+            title: t.title || "",
+            miniTitle: t.miniTitle || "",
           };
         });
         setValues((prev) => ({
@@ -140,13 +164,16 @@ export default function createRoom() {
           />
           <div className={admin.dFlex}>
             {[
-              { lang: "en", code: 0 },
-              { lang: "az", code: 1 },
-              { lang: "ru", code: 2 },
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
                 service: "",
                 description: "",
+                miniDescription: "",
+                title: "",
+                miniTitle: "",
               };
 
               return (
@@ -177,13 +204,16 @@ export default function createRoom() {
           </div>
           <div className={admin.dFlex}>
             {[
-              { lang: "en", code: 0 },
-              { lang: "az", code: 1 },
-              { lang: "ru", code: 2 },
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
                 service: "",
                 description: "",
+                miniDescription: "",
+                title: "",
+                miniTitle: "",
               };
 
               return (
@@ -202,6 +232,129 @@ export default function createRoom() {
                             [code]: {
                               ...prev.translations?.[code],
                               description: e.target.value,
+                            },
+                          },
+                        }))
+                      }
+                      required={code === 1}
+                    />
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className={admin.dFlex}>
+            {[
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
+            ].map(({ lang, code }) => {
+              const translation = values.translations?.[code] || {
+                service: "",
+                description: "",
+                miniDescription: "",
+                title: "",
+                miniTitle: "",
+              };
+
+              return (
+                <div key={lang} className={admin.dFlex}>
+                  <label>
+                    Mini Description ({lang.toUpperCase()}):
+                    <textarea
+                      value={translation.miniDescription}
+                      rows="5"
+                      cols="33"
+                      onChange={(e) =>
+                        setValues((prev) => ({
+                          ...prev,
+                          translations: {
+                            ...prev.translations,
+                            [code]: {
+                              ...prev.translations?.[code],
+                              miniDescription: e.target.value,
+                            },
+                          },
+                        }))
+                      }
+                      required={code === 1}
+                    />
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className={admin.dFlex}>
+            {[
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
+            ].map(({ lang, code }) => {
+              const translation = values.translations?.[code] || {
+                service: "",
+                description: "",
+                miniDescription: "",
+                title: "",
+                miniTitle: "",
+              };
+
+              return (
+                <div key={lang} className={admin.dFlex}>
+                  <label>
+                    Title ({lang.toUpperCase()}):
+                    <textarea
+                      value={translation.title}
+                      rows="5"
+                      cols="33"
+                      onChange={(e) =>
+                        setValues((prev) => ({
+                          ...prev,
+                          translations: {
+                            ...prev.translations,
+                            [code]: {
+                              ...prev.translations?.[code],
+                              title: e.target.value,
+                            },
+                          },
+                        }))
+                      }
+                      required={code === 1}
+                    />
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className={admin.dFlex}>
+            {[
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
+            ].map(({ lang, code }) => {
+              const translation = values.translations?.[code] || {
+                service: "",
+                description: "",
+                miniDescription: "",
+                title: "",
+                miniTitle: "",
+              };
+
+              return (
+                <div key={lang} className={admin.dFlex}>
+                  <label>
+                    MiniTitle ({lang.toUpperCase()}):
+                    <textarea
+                      value={translation.miniTitle}
+                      rows="5"
+                      cols="33"
+                      onChange={(e) =>
+                        setValues((prev) => ({
+                          ...prev,
+                          translations: {
+                            ...prev.translations,
+                            [code]: {
+                              ...prev.translations?.[code],
+                              miniTitle: e.target.value,
                             },
                           },
                         }))

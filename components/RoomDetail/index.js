@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import { getDataByid, getDatas } from "@/lib/handleApiActions";
+import { getDataById, getDatas } from "@/lib/handleApiActions";
 
 import Video from "../Video/VIdeo";
 import Loading from "../Loading";
@@ -19,16 +19,16 @@ export default function RoomDetail({ t, locale }) {
   const id = params.id;
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 0;
-    if (locale === "az") return 1;
-    return 2;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
+    return 3;
   }, [locale]);
   useEffect(() => {
     fetchDatas();
   }, []);
 
   const fetchDatas = async () => {
-    const data = await getDataByid("Room", id);
+    const data = await getDataById("Room", id);
 
     if (data) {
       setRoom(data);
@@ -48,7 +48,7 @@ export default function RoomDetail({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  console.log(matchedEquipments);
+  console.log(room);
   const images = [
     "/DSC_0610.png",
     "/DSC_0618.png",
@@ -61,14 +61,10 @@ export default function RoomDetail({ t, locale }) {
       <div className={style.head}>
         <div className={style.top}>
           <h1>{room?.category}</h1>
-          <p>Rahatlıq və Sakitliyin Ünvanı</p>
+          <p>{selectedTranslation?.title}</p>
         </div>
         <div className={style.dFlex}>
-          <p>
-            Hər bir otaq zövqlə dizayn edilmiş və istirahətinizin maksimum
-            komfortla təmin olunması üçün bütün zəruri şəraitlə təchiz
-            olunmuşdur.
-          </p>
+          <p>{selectedTranslation?.miniDescription}</p>
           <Button
             onClick={() =>
               router.push(`/${locale}/reservations/${room?.category}`)
@@ -83,9 +79,7 @@ export default function RoomDetail({ t, locale }) {
         src="/park suite 1.png"
         alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
       />
-      <p className={style.centerText}>
-        Rahat ikinəfərlik və ya tək nəfərlik çarpayı
-      </p>
+      <p className={style.centerText}>{room?.title}</p>
       <p>
         {room?.area} m <sup>2</sup>
       </p>
@@ -106,14 +100,7 @@ export default function RoomDetail({ t, locale }) {
             />
             <div className={style.text}>
               <p>
-                Bu otaqlar, istər müalicə məqsədli, istərsə də ümumi istirahət
-                üçün gələn qonaqlarımızın ehtiyaclarına tam cavab verir. Rahat
-                mühit, təmiz hava və sakitlik sizə xoş istirahət və enerji ilə
-                dolu bir təcrübə bəxş edəcək. Bu otaqlar, istər müalicə
-                məqsədli, istərsə də ümumi istirahət üçün gələn qonaqlarımızın
-                ehtiyaclarına tam cavab verir. Rahat mühit, təmiz hava və
-                sakitlik sizə xoş istirahət və enerji ilə dolu bir təcrübə bəxş
-                edəcək.
+                {selectedTranslation?.description}
               </p>
               <Button
                 onClick={() => router.push(`/${locale}/reservations`)}
@@ -132,14 +119,14 @@ export default function RoomDetail({ t, locale }) {
           </div>
         </div>
       </div>
-      <h2>Təchizatlar</h2>
+      <h2>{t?.Equipment}</h2>
       <ul className={style.equipments}>
         {matchedEquipments.map((item) => (
           <li key={`${item.id}-${item.language}`}>• {item?.name}</li>
         ))}
       </ul>
       <div className={style.video}>
-        <p>Otağı vizual olaraq kəşf et</p>
+        <p>{t?.VideoTitel}</p>
         <Video src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1" />
       </div>
     </div>

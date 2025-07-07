@@ -8,11 +8,11 @@ import Button from "@/components/Button/Button";
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 import {
-  createData,
+  createData, 
   getDataByIdLang,
   updateData,
 } from "@/lib/handleApiActions";
-
+import { Router } from "next/router";
 import { toast } from "react-toastify";
 
 export default function createEquipment() {
@@ -53,8 +53,6 @@ export default function createEquipment() {
   };
 
   const fetchDatas = async () => {
-    console.log(id);
-    console.log(language);
     if (isEdit) {
       const data = await getDataByIdLang("Equipment", id);
 
@@ -66,29 +64,9 @@ export default function createEquipment() {
     }
   };
 
-  console.log(isEdit, "val");
-
   return (
     <div className={global.container}>
       <form className={admin.form}>
-        {/* {isEdit ? (
-          
-        ) : (
-          <>
-            <label>
-              Name ({["EN", "AZ", "RU"][language]}):
-              <input
-                type="text"
-                value={values[language]}
-                onChange={(e) =>
-                  setValues((prev) => ({ ...prev, [language]: e.target.value }))
-                }
-                required
-              />
-            </label>
-          </>
-        )} */}
-
         <>
           {[
             { lang: "en", code: 1 },

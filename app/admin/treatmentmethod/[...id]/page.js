@@ -7,7 +7,7 @@ import Button from "@/components/Button/Button";
 
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
-import { createData, getDataByid, updateData } from "@/lib/handleApiActions";
+import { createData, getDataById, updateData } from "@/lib/handleApiActions";
 
 export default function createTreatmentMethod() {
   const params = useParams();
@@ -63,7 +63,7 @@ export default function createTreatmentMethod() {
 
   const fetchDatas = async () => {
     if (isEdit !== "create") {
-      const data = await getDataByid("treatmentMethod", id);
+      const data = await getDataById("treatmentMethod", id);
       console.log(data)
       if (data) {
         setValues((prev) => ({

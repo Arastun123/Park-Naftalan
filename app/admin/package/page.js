@@ -6,13 +6,12 @@ import Table from "@/components/Admin/Table/Table";
 
 import global from "@/styles/global.module.scss";
 import "@/styles/reset.css";
-import { toast } from "react-toastify";
 
 export default function treatmentMethod() {
   const [data, setData] = useState([]);
-  const model = "Room";
+  const model = "Package";
 
-  const th = ["category", "area", "price", "member"];
+  const th = ["name", "duration", "price", "roomType"];
 
   useEffect(() => {
     fetchDatas();
@@ -27,8 +26,8 @@ export default function treatmentMethod() {
     const res = await deleteData(model, id);
     console.log(typeof res.status);
     res.status === 204
-      ? toast.success("Proses uğurla başa çatdı")
-      : toast.error("Xəta baş verdi");
+      ? alert("Proses uğurla başa çatdı")
+      : alert("Xəta baş verdi");
     if (res) {
       fetchDatas();
     }
