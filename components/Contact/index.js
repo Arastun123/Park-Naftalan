@@ -15,8 +15,8 @@ export default async function Contact({ locale, t }) {
             <h2>{t?.ContactUs}</h2>
             <div className={styles.linkGroup}>
               <p>{t?.Phone}</p>
-              <Link href="tel:05555555">055-555-55</Link>
-              <Link href="tel:05555555">055-555-55</Link>
+              <Link href="tel:+994502342458">050-234-24-58</Link>
+              <Link href="tel:+994223522212">022-352-22-12</Link>
             </div>
             <div className={styles.linkGroup}>
               <p>{t?.Email}</p>
@@ -26,7 +26,7 @@ export default async function Contact({ locale, t }) {
             </div>
             <div className={styles.linkGroup}>
               <p>{t?.Address}</p>
-              <Link href="#">64А Р.Зульфикаров, Naftalan 4600</Link>
+              <Link href="#">Park Naftalan, Naftalan, Azerbaijan 4600</Link>
             </div>
             <div className={styles.linkGroup + " " + styles.social}>
               <p>{t?.SocialMedia}</p>
