@@ -23,11 +23,7 @@ export default async function Home({ params }) {
           locale={locale}
         >
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur. Amet cursus enim sem et
-            proin. Justo eget risus sollicitudin mauris nulla sapien diam.
-            Semper in facilisis augue diam nibh arcu turpis lacus potenti. Netus
-            sit consequat nullam id proin. Est risus lobortis lectus amet mattis
-            odio.
+            {t?.MainAbout}
           </p>
         </Section>
       </div>
