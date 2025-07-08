@@ -58,7 +58,6 @@ export default function createRoom() {
     fetchDatas();
   }, []);
 
-  console.log(isEdit)
   const handleSubmit = async () => {
     const payload = {
       ...values,
