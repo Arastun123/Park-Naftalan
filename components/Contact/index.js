@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import Map from "../Map";
@@ -5,8 +7,20 @@ import ContactForm from "../ContactForm";
 import SocialMediaIcon from "../SocailMediaIcons";
 
 import styles from "./styles.module.scss";
+import { getDatas } from "@/lib/handleApiActions";
 
-export default async function Contact({ locale, t }) {
+export default function ContactComponent({ locale, t }) {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const datas = await getDatas("Contact");
+      if (datas) setData(datas);  
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className={styles.contact}>
@@ -15,20 +29,19 @@ export default async function Contact({ locale, t }) {
             <h2>{t?.ContactUs}</h2>
             <div className={styles.linkGroup}>
               <p>{t?.Phone}</p>
-              <Link href="tel:+994502342458">050-234-24-58</Link>
-              <Link href="tel:+994223522212">022-352-22-12</Link>
+              {data.number?.map((n, i) => (
+                <Link key={i} href={`tel:${n}`}>{n}</Link>
+              ))}
             </div>
             <div className={styles.linkGroup}>
               <p>{t?.Email}</p>
-              <Link href="mailto:parknaftalan@gmail.com">
-                parknaftalan@gmail.com
-              </Link>
+              <Link href={`mailto:${data.mail}`}>{data.mail}</Link>
             </div>
             <div className={styles.linkGroup}>
               <p>{t?.Address}</p>
-              <Link href="#">Park Naftalan, Naftalan, Azerbaijan 4600</Link>
+              <Link href="#">{data.adress}</Link>
             </div>
-            <div className={styles.linkGroup + " " + styles.social}>
+            <div className={`${styles.linkGroup} ${styles.social}`}>
               <p>{t?.SocialMedia}</p>
               <SocialMediaIcon />
             </div>

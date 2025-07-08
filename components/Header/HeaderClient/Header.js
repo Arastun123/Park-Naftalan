@@ -55,7 +55,7 @@ export default function HeaderClient({ locale, t }) {
             <div className={styles.links}>
               <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
               <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
               <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
 
@@ -67,10 +67,10 @@ export default function HeaderClient({ locale, t }) {
         <div
           className={`${styles.mobileMenu} ${mobileMenu ? styles.active : ""}`}
         >
-          <div className={`${styles.drawerColumns} ${styles.fRight}`}>
+          <div className={styles.drawerColumns}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
             <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+            {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
             <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           </div>
 
@@ -105,9 +105,7 @@ export default function HeaderClient({ locale, t }) {
 
         <div className={styles.reserve}>
           <p className={styles.reserveTitle}>
-            Otağını indi rezerv et,
-            <br />
-            rahatlığın dadını çıxar!
+           {t?.HeaderTxt}
           </p>
           <span>
             <ArrowFlow className={styles.arrow} />

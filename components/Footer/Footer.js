@@ -18,17 +18,17 @@ export default async function Footer({ params }) {
         <div className={styles.links}>
           <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
           <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-          <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+          {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
           <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           <LinkItem slug={`/${locale}/reservations`}>{t?.Reservation}</LinkItem>
         </div>
         <SocialMediaIcon />
         <div className={styles.bottom}>
           <p>
-            Hotel Plaza Athenee SAS Société par Actions Simplifiées au capital
-            de 460 000 Euros 25, 27 Avenue Montaigne, Paris 75008
+            {/* Hotel Plaza Athenee SAS Société par Actions Simplifiées au capital
+            de 460 000 Euros 25, 27 Avenue Montaigne, Paris 75008 */}
           </p>
-          <LinkItem slug="/">{t?.Developed} </LinkItem>
+          <LinkItem slug="/"></LinkItem>
         </div>
       </div>
     </footer>

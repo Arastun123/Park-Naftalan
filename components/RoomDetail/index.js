@@ -23,6 +23,7 @@ export default function RoomDetail({ t, locale }) {
     if (locale === "az") return 2;
     return 3;
   }, [locale]);
+  
   useEffect(() => {
     fetchDatas();
   }, []);

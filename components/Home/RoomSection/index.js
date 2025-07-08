@@ -44,6 +44,7 @@ export default function RoomSection({ t, locale, showBtn }) {
   if (!rooms || rooms.length === 0) {
     return <Loading />;
   }
+  // console.log(rooms)
 
   return (
     <>

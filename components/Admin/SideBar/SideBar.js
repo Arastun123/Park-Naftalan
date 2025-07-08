@@ -9,11 +9,11 @@ export default function SideBar() {
         <Logo />
       </div>
       <div className={`${styles.menu} ${styles.after}`}>
-        <LinkItem slug="/admin/reservasion">Rezervasiya</LinkItem>
-        <LinkItem slug="/admin/slider">Ana səhifə başlıq şəkili</LinkItem>
+        {/* <LinkItem slug="/admin/reservasion">Rezervasiya</LinkItem> */}
+        {/* <LinkItem slug="/admin/slider">Ana səhifə başlıq şəkili</LinkItem> */}
         <LinkItem slug="/admin/about">Haqqımızda</LinkItem>
         <LinkItem slug="/admin/contact">Əlaqə məlumatları</LinkItem>
-        <LinkItem slug="/admin/Illness">Xəstəliklər</LinkItem>
+        {/* <LinkItem slug="/admin/Illness">Xəstəliklər</LinkItem> */}
         <LinkItem slug="/admin/treatmentmethod">Naftalan Müalicəsi</LinkItem>
         <LinkItem slug="/admin/treatmentCategory">Müalicə Növü</LinkItem>
      

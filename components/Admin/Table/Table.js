@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 import Button from "@/components/Button/Button";
 import table from "@/styles/table.module.scss";
 import { logoutAdmin } from "@/lib/handleApiActions";
@@ -15,29 +14,26 @@ export default function Table({ data, th, handleDelete, createSlug }) {
     router.push("/admin");
   };
 
+  const normalizedData = Array.isArray(data) ? data : [data];
 
   const idColorMap = useMemo(() => {
     const colors = ["color1", "color2", "color3", "color4", "color5"];
     const map = {};
     let colorIndex = 0;
-    data.forEach((item) => {
-      const id = item.id;
-      if (!map[id]) {
-        map[id] = colors[colorIndex % colors.length];
-        colorIndex++;
+    normalizedData.forEach((item) => {
+      if (item?.id) {
+        const id = item.id;
+        if (!map[id]) {
+          map[id] = colors[colorIndex % colors.length];
+          colorIndex++;
+        }
       }
     });
     return map;
-  }, [data]);
+  }, [normalizedData]);
 
   return (
     <>
-      {/* <Button
-        onClick={() => handleLogout()}
-        className={`${table.actionBtn} ${table.delete}`}
-      >
-        Logout
-      </Button> */}
       <table className={table.table}>
         <thead className={table.thead}>
           <tr>
@@ -47,51 +43,62 @@ export default function Table({ data, th, handleDelete, createSlug }) {
               </th>
             ))}
             <th className={table.th}>Action</th>
-            <th className={table.th}>
-              <Link
-                className={`${table.actionBtn} ${table.create}`}
-                href={`${createSlug}/create`}
-              >
-                Create
-              </Link>
-            </th>
+            {createSlug !== "about" && (
+              <th className={table.th}>
+                <Link
+                  className={`${table.actionBtn} ${table.create}`}
+                  href={`${createSlug}/create`}
+                >
+                  Create
+                </Link>
+              </th>
+            )}
           </tr>
         </thead>
-        {data !== "" ? (
+        {normalizedData.length > 0 ? (
           <tbody>
-            {[...data].reverse().map((row, i) => (
-              <tr
-                key={i}
-                className={`${table.trHover} ${table[idColorMap[row.id]]}`}
-              >
-                {th.map((item) => (
-                  <td key={item} className={table.td}>
-                    {row[item]}
+            {[...normalizedData].reverse().map((row, i) => {
+              const rowColorClass = row?.id ? table[idColorMap[row.id]] : "";
+              return (
+                <tr key={i} className={`${table.trHover} ${rowColorClass}`}>
+                  {th.map((item) => (
+                    <td key={item} className={table.td}>
+                      {row[item] ?? "-"}
+                    </td>
+                  ))}
+                  <td className={table.td}>
+                    <Button
+                      className={`${table.actionBtn} ${table.edit}`}
+                      onClick={() => {
+                        createSlug === "equipment"
+                          ? router.push(
+                              `${createSlug}/${row.id}/${row.language || "az"}`
+                            )
+                          : router.push(`${createSlug}/${row.id || ""}`);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className={`${table.actionBtn} ${table.delete}`}
+                      onClick={() => handleDelete(row.id)}
+                      disabled={!row.id}
+                    >
+                      Delete
+                    </Button>
                   </td>
-                ))}
-                <td className={table.td}>
-                  <Button
-                    className={`${table.actionBtn} ${table.edit}`}
-                    onClick={() => {
-                      createSlug === "equipment"
-                        ? router.push(`${createSlug}/${row.id}/${row.language}`)
-                        : router.push(`${createSlug}/${row.id}`);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    className={`${table.actionBtn} ${table.delete}`}
-                    onClick={() => handleDelete(row.id)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
+                </tr>
+              );
+            })}
           </tbody>
         ) : (
-          <h2>Hazırda yaradılmış məlumat yoxdur zəhmət olmasa əlavə edin</h2>
+          <tbody>
+            <tr>
+              <td colSpan={th.length + 2} className={table.td}>
+                Hazırda yaradılmış məlumat yoxdur, zəhmət olmasa əlavə edin.
+              </td>
+            </tr>
+          </tbody>
         )}
       </table>
     </>

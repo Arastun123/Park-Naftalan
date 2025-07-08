@@ -7,6 +7,7 @@ import Section from "@/components/Section/Section";
 import RoomSection from "@/components/Home/RoomSection";
 import { getAznToUsdRate } from "@/lib/handleApiActions";
 import WriteUs from "@/components/WriteUs";
+import About from "@/components/About";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -18,12 +19,12 @@ export default async function Home({ params }) {
         <Section
           className={styles.about}
           name={t?.About}
-          oneLine={false}
+          oneLine={true}
           t={t}
           locale={locale}
         >
           <p className={styles.desc}>
-            {t?.MainAbout}
+            <About />
           </p>
         </Section>
       </div>
@@ -48,7 +49,7 @@ export default async function Home({ params }) {
       </Section>
 
       <div className={global.container}>
-        <WriteUs t={t} locale={locale}/>
+        <WriteUs t={t} locale={locale} />
       </div>
     </>
   );
