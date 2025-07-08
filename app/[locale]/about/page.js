@@ -23,14 +23,8 @@ export default async function AboutPage({ params }) {
           </div>
           <div className={styles.txt}>
             <p>
-              2022-ci ildən fəaliyyətə başlayan Park Naftalan Sanatoriya
-              Kompleksi 1 hektara yaxın ərazidə yerləşir və iki altımərtəbəli
-              korpusdan ibarətdir. Mərkəzdə ümumilikdə 114 komfortlu otaq
-              mövcuddur və 240 nəfərədək qonağın yerləşdirilməsi
-              mümkündür.Kompleks müasir tibbi və texniki avadanlıqlarla təchiz
-              olunmuşdur. Qonaqlara milli və Avropa mətbəxinin ləziz təamları
-              təqdim olunan restoran, istirahət üçün isə Lobby bar xidmət
-              göstərir. Müalicə bölməsi geniş spektrli prosedurları ilə seçilir.
+                          {t?.AboutTxt}
+
             </p>
           </div>
         </div>
