@@ -10,18 +10,18 @@ import LinkItem from "../Header/LinkItem/LinkItem";
 export default function SocialMediaIcon({}) {
   return (
     <div className={styles.drawerIcons}>
-      <LinkItem slug="/">
+     <LinkItem slug="http://www.instagram.com/parknaftalan.az">
         <Instagram />
       </LinkItem>
-      <LinkItem slug="/">
+      <LinkItem slug="http://www.facebook.com/ParkNaftalanSanatoriyasi">
         <Facebook />
       </LinkItem>
-      <LinkItem slug="/">
+      <LinkItem slug="http://www.facebook.com/ParkNaftalanSanatoriyasi">
         <Youtube />
       </LinkItem>
-      <LinkItem slug="/">
+      {/* <LinkItem slug="/">
         <Phone />
-      </LinkItem>
+      </LinkItem> */}
     </div>
   );
 }
