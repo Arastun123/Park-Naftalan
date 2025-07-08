@@ -19,7 +19,7 @@ export default function createRoom() {
   const router = useRouter();
   const id = params.id;
 
-  const isEdit = id === "create";
+  const isEdit = id !== "create" ? "create" : "edit";
   const [equipment, setEquipment] = useState([]);
   const [values, setValues] = useState({
     category: "",
@@ -58,6 +58,7 @@ export default function createRoom() {
     fetchDatas();
   }, []);
 
+  console.log(isEdit)
   const handleSubmit = async () => {
     const payload = {
       ...values,
@@ -71,29 +72,20 @@ export default function createRoom() {
       })),
     };
 
-    const res = !isEdit
-      ? await updateData("Room", id, payload)
-      : await createData("Room", payload);
+    const res =
+      isEdit === "edit"
+        ? await updateData("Room", id, payload)
+        : await createData("Room", payload);
 
-    if (isEdit) {
-      if (res.statusText === "OK") {
-        alert("Proses uğurla başa çatdı");
-        router.back();
-      } else {
-        alert(res.status);
-      }
+    if (res.status === 204 && res.status === 200) {
+      alert("Proses uğurla başa çatdı");
+      router.back();
     } else {
-      if (res.status === 204) {
-        router.back();
-        alert("Proses uğurla başa çatdı");
-      } else {
-        alert("Xeta bas verdi");
-      }
+      alert(res.status);
     }
   };
-  console.log(isEdit);
   const fetchDatas = async () => {
-    if (!isEdit) {
+    if (isEdit === "edit") {
       const data = await getDataById("Room", id);
       if (data) {
         const newTranslations = { ...values.translations };
