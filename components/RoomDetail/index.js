@@ -80,7 +80,7 @@ export default function RoomDetail({ t, locale }) {
         src="/park suite 1.png"
         alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
       />
-      <p className={style.centerText}>{room?.title}</p>
+      <p className={style.centerText}>{room?.miniTitle}</p>
       <p>
         {room?.area} m <sup>2</sup>
       </p>
