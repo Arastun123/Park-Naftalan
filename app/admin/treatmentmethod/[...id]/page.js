@@ -15,7 +15,6 @@ export default function createTreatmentMethod() {
   const id = params.id;
 
   const isEdit = !!id && id !== "create";
-  console.log(isEdit)
   const [values, setValues] = useState({
     treatmentMethodTranslationDtos: {
       0: { name: "", description: "" },
@@ -64,7 +63,6 @@ export default function createTreatmentMethod() {
   const fetchDatas = async () => {
     if (isEdit !== "create") {
       const data = await getDataById("treatmentMethod", id);
-      console.log(data)
       if (data) {
         setValues((prev) => ({
           ...prev,

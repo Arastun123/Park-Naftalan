@@ -49,7 +49,6 @@ export default function RoomDetail({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  console.log(room);
   const images = [
     "/DSC_0610.png",
     "/DSC_0618.png",

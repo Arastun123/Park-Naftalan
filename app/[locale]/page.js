@@ -4,8 +4,7 @@ import global from "@/styles/global.module.scss";
 import styles from "@/styles/index.module.scss";
 import Section from "@/components/Section/Section";
 
-import RoomSection from "@/components/Home/RoomSection";
-import { getAznToUsdRate } from "@/lib/handleApiActions";
+import RoomSection from "@/components/Home/RoomSection"; 
 import WriteUs from "@/components/WriteUs";
 import About from "@/components/About";
 
@@ -24,7 +23,7 @@ export default async function Home({ params }) {
           locale={locale}
         >
           <p className={styles.desc}>
-            <About />
+            <About locale={locale} />
           </p>
         </Section>
       </div>

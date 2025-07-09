@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { getDatas } from "@/lib/handleApiActions";
+import { getAznToUsdRate, getDatas } from "@/lib/handleApiActions";
 
 import Button from "../Button/Button";
 import Loading from "../Loading";
@@ -19,6 +19,7 @@ export default function RoomCard({ t, locale }) {
   const router = useRouter();
 
   const [rooms, setRooms] = useState([]);
+  const [currency, setCurrency] = useState(0.5877);
 
   useEffect(() => {
     const fetchDatas = async () => {
@@ -35,7 +36,13 @@ export default function RoomCard({ t, locale }) {
       }
     };
 
+    const getCurrency = async () => {
+      const currency = await getAznToUsdRate();
+      if(currency) setCurrency(currency);
+    };
+
     fetchDatas();
+    getCurrency();
   }, [locale]);
 
   if (!rooms || rooms.length === 0) {
@@ -59,8 +66,9 @@ export default function RoomCard({ t, locale }) {
               <div className={styles.desc}>
                 <h2>{item.category}</h2>
                 <p>
-                  {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ |{" "}
-                  {t?.Guest}: {item?.member}
+                  {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ /{" "}
+                  {(Number(item?.price) * currency).toFixed(0)} $ | {t?.Guest}:{" "}
+                  {item?.member}
                 </p>
                 <p>{currentTranslation?.description}</p>
                 <Button
@@ -74,7 +82,7 @@ export default function RoomCard({ t, locale }) {
                     <img
                       key={idx}
                       src={item?.picture || "/parkSuite.png"}
-                     alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
+                      alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
                     />
                   ))}
                 </div>

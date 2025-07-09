@@ -25,7 +25,6 @@ export default function treatmentMethod() {
 
   const handleDelete = async (id) => {
     const res = await deleteData(model, id);
-    console.log(typeof res.status);
     res.status === 204
       ? toast.success("Proses uğurla başa çatdı")
       : toast.error("Xəta baş verdi");

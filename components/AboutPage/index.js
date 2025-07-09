@@ -34,7 +34,6 @@ export default function AboutPageMain({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  console.log(about?.videoLink);
 
   return (
     <div className={`${global.container} ${styles.about}`}>

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import { getDatas, sendMail } from "@/lib/handleApiActions";
+import { getAznToUsdRate, getDatas, sendMail } from "@/lib/handleApiActions";
 import Input from "../Input";
 import SelectBox from "../SelecBox";
 import Calendar from "../Calendar/Calendar";
@@ -18,7 +18,8 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     phone: "",
     date: "",
     message: "",
-    dayCount: 1,
+    dayCount: "",
+    childCount: 1,
     roomCount: 1,
   });
   const [selectedRoom, setSelectedRoom] = useState(currentRoom || "Deluxe");
@@ -26,6 +27,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   const [errors, setErrors] = useState({});
   const [rooms, setRooms] = useState([]);
   const [price, setPrice] = useState(0);
+  const [currency, setCurrecy] = useState(0.5877);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -37,6 +39,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       }
     };
     fetchRooms();
+    const getCurrency = async () => {
+      const currency = await getAznToUsdRate();
+      if (currency) setCurrecy(currency);
+    };
+    getCurrency();
   }, []);
 
   useEffect(() => {
@@ -77,7 +84,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       newErrors.email = true;
     if (!formData.phone.trim()) newErrors.phone = true;
     if (!formData.date.trim()) newErrors.date = true;
-    if (formData.dayCount < 1) newErrors.dayCount = true;
+    if (formData.childCount < 1) newErrors.childCount = true;
     if (formData.roomCount < 1) newErrors.roomCount = true;
     if (!selectedRoom.trim()) newErrors.selectedRoom = true;
     if (guest < 1) newErrors.guest = true;
@@ -98,7 +105,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         - Email: ${finalData.email}
         - Əlaqə nömrəsi: ${finalData.phone}
         - Seçilmiş otaq: ${finalData.selectedRoom}
-        - Gün sayı: ${finalData.dayCount}
+        - Uşaq sayı: ${finalData.childCount}
         - Tarix: ${finalData.date || "Seçilməyib"}
         - Otaq sayı: ${finalData.roomCount || 1}
         - Əlavə qeyd: ${finalData.message || 1}
@@ -121,6 +128,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             date: "",
             message: "",
             dayCount: 1,
+            childCount: 1,
             roomCount: 1,
           });
           setSelectedRoom(currentRoom || "Deluxe");
@@ -149,9 +157,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         ? endDate.toLocaleDateString("az-AZ")
         : "";
 
+    let dayCount = 1;
+    if (startDate && endDate) {
+      const timeDiff = endDate.getTime() - startDate.getTime();
+      dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) || 1;
+    }
+
     setFormData((prev) => ({
       ...prev,
       date: `${formattedStartDate} - ${formattedEndDate}`,
+      dayCount,
     }));
   };
 
@@ -191,11 +206,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           <div className={styles.formGroup}>
             <Input
               type="number"
-              name="dayCount"
-              label={t?.DayCount}
-              value={formData.dayCount}
+              name="childCount"
+              label={t?.ChildCount}
+              value={formData.childCount}
               onChange={handleChange}
-              hasError={errors.dayCount}
+              hasError={errors.childCount}
               min="1"
             />
             <Input
@@ -245,7 +260,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               <label htmlFor="message">{t?.Message}</label>
               <textarea
                 id="message"
-                name="əlavə qeyd"
+                name="message"
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
@@ -256,9 +271,12 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             <div className={styles.priceSubmitWrapper}>
               <p className={styles.priceInfo}>
                 {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
-                {formData.dayCount} {t?.DayFor}
+                {formData.childCount} {t?.DayFor}
                 {t?.PriceIs} {t?.PriceEnd}
-                <span className={styles.totalPrice}> {price} ₼</span>
+                <span className={styles.totalPrice}>
+                  {" "}
+                  {price} ₼ / {(Number(price) * currency).toFixed(0)} $
+                </span>
               </p>
               <Input
                 type="submit"

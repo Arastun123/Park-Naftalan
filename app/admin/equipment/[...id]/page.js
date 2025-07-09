@@ -53,8 +53,6 @@ export default function createEquipment() {
   };
 
   const fetchDatas = async () => {
-    console.log(id);
-    console.log(language);
     if (isEdit) {
       const data = await getDataByIdLang("Equipment", id);
 
@@ -66,7 +64,6 @@ export default function createEquipment() {
     }
   };
 
-  console.log(isEdit, "val");
 
   return (
     <div className={global.container}>

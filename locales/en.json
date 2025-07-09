@@ -38,7 +38,7 @@
   "Error": "Failed attempt! Please try again.",
   "BackError": "An error occurred. Please try again later.",
   "FillInput": "Please fill in all fields correctly.",
-  "DayCount": "Day Count",
+  "ChildCount": "Number of Children",
   "Name": "Your Name",
   "Surname": "Your Surname",
   "Email": "Email",
