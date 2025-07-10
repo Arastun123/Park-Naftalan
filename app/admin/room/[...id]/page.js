@@ -17,9 +17,9 @@ import {
 export default function createRoom() {
   const params = useParams();
   const router = useRouter();
-  const id = params.id;
+  const id = params.id[0];
 
-  const isEdit = id !== "create" ? "create" : "edit";
+  const isEdit = id === "create" ? "create" : "edit";
   const [equipment, setEquipment] = useState([]);
   const [values, setValues] = useState({
     category: "",
@@ -53,6 +53,7 @@ export default function createRoom() {
       },
     },
   });
+
 
   useEffect(() => {
     fetchDatas();
@@ -118,7 +119,7 @@ export default function createRoom() {
     <div className={global.container}>
       <form className={admin.form}>
         <>
-          <label>Category</label>
+          <label>Otaqın adı</label>
           <input
             type="text"
             value={values.category}
@@ -127,7 +128,7 @@ export default function createRoom() {
             }
           />
 
-          <label>Area</label>
+          <label>Otaqın ərazisi</label>
           <input
             type="text"
             value={values.area}
@@ -136,7 +137,7 @@ export default function createRoom() {
             }
           />
 
-          <label>Price</label>
+          <label>Qiymət</label>
           <input
             type="number"
             value={values.price}
@@ -145,7 +146,7 @@ export default function createRoom() {
             }
           />
 
-          <label>Member</label>
+          <label>Qonaq sayı</label>
           <input
             type="3"
             value={values.member}
@@ -161,16 +162,12 @@ export default function createRoom() {
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
                 service: "",
-                description: "",
-                miniDescription: "",
-                title: "",
-                miniTitle: "",
               };
 
               return (
                 <div key={lang} className={admin.dFlex}>
                   <label>
-                    Service ({lang.toUpperCase()}):
+                    Xidmətlər ({lang.toUpperCase()}):
                     <input
                       type="text"
                       value={translation.service}
@@ -200,17 +197,13 @@ export default function createRoom() {
               { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
-                service: "",
                 description: "",
-                miniDescription: "",
-                title: "",
-                miniTitle: "",
               };
 
               return (
                 <div key={lang} className={admin.dFlex}>
                   <label>
-                    Description ({lang.toUpperCase()}):
+                    Otaq haqqında məlumat ({lang.toUpperCase()}):
                     <textarea
                       value={translation.description}
                       rows="5"
@@ -241,17 +234,13 @@ export default function createRoom() {
               { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
-                service: "",
-                description: "",
                 miniDescription: "",
-                title: "",
-                miniTitle: "",
               };
 
               return (
                 <div key={lang} className={admin.dFlex}>
                   <label>
-                    Mini Description ({lang.toUpperCase()}):
+                    Kiçik məlumat ({lang.toUpperCase()}):
                     <textarea
                       value={translation.miniDescription}
                       rows="5"
@@ -282,17 +271,13 @@ export default function createRoom() {
               { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
-                service: "",
-                description: "",
-                miniDescription: "",
                 title: "",
-                miniTitle: "",
               };
 
               return (
                 <div key={lang} className={admin.dFlex}>
                   <label>
-                    Title ({lang.toUpperCase()}):
+                    Otaqın sloganı ({lang.toUpperCase()}):
                     <textarea
                       value={translation.title}
                       rows="5"
@@ -323,10 +308,6 @@ export default function createRoom() {
               { lang: "ru", code: 3 },
             ].map(({ lang, code }) => {
               const translation = values.translations?.[code] || {
-                service: "",
-                description: "",
-                miniDescription: "",
-                title: "",
                 miniTitle: "",
               };
 

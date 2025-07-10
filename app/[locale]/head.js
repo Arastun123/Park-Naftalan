@@ -1,4 +1,3 @@
-//app/[locale]/head.js
 import Head from "next/head";
 
 export default function Head({ params }) {
@@ -32,7 +31,6 @@ export default function Head({ params }) {
         <meta property="og:url" content="https://parknaftalan.az" />
         <meta property="og:type" content="website" />
 
-        {/* Twitter Card */}
         <meta name="twitter:title" content="Park Naftalan Sanatoriyası" />
         <meta
           name="twitter:description"
@@ -46,7 +44,6 @@ export default function Head({ params }) {
 
         <link rel="canonical" href="https://parknaftalan.az" />
 
-        {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
 
         <link rel="alternate" hrefLang="az" href="https://parknaftalan.az/az" />

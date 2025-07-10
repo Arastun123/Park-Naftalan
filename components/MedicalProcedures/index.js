@@ -5,14 +5,17 @@ import { getDatas } from "@/lib/handleApiActions";
 import styles from "@/styles/naftalan.module.scss";
 import Button from "@/components/Button/Button";
 import { ArrowLeft, ArrowRight } from "@/components/Svg";
- 
+
 import Loading from "@/components/Loading";
 import useScrollCarousel from "@/helper/corusel";
 
 function Card({ src, name, stil }) {
   return (
     <div className={stil}>
-      <img src={src || "/placeholder.svg?height=400&width=350"} alt={`Park Naftalan Sanatoriyası - ${name}`} />
+      <img
+        src={src || "/placeholder.svg?height=400&width=350"}
+        alt={`Park Naftalan Sanatoriyası - ${name}`}
+      />
       <p>{name}</p>
     </div>
   );
@@ -27,6 +30,7 @@ export default function MedicalProcedures({ t, locale }) {
     return 2;
   }, [locale]);
 
+
   useEffect(() => {
     const fetchDatas = async () => {
       try {
@@ -39,7 +43,7 @@ export default function MedicalProcedures({ t, locale }) {
     };
 
     fetchDatas();
-  }, []);
+  }, []); 
 
   const filteredData = useMemo(
     () => data.filter((item) => item.language === lanCode),

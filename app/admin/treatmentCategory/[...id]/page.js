@@ -1,95 +1,100 @@
 "use client";
 import { useEffect, useState } from "react";
-
 import { useParams, useRouter } from "next/navigation";
-
 import Button from "@/components/Button/Button";
-
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
-import {
-  createData, 
-  getDataByIdLang,
-  updateData,
-} from "@/lib/handleApiActions";
-import { Router } from "next/router";
+import { createData, getDataById, updateData } from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
 
-export default function createEquipment() {
+export default function CreateTreatmentCategory() {
   const params = useParams();
   const router = useRouter();
+  const id = params.id?.[0]; 
+  const isEdit = id !== "create";
 
-  const isEdit = params.id[0] !== "create";
-
-  const id = isEdit ? Number(params.id[0]) : null;
-  const language = Number(params.id[1]);
   const [values, setValues] = useState({
-    1: "",
-    2: "",
-    3: "",
+    translations: {
+      1: { name: "" }, 
+      2: { name: "" }, 
+      3: { name: "" }, 
+    },
   });
 
   useEffect(() => {
-    fetchDatas();
-  }, [isEdit]);
+    if (isEdit) fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await getDataById("TreatmentCategory", id);
+    if (data?.translations) {
+      const formattedTranslations = {};
+      data.translations.forEach((t) => {
+        formattedTranslations[t.language] = {
+          name: t.name || "",
+        };
+      });
+      setValues({ translations: formattedTranslations });
+    }
+  };
 
   const handleSubmit = async () => {
     const payload = {
-      translations: Object.entries(values).map(([language, name]) => ({
-        language: Number(language),
-        name,
-      })),
+      translations: Object.entries(values.translations).map(
+        ([language, { name }]) => ({
+          language: Number(language),
+          name,
+        })
+      ),
     };
+
     const res = isEdit
-      ? await updateData("Equipment", id, payload)
-      : await createData("Equipment", payload);
+      ? await updateData("TreatmentCategory", id, payload)
+      : await createData("TreatmentCategory", payload);
 
     if (res.status === 200 || res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
       router.back();
     } else {
-      toast.error(res.statusText);
-    }
-  };
-
-  const fetchDatas = async () => {
-    if (isEdit) {
-      const data = await getDataByIdLang("Equipment", id);
-
-      if (data)
-        setValues((prev) => ({
-          ...prev,
-          [data.language]: data.name,
-        }));
+      toast.error(res.statusText || "Xəta baş verdi");
     }
   };
 
   return (
     <div className={global.container}>
       <form className={admin.form}>
-        <>
-          {[
-            { lang: "en", code: 1 },
-            { lang: "az", code: 2 },
-            { lang: "ru", code: 3 },
-          ].map(({ lang, code }) => (
-            <label key={lang}>
-              Name ({lang.toUpperCase()}):
-              <input
-                type="text"
-                value={values[code]}
-                onChange={(e) =>
-                  setValues((prev) => ({ ...prev, [code]: e.target.value }))
-                }
-                required={code === 1}
-              />
-            </label>
-          ))}
-        </>
+        <div className={admin.dFlex}>
+          {[{ lang: "en", code: 1 }, { lang: "az", code: 2 }, { lang: "ru", code: 3 }].map(
+            ({ lang, code }) => (
+              <div key={code}>
+                <label>
+                  Müalicə növünün adı  ({lang.toUpperCase()}):
+                  <input
+                    type="text"
+                    value={values.translations[code]?.name || ""}
+                    onChange={(e) =>
+                      setValues((prev) => ({
+                        ...prev,
+                        translations: {
+                          ...prev.translations,
+                          [code]: {
+                            ...prev.translations[code],
+                            name: e.target.value,
+                          },
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+            )
+          )}
+        </div>
       </form>
+
       <Button
         className={`${admin.actionBtn} ${admin.create}`}
-        onClick={() => handleSubmit()}
+        onClick={handleSubmit}
       >
         Təsdiq et
       </Button>

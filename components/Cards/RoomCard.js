@@ -37,7 +37,7 @@ export default function RoomCard({ t, locale }) {
     };
 
     const getCurrency = async () => {
-      const currency = await getAznToUsdRate();
+      const currency = 0;
       if(currency) setCurrency(currency);
     };
 

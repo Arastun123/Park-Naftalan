@@ -102,12 +102,12 @@ export default function RoomDetail({ t, locale }) {
               <p>
                 {selectedTranslation?.description}
               </p>
-              <Button
+              {/* <Button
                 onClick={() => router.push(`/${locale}/reservations`)}
                 className={style.reserveBtn}
               >
                 {t?.Reservation}
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div>

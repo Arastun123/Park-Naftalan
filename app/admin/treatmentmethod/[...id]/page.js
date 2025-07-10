@@ -8,18 +8,20 @@ import Button from "@/components/Button/Button";
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 import { createData, getDataById, updateData } from "@/lib/handleApiActions";
+import { toast } from "react-toastify";
 
 export default function createTreatmentMethod() {
   const params = useParams();
   const router = useRouter();
-  const id = params.id;
+  const id = params.id[0];
 
-  const isEdit = !!id && id !== "create";
+  const isEdit = id === "create" ? "create" : "edit";
+
   const [values, setValues] = useState({
     treatmentMethodTranslationDtos: {
-      0: { name: "", description: "" },
       1: { name: "", description: "" },
       2: { name: "", description: "" },
+      3: { name: "", description: "" },
     },
   });
 
@@ -39,29 +41,20 @@ export default function createTreatmentMethod() {
     };
 
     const res =
-      isEdit === "create"
+      isEdit === "edit"
         ? await updateData("treatmentMethod", id, payload)
         : await createData("treatmentMethod", payload);
 
-    if (isEdit === "create") {
-      if (res.status === 200) {
-        alert("Proses uğurla başa çatdı");
-        router.back();
-      } else {
-        alert(res.statusText);
-      }
+    if (res.status === 200 && res.status === 204) {
+      toast.success("Proses uğurla başa çatdı");
+      router.back();
     } else {
-      if (res.status === 200) {
-        router.back();
-        alert("Proses uğurla başa çatdı");
-      } else {
-        alert("Xeta bas verdi");
-      }
+      toast.error(res.statusText);
     }
   };
 
   const fetchDatas = async () => {
-    if (isEdit !== "create") {
+    if (isEdit === "edit") {
       const data = await getDataById("treatmentMethod", id);
       if (data) {
         setValues((prev) => ({
@@ -84,13 +77,13 @@ export default function createTreatmentMethod() {
         <>
           <div className={admin.dFlex}>
             {[
-              { lang: "en", code: 0 },
-              { lang: "az", code: 1 },
-              { lang: "ru", code: 2 },
+              { lang: "en", code: 1 },
+              { lang: "az", code: 2 },
+              { lang: "ru", code: 3 },
             ].map(({ lang, code }) => (
               <div key={code}>
                 <label>
-                  Name ({lang.toUpperCase()}):
+                  Müalicə methodunun adı ({lang.toUpperCase()}):
                   <input
                     type="text"
                     value={
@@ -112,7 +105,7 @@ export default function createTreatmentMethod() {
                 </label>
 
                 <label>
-                  Description ({lang.toUpperCase()}):
+                  Əlavə məlumat ({lang.toUpperCase()}):
                   <textarea
                     value={
                       values.treatmentMethodTranslationDtos[code]
@@ -134,6 +127,10 @@ export default function createTreatmentMethod() {
                 </label>
               </div>
             ))}
+            <p>
+              Əlavə məlumat hazırda görünmür gələcəkdə lazım olarsa ayrıca
+              səhifə halında göstərmək üçün nəzərdə tutlub
+            </p>
           </div>
           {/* <div className={admin.dFlex}>
             {[

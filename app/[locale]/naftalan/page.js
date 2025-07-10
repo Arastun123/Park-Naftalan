@@ -1,3 +1,4 @@
+import Illness from "@/components/Illness";
 import ImageWithText from "@/components/ImageWithText";
 import MedicalProcedures from "@/components/MedicalProcedures";
 import { getTranslations } from "@/lib/getTranslations";
@@ -12,6 +13,7 @@ export default async function Naftalan({ params }) {
       <ImageWithText />
       <MedicalProcedures t={t} locale={locale} />
       <h3 className={global.medical}>{t?.Medical}</h3>
+      <Illness t={t} locale={locale}/>
     </div>
   );
 }

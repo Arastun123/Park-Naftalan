@@ -1,0 +1,172 @@
+@import "../../styles//vairable.scss";
+
+.banner {
+  @include flex($direction: row, $align: center, $justify: center);
+  gap: 20px;
+  .item {
+    display: flex;
+    background: #0e3c61;
+
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+    width: 100%;
+    position: relative;
+    height: 150px;
+    align-items: stretch;
+  }
+
+  .left {
+    background: #0e3c61; // Dark blue
+    color: white;
+    padding: 20px;
+    flex: 0 0 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    z-index: 2;
+  }
+
+  .offer {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .text {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .mainContentArea {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    clip-path: polygon(15% 0, 100% 0, 90% 100%, 0% 100%);
+    z-index: 1;
+  }
+
+  .center {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #0e3c61;
+  }
+
+  .center h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0e3c61;
+  }
+
+  .highlight {
+    font-size: 18px;
+    color: #0e3c61;
+    line-height: 1.4;
+    margin-top: 0;
+  }
+
+  .rightDiagonal {
+    background-color: #0e3c61;
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+    color: white;
+    margin-left: -50px;
+    z-index: 3;
+  }
+
+  .reserveBtn {
+    background: #36c6f0;
+    border: none;
+    padding: 12px 24px;
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px;
+  }
+
+  .reserveBtn:hover {
+    background-color: #2da1cc;
+    color: white;
+  }
+
+  .logoPlaceholder {
+    width: 80px;
+    height: 40px;
+    background-color: #fdfbf7;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #0e3c61;
+  }
+
+  @media (max-width: 768px) {
+    .banner {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .left,
+    .mainContentArea,
+    .rightDiagonal {
+      clip-path: none;
+      margin-left: 0;
+      flex: 1 1 100%;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .left {
+      background-color: #0e3c61;
+      color: white;
+    }
+
+    .mainContentArea {
+      background-color: white;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .center {
+      padding: 0;
+    }
+
+    .rightDiagonal {
+      background-color: #0e3c61;
+      color: white;
+      flex-direction: row;
+      justify-content: space-around;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .reserveBtn {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+  }
+}

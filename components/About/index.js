@@ -25,7 +25,6 @@ export default function About({ t, locale }) {
   const selectedTranslation = about.translations?.find(
     (t) => t.language === lanCode
   );
-  console.log(locale)
 
   return <>{selectedTranslation?.description}</>;
 }

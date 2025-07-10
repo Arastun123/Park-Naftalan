@@ -57,10 +57,6 @@
   height: auto;
 
   .menu {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
-
     @include flex($direction: row, $align: center, $justify: space-between);
 
     .links {
@@ -72,8 +68,21 @@
         font-size: 16px;
         color: $whiteTxt;
         transition: opacity 0.2s;
-        &:hover {
-          opacity: 0.7;
+        border-bottom: 2px solid transparent;
+        transition: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 2px;
+          width: 0%;
+          background-color: $border-color;
+          transition: width 0.3s ease-in-out;
+        }
+        &:hover::after {
+          width: 100%;
         }
       }
     }
@@ -124,7 +133,7 @@
         left: 24px;
         background: transparent;
       }
-      &.active{
+      &.active {
         display: block;
       }
       @media (min-width: 769px) {
@@ -165,7 +174,6 @@
   // justify-content: center;
 
   @include flex($direction: column, $align: start, $justify: center);
-
 
   @media (min-width: 1024px) {
     justify-content: flex-end;

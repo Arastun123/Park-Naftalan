@@ -4,9 +4,10 @@ import global from "@/styles/global.module.scss";
 import styles from "@/styles/index.module.scss";
 import Section from "@/components/Section/Section";
 
-import RoomSection from "@/components/Home/RoomSection"; 
+import RoomSection from "@/components/Home/RoomSection";
 import WriteUs from "@/components/WriteUs";
 import About from "@/components/About";
+import Packets from "@/components/Packets";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -46,6 +47,8 @@ export default async function Home({ params }) {
           />
         </div>
       </Section>
+
+      <Packets t={t} locale={locale} />
 
       <div className={global.container}>
         <WriteUs t={t} locale={locale} />

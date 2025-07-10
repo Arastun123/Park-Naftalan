@@ -12,8 +12,8 @@ export default function AboutPageMain({ t, locale }) {
   const [about, setAbout] = useState([]);
 
   const lanCode = useMemo(() => {
-    if (locale === "az") return 1;
-    if (locale === "en") return 2;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
     return 3;
   }, [locale]);
 
@@ -26,14 +26,17 @@ export default function AboutPageMain({ t, locale }) {
     if (data) {
       setAbout(data);
     }
+    about.imageUrl = about;
   };
-
-  if (!about) return <Loading />;
 
   const selectedTranslation = about.translations?.find(
     (t) => t.language === lanCode
   );
 
+  const originalPath = about?.imageUrl || '';
+  const updatedPath = originalPath.replace("uploads/", "uploads/images/");
+
+  if (!about && !originalPath) return <Loading />;
 
   return (
     <div className={`${global.container} ${styles.about}`}>
@@ -45,7 +48,10 @@ export default function AboutPageMain({ t, locale }) {
         </div>
         <div className={styles.mainContent}>
           <div className={styles.imageBox}>
-            <img src="../headermain.png" alt="Park Naftalan Sanatoriyası" />
+            <img
+              src={`http://localhost:5041/${updatedPath}`}
+              alt="Park Naftalan Sanatoriyası"
+            />
           </div>
           <div className={styles.txt}>
             <p>{selectedTranslation?.description}</p>

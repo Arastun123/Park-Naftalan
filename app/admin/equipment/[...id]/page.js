@@ -93,7 +93,7 @@ export default function createEquipment() {
             { lang: "ru", code: 3 },
           ].map(({ lang, code }) => (
             <label key={lang}>
-              Name ({lang.toUpperCase()}):
+              Təhcizat ({lang.toUpperCase()}):
               <input
                 type="text"
                 value={values[code]}

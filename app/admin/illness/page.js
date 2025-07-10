@@ -8,23 +8,25 @@ import global from "@/styles/global.module.scss";
 import "@/styles/reset.css";
 import { toast } from "react-toastify";
 
-export default function TreatmentCategory() {
+export default function treatmentMethod() {
   const [data, setData] = useState([]);
+  const model = "Illness";
 
-  const th = ["name"];
+  const th = ["name", "description"];
 
   useEffect(() => {
     fetchDatas();
   }, [data]);
 
   const fetchDatas = async () => {
-    let data = await getDatas("TreatmentCategory");
+    let data = await getDatas(model);
     if (data) {
       data = data.map((item) => {
         const translation = item.translations?.[1] || {};
         return {
           ...item,
           name: translation.name || "-",
+          description: translation.description || "-",
           language: translation.language || "-",
         };
       });
@@ -34,7 +36,7 @@ export default function TreatmentCategory() {
   };
 
   const handleDelete = async (id) => {
-    const res = await deleteData("TreatmentCategory", id);
+    const res = await deleteData(model, id);
     res.status === 200
       ? toast.success("Proses uğurla başa çatdı")
       : toast.error("Xəta baş verdi");
@@ -49,7 +51,7 @@ export default function TreatmentCategory() {
         data={data}
         th={th}
         handleDelete={handleDelete}
-        createSlug="treatmentCategory"
+        createSlug={model.toLocaleLowerCase()}
       />
     </div>
   );

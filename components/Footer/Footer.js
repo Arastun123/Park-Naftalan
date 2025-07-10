@@ -10,7 +10,7 @@ export default async function Footer({ params }) {
   const { locale } = await params;
   const t = await getTranslations(locale);
   return (
-    <footer className={global.container}>
+    <footer  >
       <div className={styles.footer}>
         <LinkItem slug="/">
           <Logo width="146" height="104" />

@@ -10,28 +10,27 @@ import admin from "@/styles/admin.module.scss";
 import {
   createData,
   getDataById,
-  getDatas,
   updateData,
 } from "@/lib/handleApiActions";
+import { toast } from "react-toastify";
 
 export default function createPackage() {
   const params = useParams();
   const router = useRouter();
-  const id = params.id;
+  const id = params.id[0];
 
-  const isEdit = id === "create";
-  const [room, setRoom] = useState([]);
+  const isEdit = id === "create" ? "create" : "edit";
   const [values, setValues] = useState({
     name: "",
     durationDay: "",
     price: "",
     roomType: "",
-    image: "",
     packageTranslations: {
       1: { description: "" },
       2: { description: "" },
       3: { description: "" },
     },
+    treatmentMethodsIds: [],
   });
 
   useEffect(() => {
@@ -41,39 +40,34 @@ export default function createPackage() {
   const handleSubmit = async () => {
     const payload = {
       ...values,
-      translations: Object.entries(values.translations).map(([lang, item]) => ({
-        language: Number(lang),
-        description: item.description,
-      })),
+      packageTranslations: Object.entries(values.packageTranslations).map(
+        ([lang, item]) => ({
+          language: Number(lang),
+          description: item.description,
+        })
+      ),
     };
 
-    const res = !isEdit
+
+    const res = isEdit === 'edit'
       ? await updateData("Package", id, payload)
       : await createData("Package", payload);
 
-    if (isEdit) {
-      if (res.statusText === "OK") {
-        alert("Proses uğurla başa çatdı");
-        router.back();
-      } else {
-        alert(res.status);
-      }
+    if (res.status === 200 || res.status === 204) {
+      toast.success("Proses uğurla başa çatdı");
+      router.back();
     } else {
-      if (res.status === 204) {
-        router.back();
-        alert("Proses uğurla başa çatdı");
-      } else {
-        alert("Xeta bas verdi");
-      }
+      toast.error(res.status);
     }
   };
+ 
 
   const fetchDatas = async () => {
-    if (!isEdit) {
+    if (isEdit === "edit") {
       const data = await getDataById("Package", id);
       if (data) {
-        const newTranslations = { ...values.translations };
-        data.translations.forEach((t) => {
+        const newTranslations = { ...values.packageTranslations };
+        data.packageTranslations.forEach((t) => {
           newTranslations[t.language] = {
             description: t.description || "",
           };
@@ -84,20 +78,18 @@ export default function createPackage() {
           durationDay: data.durationDay,
           price: data.price,
           roomType: data.roomType,
-          image: data.image,
           packageTranslations: newTranslations,
+          treatmentMethodsIds: [],
         }));
       }
     }
-    const room = await getDatas("Room");
-    setRoom(room);
   };
 
   return (
     <div className={global.container}>
       <form className={admin.form}>
         <>
-          <label>Name</label>
+          <label>Kompaniya adı</label>
           <input
             type="text"
             value={values.name}
@@ -106,7 +98,7 @@ export default function createPackage() {
             }
           />
 
-          <label>Price</label>
+          <label>Qiyməti</label>
           <input
             type="nunmber"
             value={values.price}
@@ -115,7 +107,7 @@ export default function createPackage() {
             }
           />
 
-          <label>DurationDay</label>
+          <label>Müddəti</label>
           <input
             type="number"
             value={values.durationDay}
@@ -124,7 +116,7 @@ export default function createPackage() {
             }
           />
 
-          <label>RoomType</label>
+          <label>Otaq növü</label>
           <input
             type="3"
             value={values.roomType}
@@ -147,7 +139,7 @@ export default function createPackage() {
               return (
                 <div key={lang} className={admin.dFlex}>
                   <label>
-                    Service ({lang.toUpperCase()}):
+                    Ətraflı məlumat ({lang.toUpperCase()}):
                     <input
                       type="text"
                       value={packageTranslations.description}

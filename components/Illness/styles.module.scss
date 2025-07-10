@@ -1,0 +1,39 @@
+@import "../../styles/vairable.scss";
+.tabBtn {
+  @include flex($direction: row, $align: center, $justify: center);
+  flex-wrap: wrap;
+  gap: 10px;
+  button {
+    border: 1px solid $mainBlueBack;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin: 0 10px;
+    font-family: $sans;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 133%;
+    color: $mainBlueBack;
+    &:hover {
+      background: $mainBlueBack;
+      color: #fff;
+    }
+  }
+  .active {
+    border: 2px solid $btnColor;
+    color: $btnColor;
+  }
+}
+
+.tabContent {
+  @include flex($direction: row, $align: center, $justify: center);
+  flex-wrap: wrap;
+  flex: 1;
+  gap: 20px;
+  margin: 40px 0;
+  @media (max-width: 1024px) {
+    > div {
+      width: calc(50% - 20px);
+      @include flex($direction: column, $align: center, $justify: center);
+    }
+  }
+}

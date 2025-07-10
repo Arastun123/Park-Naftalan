@@ -5,10 +5,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/Button/Button";
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
-import {
-  getDatas,
-  updateDataNoId,
-} from "@/lib/handleApiActions";
+import { getDatas, updateAbout } from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
 
 export default function CreateAbout() {
@@ -16,10 +13,11 @@ export default function CreateAbout() {
   const id = 1;
 
   const [videoLink, setVideoLink] = useState("");
+  const [image, setImage] = useState("");
   const [translations, setTranslations] = useState([
-    { id: 0, language: 1, title: "", miniTitle: "", description: "" }, // az
-    { id: 0, language: 2, title: "", miniTitle: "", description: "" }, // en
-    { id: 0, language: 3, title: "", miniTitle: "", description: "" }, // ru
+    { language: 1, title: "", miniTitle: "", description: "" },
+    { language: 2, title: "", miniTitle: "", description: "" },
+    { language: 3, title: "", miniTitle: "", description: "" },
   ]);
 
   useEffect(() => {
@@ -55,24 +53,33 @@ export default function CreateAbout() {
   };
 
   const handleSubmit = async () => {
-    const payload = {
-      id,
-      videoLink,
-      translations: translations.map((t) => ({
-        id: t.id || 0,
-        title: t.title,
-        miniTitle: t.miniTitle,
-        description: t.description,
-        language: t.language,
-      })),
-    };
+    const formData = new FormData();
+    formData.append("Id", id);
+    formData.append("VideoLink", videoLink);
 
-    const res = await updateDataNoId("About", payload);
-    if (res.status === 204) {
+    if (image) {
+      formData.append("ImageFile", image);
+    }
+
+    translations.forEach((t) => {
+      formData.append(
+        "Translations",
+        JSON.stringify({
+          id: t.id || 1,
+          title: t.title,
+          miniTitle: t.miniTitle,
+          description: t.description,
+          language: t.language,
+        })
+      );
+    });
+
+    const res = await updateAbout("About", id, formData);
+
+    if (res && res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
-      router.back();
     } else {
-      toast.error("Xəta baş verdi: " + res.status);
+      toast.error("Xəta baş verdi: " + (res?.status || "server xətası"));
     }
   };
 
@@ -82,9 +89,9 @@ export default function CreateAbout() {
         {translations.map((t, i) => (
           <div key={t.language}>
             <h3 style={{ marginBottom: 8 }}>
-              {t.language === 1 ? "AZ" : t.language === 2 ? "EN" : "RU"}
+              {t.language === 1 ? "EN" : t.language === 2 ? "AZ" : "RU"}
             </h3>
-            <label>Title</label>
+            <label>Başlıq</label>
             <input
               type="text"
               value={t.title}
@@ -92,7 +99,7 @@ export default function CreateAbout() {
                 handleTranslationChange(t.language, "title", e.target.value)
               }
             />
-            <label>Mini Title</label>
+            <label>Başlıqın altında olan kiçik yazı</label>
             <input
               type="text"
               value={t.miniTitle}
@@ -100,7 +107,7 @@ export default function CreateAbout() {
                 handleTranslationChange(t.language, "miniTitle", e.target.value)
               }
             />
-            <label>Description</label>
+            <label>Ətraflı məlumat</label>
             <textarea
               rows={3}
               value={t.description}
@@ -115,7 +122,12 @@ export default function CreateAbout() {
             <hr />
           </div>
         ))}
-
+        <label>Şəkil</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
         <label>Video Link</label>
         <input
           type="url"

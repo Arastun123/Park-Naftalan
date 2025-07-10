@@ -6,6 +6,7 @@ import Table from "@/components/Admin/Table/Table";
 
 import global from "@/styles/global.module.scss";
 import "@/styles/reset.css";
+import { toast } from "react-toastify";
 
 export default function Equipment() {
   const [data, setData] = useState([]);
@@ -24,8 +25,8 @@ export default function Equipment() {
   const handleDelete = async (id) => {
     const res = await deleteData("Equipment", id);
     res.status === 204
-      ? alert("Proses uğurla başa çatdı")
-      : alert("Xəta baş verdi");
+      ? toast.success("Proses uğurla başa çatdı")
+      : toast.error("Xəta baş verdi");
     if (res) {
       fetchDatas();
     }
