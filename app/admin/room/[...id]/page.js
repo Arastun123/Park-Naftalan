@@ -93,10 +93,15 @@ export default function createRoom() {
     );
     formData.append("Translations", JSON.stringify(translationsArray));
 
+    // 🔥 BURADA id əlavə edilir (yalnız update zamanı)
+    if (isEdit !== "create") {
+      formData.append("Id", id); // C#-da property böyük hərflədirsə, "Id" yaz
+    }
+
     const res =
       isEdit === "create"
         ? await createDataWithImage("Room", formData)
-        : await updateDataWithImage("Room", formData);
+        : await updateDataWithImage("Room", id, formData);
 
     if (
       res &&
