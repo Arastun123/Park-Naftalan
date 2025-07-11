@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { getAznToUsdRate, getDatas } from "@/lib/handleApiActions";
+import { getDatas } from "@/lib/handleApiActions";
 
 import "@/styles/reset.css";
 import styles from "@/styles/index.module.scss";
@@ -21,8 +21,6 @@ function Card({ src, name, slug }) {
 
 export default function RoomSection({ t, locale, showBtn }) {
   const [rooms, setRooms] = useState([]);
-  const [rate, setRate] = useState(1);
-
   const carouselRef = useRef(null);
 
   const {
@@ -40,6 +38,15 @@ export default function RoomSection({ t, locale, showBtn }) {
     };
     fetchRoomsData();
   }, []);
+
+  // Helper function to build full image URL and replace "uploads/" with "uploads/images/"
+  const buildImageUrl = (url) => {
+    if (!url) return "/parkSuite.png"; // fallback image
+    return `http://localhost:5041/${url.replace(
+      "uploads/",
+      "uploads/images/"
+    )}`;
+  };
 
   if (!rooms || rooms.length === 0) {
     return <Loading />;
@@ -62,10 +69,10 @@ export default function RoomSection({ t, locale, showBtn }) {
         <div className={styles.rooms} ref={carouselRef}>
           {rooms.map((item, i) => (
             <Card
+              key={`${item?.id}-${i}`}
               slug={`/rooms/${item.id}`}
-              src={`/${++i}.png`}
+              src={buildImageUrl(item.imageUrls?.[0])}
               name={item?.category}
-              key={`${item?.name}_${i}`}
             />
           ))}
         </div>

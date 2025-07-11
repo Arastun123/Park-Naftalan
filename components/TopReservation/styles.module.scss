@@ -1,4 +1,4 @@
-@import "../../styles/vairable.scss";
+@import "../../styles/variable.scss";
 .wrapper {
   @include flex($direction: row, $align: center, $justify: space-between);
   flex-wrap: wrap;

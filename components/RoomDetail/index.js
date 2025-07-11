@@ -23,7 +23,7 @@ export default function RoomDetail({ t, locale }) {
     if (locale === "az") return 2;
     return 3;
   }, [locale]);
-  
+
   useEffect(() => {
     fetchDatas();
   }, []);
@@ -49,12 +49,14 @@ export default function RoomDetail({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  const images = [
-    "/DSC_0610.png",
-    "/DSC_0618.png",
-    "/DSC_0620.png",
-    "/DSC_6927.png",
-  ];
+  // Helper function to build full image URL and replace "uploads/" to "uploads/images/"
+  const buildImageUrl = (url) => {
+    if (!url) return "/parkSuite.png";
+    return `http://localhost:5041/${url.replace(
+      "uploads/",
+      "uploads/images/"
+    )}`;
+  };
 
   return (
     <div className={style.detail}>
@@ -75,59 +77,67 @@ export default function RoomDetail({ t, locale }) {
           </Button>
         </div>
       </div>
+
+      {/* Baş şəkil */}
       <img
-        src="/park suite 1.png"
+        src={buildImageUrl(room.imageUrls?.[0])}
         alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
       />
+
       <p className={style.centerText}>{room?.miniTitle}</p>
       <p>
         {room?.area} m <sup>2</sup>
       </p>
+
       <div className={style.images}>
         <div className={style.rightSide}>
+          {/* Sağ tərəfdə ilk əlavə şəkil */}
           <img
-            src="/park suite 1.png"
+            src={buildImageUrl(room.imageUrls?.[1])}
             alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
             title={`Park Naftalan Otağı - ${room?.category}`}
           />
         </div>
+
         <div className={style.lefttSide}>
           <div className={style.imageWithText}>
+            {/* Sol tərəfdə ikinci əlavə şəkil */}
             <img
-              src="/park suite 1.png"
+              src={buildImageUrl(room.imageUrls?.[2])}
               alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
               title={`Park Naftalan Otağı - ${room?.category}`}
             />
             <div className={style.text}>
-              <p>
-                {selectedTranslation?.description}
-              </p>
-              {/* <Button
-                onClick={() => router.push(`/${locale}/reservations`)}
-                className={style.reserveBtn}
-              >
-                {t?.Reservation}
-              </Button> */}
+              <p>{selectedTranslation?.description}</p>
             </div>
           </div>
           <div>
+            {/* Sol tərəfdə üçüncü əlavə şəkil */}
             <img
-              src="/park suite 1.png"
+              src={buildImageUrl(room.imageUrls?.[3])}
               alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
               title={`Park Naftalan Otağı - ${room?.category}`}
             />
           </div>
         </div>
       </div>
+
       <h2>{t?.Equipment}</h2>
       <ul className={style.equipments}>
         {matchedEquipments.map((item) => (
           <li key={`${item.id}-${item.language}`}>• {item?.name}</li>
         ))}
       </ul>
+
       <div className={style.video}>
         <p>{t?.VideoTitel}</p>
-        <Video src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1" />
+        <Video
+          src={
+            room.youtubeVideoLink
+              ? room.youtubeVideoLink.replace("watch?v=", "embed/")
+              : "https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1"
+          }
+        />
       </div>
     </div>
   );

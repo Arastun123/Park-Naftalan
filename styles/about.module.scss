@@ -1,4 +1,4 @@
-@import "./styles/vairable.scss";
+@import "./variable.scss";
 
 .about {
   margin-top: 7%;
@@ -8,7 +8,7 @@
   }
   .title {
     text-align: center;
-    margin: 10px 0;
+    margin: 10px auto;
   }
 
   font-family: $inter;
@@ -35,6 +35,7 @@
     .imageBox {
       float: right;
       width: 70%;
+      max-height: 700px;
       @media (max-width: 768px) {
         float: initial;
         width: 100%;

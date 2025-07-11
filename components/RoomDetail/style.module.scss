@@ -1,4 +1,4 @@
-@import "../../styles/vairable.scss";
+@import "../../styles/variable.scss";
 
 .detail {
   margin-top: 10%;
@@ -90,7 +90,7 @@
     text-align: center;
     color: $blackTxt;
     position: relative;
-   
+
     border-bottom: 1px solid $blueTxt;
     border-top: 1px solid $blueTxt;
     cursor: pointer;

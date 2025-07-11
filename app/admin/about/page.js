@@ -61,18 +61,21 @@ export default function CreateAbout() {
       formData.append("ImageFile", image);
     }
 
-    translations.forEach((t) => {
-      formData.append(
-        "Translations",
-        JSON.stringify({
-          id: t.id || 1,
-          title: t.title,
-          miniTitle: t.miniTitle,
-          description: t.description,
-          language: t.language,
-        })
-      );
-    });
+    const translationsArray = translations.map((t) => ({
+      id: t.id || 1,
+      title: t.title,
+      miniTitle: t.miniTitle,
+      description: t.description,
+      language: t.language,
+    }));
+
+    formData.append("Translations", JSON.stringify(translationsArray));
+
+    const dto = {
+      id,
+      videoLink,
+    };
+    formData.append("dto", JSON.stringify(dto));
 
     const res = await updateAbout("About", id, formData);
 

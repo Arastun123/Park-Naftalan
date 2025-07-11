@@ -48,8 +48,6 @@ export default async function Home({ params }) {
         </div>
       </Section>
 
-      <Packets t={t} locale={locale} />
-
       <div className={global.container}>
         <WriteUs t={t} locale={locale} />
       </div>

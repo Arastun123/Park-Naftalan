@@ -114,7 +114,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
       try {
         const res = await sendMail(
-          "ekbr03@gmail.com",
+          "Reservation@parknaftalan.az",
           "Reservation",
           emailBody
         );

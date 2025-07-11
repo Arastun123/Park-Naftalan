@@ -9,10 +9,13 @@ import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 import {
   createData,
+  createDataWithImage,
   getDataById,
   getDatas,
   updateData,
+  updateDataWithImage,
 } from "@/lib/handleApiActions";
+import { toast } from "react-toastify";
 
 export default function createRoom() {
   const params = useParams();
@@ -27,8 +30,9 @@ export default function createRoom() {
     price: "",
     member: "",
     picture: "",
-    youtubeVideoLink: "",
+    youtubeVideoLink: "https://gemini.google.com/app/a0f1069ff4bdc9c7",
     equipmentIds: [],
+    imageUrls: [],
     translations: {
       1: {
         service: "",
@@ -54,36 +58,57 @@ export default function createRoom() {
     },
   });
 
-
   useEffect(() => {
     fetchDatas();
   }, []);
 
   const handleSubmit = async () => {
-    const payload = {
-      ...values,
-      translations: Object.entries(values.translations).map(([lang, item]) => ({
-        language: Number(lang),
+    const formData = new FormData();
+
+    formData.append("Category", values.category);
+    formData.append("Area", values.area);
+    formData.append("Price", values.price);
+    formData.append("Member", values.member);
+    formData.append("YoutubeVideoLink", values.youtubeVideoLink || "");
+
+    if (values.pictures && values.pictures.length > 0) {
+      values.pictures.forEach((file) => {
+        formData.append("ImageFiles", file);
+      });
+    }
+
+    values.equipmentIds.forEach((id) => {
+      formData.append("EquipmentIds", id);
+    });
+
+    const translationsArray = Object.entries(values.translations).map(
+      ([language, item]) => ({
+        language: Number(language),
         service: item.service,
         description: item.description,
         miniDescription: item.miniDescription,
         title: item.title,
         miniTitle: item.miniTitle,
-      })),
-    };
+      })
+    );
+    formData.append("Translations", JSON.stringify(translationsArray));
 
     const res =
-      isEdit === "edit"
-        ? await updateData("Room", id, payload)
-        : await createData("Room", payload);
+      isEdit === "create"
+        ? await createDataWithImage("Room", formData)
+        : await updateDataWithImage("Room", formData);
 
-    if (res.status === 204 && res.status === 200) {
-      alert("Proses uğurla başa çatdı");
+    if (
+      res &&
+      (res.status === 200 || res.status === 204 || res.status === 201)
+    ) {
+      toast.success("Proses uğurla başa çatdı");
       router.back();
     } else {
-      alert(res.status);
+      toast.error("Xəta baş verdi: " + res?.status);
     }
   };
+
   const fetchDatas = async () => {
     if (isEdit === "edit") {
       const data = await getDataById("Room", id);
@@ -115,10 +140,38 @@ export default function createRoom() {
     setEquipment(equipment);
   };
 
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    const maxFiles = 4;
+
+    if (selectedFiles.length > maxFiles) {
+      alert(
+        `Xahiş olunur ən çox ${maxFiles} şəkil seçin. Yalnız ilk ${maxFiles} şəkil yüklənəcək.`
+      );
+      setValues((prev) => ({
+        ...prev,
+        pictures: selectedFiles.slice(0, maxFiles),
+      }));
+    } else {
+      setValues((prev) => ({
+        ...prev,
+        pictures: selectedFiles,
+      }));
+    }
+  };
+
   return (
     <div className={global.container}>
       <form className={admin.form}>
         <>
+          <label>Şəkil</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+          />
+
           <label>Otaqın adı</label>
           <input
             type="text"

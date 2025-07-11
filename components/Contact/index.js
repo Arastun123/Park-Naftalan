@@ -15,11 +15,13 @@ export default function ContactComponent({ locale, t }) {
   useEffect(() => {
     const fetchData = async () => {
       const datas = await getDatas("Contact");
-      if (datas) setData(datas);  
+      if (datas) setData(datas);
     };
 
     fetchData();
   }, []);
+
+ 
 
   return (
     <>
@@ -30,7 +32,9 @@ export default function ContactComponent({ locale, t }) {
             <div className={styles.linkGroup}>
               <p>{t?.Phone}</p>
               {data.number?.map((n, i) => (
-                <Link key={i} href={`tel:${n}`}>{n}</Link>
+                <Link key={i} href={`tel:${n}`}>
+                  {n}
+                </Link>
               ))}
             </div>
             <div className={styles.linkGroup}>
@@ -43,14 +47,24 @@ export default function ContactComponent({ locale, t }) {
             </div>
             <div className={`${styles.linkGroup} ${styles.social}`}>
               <p>{t?.SocialMedia}</p>
-              <SocialMediaIcon />
+              <SocialMediaIcon
+                insta={data?.instagramLink}
+                face={data?.facebookLink}
+                tiktok={data?.tiktokLink}
+                wp={data?.whatsappNumber}
+                you={data?.youtubeLink}
+              />
             </div>
           </div>
         </div>
 
         <div className={styles.right}>
           <h2>{t?.SubmitanInquiry}</h2>
-          <ContactForm t={t} locale={locale} />
+          <ContactForm
+            t={t}
+            locale={locale}
+             
+          />
         </div>
       </div>
       <Map />

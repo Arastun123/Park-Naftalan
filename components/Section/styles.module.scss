@@ -1,4 +1,4 @@
-@import "../../styles/vairable.scss";
+@import "../../styles/variable.scss";
 .section {
   .sectionTitle {
     color: $blackTxt;
@@ -7,8 +7,8 @@
     font-family: $inter;
     padding: 0 10px;
     margin-right: 10px;
-    @include flex($direction:row, $align: center, $justify:start);
-    
+    @include flex($direction: row, $align: center, $justify: start);
+
     gap: 12px;
     height: max-content;
     white-space: nowrap;

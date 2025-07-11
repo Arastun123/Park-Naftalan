@@ -1,31 +1,33 @@
-@import "../../styles//vairable.scss";
+@import "../../styles//variable.scss";
 
 .banner {
   @include flex($direction: row, $align: center, $justify: center);
   gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
   .item {
+    max-width: 800px;
     display: flex;
     background: #0e3c61;
-
     overflow: hidden;
-
     font-family: Arial, sans-serif;
     width: 100%;
     position: relative;
-    height: 150px;
     align-items: stretch;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .left {
-    background: #0e3c61; // Dark blue
+    background: #0e3c61;
     color: white;
     padding: 20px;
     flex: 0 0 200px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex($direction: column, $align: center, $justify: center);
     position: relative;
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
     z-index: 2;
@@ -45,24 +47,24 @@
   .mainContentArea {
     flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
+    flex-direction: column;
+    // justify-content: space-between;
+    // align-items: stretch;
     background-color: white;
+    padding: 0;
+    position: relative;
     clip-path: polygon(15% 0, 100% 0, 90% 100%, 0% 100%);
+
     z-index: 1;
   }
 
   .center {
     flex: 1;
-    padding: 20px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex($direction: column, $align: center, $justify: center);
     color: #0e3c61;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
   .center h2 {
@@ -81,17 +83,14 @@
   .rightDiagonal {
     background-color: #0e3c61;
     flex: 0 0 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    @include flex($direction: roü, $align: center, $justify: center);
     padding: 20px;
-    position: relative;
-
-    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
     color: white;
     margin-left: -50px;
     z-index: 3;
+    box-sizing: border-box;
+
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%); //
   }
 
   .reserveBtn {
@@ -105,6 +104,7 @@
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-bottom: 10px;
+    white-space: nowrap;
   }
 
   .reserveBtn:hover {
@@ -115,19 +115,21 @@
   .logoPlaceholder {
     width: 80px;
     height: 40px;
-    background-color: #fdfbf7;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex($direction: row, $align: center, $justify: center);
     font-size: 10px;
     color: #0e3c61;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .banner {
+      gap: 10px;
+    }
+
+    .item {
       flex-direction: column;
-      height: auto;
+      align-items: center;
+      width: calc(100% - 20px);
+      margin: 0 10px;
     }
 
     .left,
@@ -143,12 +145,15 @@
     .left {
       background-color: #0e3c61;
       color: white;
+      height: auto;
     }
 
     .mainContentArea {
       background-color: white;
       padding-left: 20px;
       padding-right: 20px;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .center {
@@ -159,14 +164,67 @@
       background-color: #0e3c61;
       color: white;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: center;
       padding-top: 15px;
       padding-bottom: 15px;
+      flex-wrap: wrap;
     }
 
     .reserveBtn {
       margin-bottom: 0;
       margin-right: 10px;
     }
+
+    .logoPlaceholder {
+      margin-top: 0;
+    }
   }
+
+  @media (max-width: 576px) {
+    .banner {
+      gap: 0;
+    }
+
+    .item {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .left {
+      flex: 1 1 100%;
+      padding: 15px 10px;
+    }
+
+    .mainContentArea {
+      flex: 1 1 100%;
+      padding: 15px 10px;
+    }
+
+    .rightDiagonal {
+      flex: 1 1 100%;
+      flex-direction: column;
+      padding: 15px 10px;
+      gap: 10px;
+    }
+
+    .reserveBtn {
+      margin-right: 0;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .logoPlaceholder {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+@mixin flex($direction: row, $align: flex-start, $justify: flex-start) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
 }

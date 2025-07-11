@@ -1,5 +1,4 @@
-@import "../../styles/vairable.scss";
- 
+@import "../../styles/variable.scss";
 
 .inputWrapper,
 .selectWrapper {
@@ -42,6 +41,6 @@
 
   &.error input,
   &.error select {
-    border-color: $error-color;  
+    border-color: $error-color;
   }
 }

@@ -28,7 +28,7 @@ export default async function Footer({ params }) {
             {/* Hotel Plaza Athenee SAS Société par Actions Simplifiées au capital
             de 460 000 Euros 25, 27 Avenue Montaigne, Paris 75008 */}
           </p>
-          <LinkItem slug="/"></LinkItem>
+          {/* <LinkItem slug="/"></LinkItem> */}
         </div>
       </div>
     </footer>

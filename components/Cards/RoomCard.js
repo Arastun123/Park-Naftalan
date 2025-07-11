@@ -16,8 +16,8 @@ export default function RoomCard({ t, locale }) {
     if (locale === "az") return 1;
     return 2;
   }, [locale]);
-  const router = useRouter();
 
+  const router = useRouter();
   const [rooms, setRooms] = useState([]);
   const [currency, setCurrency] = useState(0.5877);
 
@@ -38,7 +38,7 @@ export default function RoomCard({ t, locale }) {
 
     const getCurrency = async () => {
       const currency = 0;
-      if(currency) setCurrency(currency);
+      if (currency) setCurrency(currency);
     };
 
     fetchDatas();
@@ -48,49 +48,62 @@ export default function RoomCard({ t, locale }) {
   if (!rooms || rooms.length === 0) {
     return <Loading />;
   }
+
   return (
     <div className={styles.roomGrid}>
-      <>
-        {[...rooms].reverse().map((item) => {
-          const currentTranslation = item.translations.find(
-            (t) => t.language === lanCode
-          );
-          return (
-            <div key={`${item?.id}-${locale}`} className={styles.roomCard}>
-              <div className={styles.image}>
-                <img
-                  src={item?.picture || "/parkSuite.png"}
-                  alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
-                />
-              </div>
-              <div className={styles.desc}>
-                <h2>{item.category}</h2>
-                <p>
-                  {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ /{" "}
-                  {(Number(item?.price) * currency).toFixed(0)} $ | {t?.Guest}:{" "}
-                  {item?.member}
-                </p>
-                <p>{currentTranslation?.description}</p>
-                <Button
-                  onClick={() => router.push(`rooms/${item.id}`)}
-                  className={styles.reserveBtn}
-                >
-                  {t?.SeeMore}
-                </Button>
+      {[...rooms].reverse().map((item) => {
+        const currentTranslation = item.translations.find(
+          (t) => t.language === lanCode
+        );
+
+        const updatedImageUrls = item.imageUrls?.map((url) =>
+          url.replace("uploads/", "uploads/images/")
+        );
+
+        return (
+          <div className={styles.roomCard} key={`${item?.id}-${locale}`}>
+            <div className={styles.image}>
+              <img
+                src={
+                  updatedImageUrls?.[0]
+                    ? `http://localhost:5041/${updatedImageUrls[0]}`
+                    : "/parkSuite.png"
+                }
+                alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
+              />
+            </div>
+
+            <div className={styles.desc}>
+              <h2>{item.category}</h2>
+              <p>
+                {t?.Area}: {item?.area} m² | {t?.Price}: {item?.price}₼ /{" "}
+                {(Number(item?.price) * currency).toFixed(0)} $ | {t?.Guest}:{" "}
+                {item?.member}
+              </p>
+              <p>{currentTranslation?.description}</p>
+
+              <Button
+                onClick={() => router.push(`rooms/${item.id}`)}
+                className={styles.reserveBtn}
+              >
+                {t?.SeeMore}
+              </Button>
+
+              {updatedImageUrls?.length > 1 && (
                 <div className={styles.images}>
-                  {[1, 2, 3].map((_, idx) => (
+                  {updatedImageUrls.slice(1).map((url, idx) => (
                     <img
                       key={idx}
-                      src={item?.picture || "/parkSuite.png"}
-                      alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
+                      src={`http://localhost:5041/${url}`}
+                      alt={`Park Naftalan - ${item.category} - ${idx + 2}. şəkil`}
                     />
                   ))}
                 </div>
-              </div>
+              )}
             </div>
-          );
-        })}
-      </>
+          </div>
+        );
+      })}
     </div>
   );
 }

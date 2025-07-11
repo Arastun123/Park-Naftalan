@@ -1,4 +1,4 @@
-@import "./styles/vairable.scss";
+@import "./styles/variable.scss";
 
 .form input,
 .form textarea {
@@ -39,4 +39,13 @@
   @include flex($direction: row, $align: center, $justify: space-between);
 
   margin: 10px 0;
+}
+
+.imagePreviewContainer {
+  @include flex($direction: row, $align: center, $justify: space-between);
+
+  gap: 10;
+  img {
+    width: 100%;
+  }
 }

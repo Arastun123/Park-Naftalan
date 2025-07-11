@@ -1,4 +1,4 @@
-@import "./vairable";
+@import "./variable.scss";
 
 @mixin respond($breakpoint) {
   @if $breakpoint == tablet {

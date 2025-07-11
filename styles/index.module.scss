@@ -1,4 +1,4 @@
-@import "./vairable.scss";
+@import "./variable.scss";
 .about {
   margin: 20px 0;
   div {
@@ -84,6 +84,7 @@
 
       img {
         width: 100%;
+        max-width: 800px;
         height: 100%;
         object-fit: cover;
         display: block;
