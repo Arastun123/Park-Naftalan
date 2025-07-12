@@ -33,7 +33,7 @@ export function middleware(request) {
 
   if (pathname.startsWith("/naftalanPark")) {
     const token = request.cookies.get("admin_token")?.value;
-    const isLoginPage = pathname === "/admin";
+    const isLoginPage = pathname === "/naftalanPark";
 
     if (!token && !isLoginPage) {
       return NextResponse.redirect(new URL("/naftalanPark", request.url));
