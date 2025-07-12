@@ -10,12 +10,19 @@ export default function Illness({ t, locale }) {
   const [treatment, setTreatment] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
 
-  console.log(treatment);
+  console.log('treatment', treatment);
+  // console.log(illness);
 
   const lanCode = useMemo(() => {
     if (locale === "en") return 1;
     if (locale === "az") return 2;
     return 3;
+  }, [locale]);
+
+   const treatmentLanCode = useMemo(() => {
+    if (locale === "en") return 0;
+    if (locale === "az") return 1;
+    return 2;
   }, [locale]);
 
   useEffect(() => {
@@ -28,7 +35,7 @@ export default function Illness({ t, locale }) {
         setTreatment(treatmentData);
 
         const firstValidTab = treatmentData.find((cat) =>
-          cat.translations?.find((tr) => tr.language === lanCode && tr.name)
+          cat.translations?.find((tr) => tr.language === treatmentLanCode && tr.name)
         );
 
         setActiveTab(firstValidTab?.id);
@@ -40,7 +47,7 @@ export default function Illness({ t, locale }) {
   console.log(illness);
 
   const getTranslatedName = (translations = []) => {
-    const translation = translations.find((t) => t.language === lanCode);
+    const translation = translations.find((t) => t.language === treatmentLanCode);
     return translation?.name || "-";
   };
 

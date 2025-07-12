@@ -40,7 +40,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     };
     fetchRooms();
     const getCurrency = async () => {
-      const currency = 0;
+      const currency = await getAznToUsdRate();
       if (currency) setCurrecy(currency);
     };
     getCurrency();
