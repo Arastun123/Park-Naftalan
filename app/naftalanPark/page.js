@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import { useRouter } from "next/navigation"; 
 import { toast } from "react-toastify";
 import styles from "@/styles/global.module.scss";
 import Input from "@/components/Input";
@@ -28,7 +27,7 @@ export default function AdminLoginPage() {
         );
 
         toast.success("Login successful");
-        router.push("/admin/dashboard");
+        router.push("/naftalanPark/dashboard");
       } catch (err) {
         toast.error("Uğursuz cəhd");
       }

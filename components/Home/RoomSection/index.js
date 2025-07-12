@@ -39,10 +39,9 @@ export default function RoomSection({ t, locale, showBtn }) {
     fetchRoomsData();
   }, []);
 
-  // Helper function to build full image URL and replace "uploads/" with "uploads/images/"
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png"; // fallback image
-    return `http://localhost:5041/${url.replace(
+    return `https://parknaftalan.az/api/${url.replace(
       "uploads/",
       "uploads/images/"
     )}`;

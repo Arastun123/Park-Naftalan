@@ -13,7 +13,7 @@ function Card({ src, name, stil }) {
   return (
     <div className={stil}>
       <img
-        src={src || "/placeholder.svg?height=400&width=350"}
+        src={src}
         alt={`Park Naftalan Sanatoriyası - ${name}`}
       />
       <p>{name}</p>
@@ -30,7 +30,6 @@ export default function MedicalProcedures({ t, locale }) {
     return 2;
   }, [locale]);
 
-
   useEffect(() => {
     const fetchDatas = async () => {
       try {
@@ -43,7 +42,7 @@ export default function MedicalProcedures({ t, locale }) {
     };
 
     fetchDatas();
-  }, []); 
+  }, []);
 
   const filteredData = useMemo(
     () => data.filter((item) => item.language === lanCode),
@@ -68,8 +67,7 @@ export default function MedicalProcedures({ t, locale }) {
         <div className={styles.cards} ref={carouselRef}>
           {filteredData.map((item, i) => (
             <Card
-              slug={`/${item.name}`}
-              src={`/${item.name}.png`}
+              src={item?.name}
               name={item?.name}
               key={`${item.name}_${i}`}
               isActive={i === activeIndex}

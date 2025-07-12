@@ -31,16 +31,16 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
   const response = NextResponse.next();
 
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/naftalanPark")) {
     const token = request.cookies.get("admin_token")?.value;
     const isLoginPage = pathname === "/admin";
 
     if (!token && !isLoginPage) {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/naftalanPark", request.url));
     }
 
     if (token && isLoginPage) {
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+      return NextResponse.redirect(new URL("/naftalanPark/dashboard", request.url));
     }
 
     return response;

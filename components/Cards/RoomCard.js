@@ -66,7 +66,7 @@ export default function RoomCard({ t, locale }) {
               <img
                 src={
                   updatedImageUrls?.[0]
-                    ? `http://localhost:5041/${updatedImageUrls[0]}`
+                    ? `https://parknaftalan.az/api/${updatedImageUrls[0]}`
                     : "/parkSuite.png"
                 }
                 alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
@@ -94,7 +94,7 @@ export default function RoomCard({ t, locale }) {
                   {updatedImageUrls.slice(1).map((url, idx) => (
                     <img
                       key={idx}
-                      src={`http://localhost:5041/${url}`}
+                      src={`https://parknaftalan.az/api/${url}`}
                       alt={`Park Naftalan - ${item.category} - ${idx + 2}. şəkil`}
                     />
                   ))}

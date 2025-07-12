@@ -11,6 +11,8 @@ import Loading from "../Loading";
 export default function AboutPageMain({ t, locale }) {
   const [about, setAbout] = useState([]);
 
+  console.log(about)
+
   const lanCode = useMemo(() => {
     if (locale === "en") return 1;
     if (locale === "az") return 2;
@@ -33,7 +35,7 @@ export default function AboutPageMain({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  const originalPath = about?.imageUrl || '';
+  const originalPath = about?.imageUrl || "";
   const updatedPath = originalPath.replace("uploads/", "uploads/images/");
 
   if (!about && !originalPath) return <Loading />;
@@ -49,7 +51,7 @@ export default function AboutPageMain({ t, locale }) {
         <div className={styles.mainContent}>
           <div className={styles.imageBox}>
             <img
-              src={`http://localhost:5041/${updatedPath}`}
+              src={`https://parknaftalan.az/api/${updatedPath}`}
               alt="Park Naftalan Sanatoriyası"
             />
           </div>

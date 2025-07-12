@@ -45,7 +45,7 @@ export default function createTreatmentMethod() {
         ? await updateData("treatmentMethod", id, payload)
         : await createData("treatmentMethod", payload);
 
-    if (res.status === 200 && res.status === 204) {
+    if (res.status === 200 || res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
       router.back();
     } else {

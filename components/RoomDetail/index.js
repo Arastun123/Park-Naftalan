@@ -52,7 +52,7 @@ export default function RoomDetail({ t, locale }) {
   // Helper function to build full image URL and replace "uploads/" to "uploads/images/"
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png";
-    return `http://localhost:5041/${url.replace(
+    return `https://parknaftalan.az/api/${url.replace(
       "uploads/",
       "uploads/images/"
     )}`;
@@ -78,7 +78,6 @@ export default function RoomDetail({ t, locale }) {
         </div>
       </div>
 
-      {/* Baş şəkil */}
       <img
         src={buildImageUrl(room.imageUrls?.[0])}
         alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
@@ -91,7 +90,6 @@ export default function RoomDetail({ t, locale }) {
 
       <div className={style.images}>
         <div className={style.rightSide}>
-          {/* Sağ tərəfdə ilk əlavə şəkil */}
           <img
             src={buildImageUrl(room.imageUrls?.[1])}
             alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
@@ -101,7 +99,6 @@ export default function RoomDetail({ t, locale }) {
 
         <div className={style.lefttSide}>
           <div className={style.imageWithText}>
-            {/* Sol tərəfdə ikinci əlavə şəkil */}
             <img
               src={buildImageUrl(room.imageUrls?.[2])}
               alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
@@ -112,7 +109,6 @@ export default function RoomDetail({ t, locale }) {
             </div>
           </div>
           <div>
-            {/* Sol tərəfdə üçüncü əlavə şəkil */}
             <img
               src={buildImageUrl(room.imageUrls?.[3])}
               alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
@@ -129,7 +125,7 @@ export default function RoomDetail({ t, locale }) {
         ))}
       </ul>
 
-      <div className={style.video}>
+      {/* <div className={style.video}>
         <p>{t?.VideoTitel}</p>
         <Video
           src={
@@ -138,7 +134,7 @@ export default function RoomDetail({ t, locale }) {
               : "https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1"
           }
         />
-      </div>
+      </div> */}
     </div>
   );
 }

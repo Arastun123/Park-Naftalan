@@ -10,10 +10,12 @@ export default function Illness({ t, locale }) {
   const [treatment, setTreatment] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
 
+  console.log(treatment);
+
   const lanCode = useMemo(() => {
-    if (locale === "en") return 0;
-    if (locale === "az") return 1;
-    return 2;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
+    return 3;
   }, [locale]);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Illness({ t, locale }) {
 
     fetchDatas();
   }, [lanCode]);
-  console.log(illness)
+  console.log(illness);
 
   const getTranslatedName = (translations = []) => {
     const translation = translations.find((t) => t.language === lanCode);
@@ -54,7 +56,11 @@ export default function Illness({ t, locale }) {
           if (!name) return null;
 
           return (
-            <Button key={cat.id} onClick={() => setActiveTab(cat.id)} className={`${cat.id === activeTab && styles.active}`}>
+            <Button
+              key={cat.id}
+              onClick={() => setActiveTab(cat.id)}
+              className={`${cat.id === activeTab && styles.active}`}
+            >
               {name}
             </Button>
           );
@@ -70,7 +76,10 @@ export default function Illness({ t, locale }) {
 
           return (
             <div key={illnessItem.id}>
-              <img src="/Osteoxondroz.png" alt="Osteoxondroz" />
+              <img
+                src={`http://localhost:5041/${illnessItem.id}`}
+                alt={`Park Naftalan Sanatoriyası - ${illnessItem.name}`}
+              />
               <h3>{translation.name}</h3>
             </div>
           );
