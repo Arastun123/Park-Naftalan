@@ -35,7 +35,7 @@ export default function AboutPageMain({ t, locale }) {
   );
 
   const originalPath = about?.imageUrl || "";
-  const updatedPath = originalPath.replace("uploads/", "uploads/images/");
+  const updatedPath = originalPath.replace("uploads/", "uploads/");
 
   if (!about && !originalPath) return <Loading />;
 
