@@ -71,15 +71,18 @@ export default function createRoom() {
     formData.append("Member", values.member);
     formData.append("YoutubeVideoLink", values.youtubeVideoLink || "");
 
-    if (values.pictures && values.pictures.length > 0) {
-      values.pictures.forEach((file) => {
-        formData.append("ImageFiles", file);
-      });
-    }
-
     values.equipmentIds.forEach((id) => {
       formData.append("EquipmentIds", id);
     });
+
+    if (values.pictures && values.pictures.length > 0) {
+      values.pictures.forEach((file) => {
+        formData.append(
+          isEdit === "create" ? "ImageFiles" : "NewImageFiles",
+          file
+        );
+      });
+    }
 
     const translationsArray = Object.entries(values.translations).map(
       ([language, item]) => ({
@@ -93,9 +96,8 @@ export default function createRoom() {
     );
     formData.append("Translations", JSON.stringify(translationsArray));
 
-    // 🔥 BURADA id əlavə edilir (yalnız update zamanı)
     if (isEdit !== "create") {
-      formData.append("Id", id); // C#-da property böyük hərflədirsə, "Id" yaz
+      formData.append("Id", id);
     }
 
     const res =
@@ -188,7 +190,7 @@ export default function createRoom() {
 
           <label>Otaqın ərazisi</label>
           <input
-            type="text"
+            type="number"
             value={values.area}
             onChange={(e) =>
               setValues((prev) => ({ ...prev, area: e.target.value }))
@@ -206,7 +208,7 @@ export default function createRoom() {
 
           <label>Qonaq sayı</label>
           <input
-            type="3"
+            type="number"
             value={values.member}
             onChange={(e) =>
               setValues((prev) => ({ ...prev, member: e.target.value }))
