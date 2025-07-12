@@ -18,7 +18,7 @@ export default async function Footer({ params }) {
         <div className={styles.links}>
           <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
           <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-          <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+          {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
           <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           <LinkItem slug={`/${locale}/reservations`}>{t?.Reservation}</LinkItem>
         </div>

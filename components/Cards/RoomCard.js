@@ -48,7 +48,7 @@ export default function RoomCard({ t, locale }) {
   if (!rooms || rooms.length === 0) {
     return <Loading />;
   }
-
+  
   return (
     <div className={styles.roomGrid}>
       {[...rooms].reverse().map((item) => {
@@ -56,17 +56,13 @@ export default function RoomCard({ t, locale }) {
           (t) => t.language === lanCode
         );
 
-        const updatedImageUrls = item.imageUrls?.map((url) =>
-          url.replace("uploads/", "uploads/images/")
-        );
-
         return (
           <div className={styles.roomCard} key={`${item?.id}-${locale}`}>
             <div className={styles.image}>
               <img
                 src={
-                  updatedImageUrls?.[0]
-                    ? `https://parknaftalan.az/api/${updatedImageUrls[0]}`
+                  item.imageUrls[0]
+                    ? `https://parknaftalan.az/${item?.imageUrls[0]}`
                     : "/parkSuite.png"
                 }
                 alt={`Park Naftalan Sanatoriyası - ${item?.category}`}
@@ -89,13 +85,15 @@ export default function RoomCard({ t, locale }) {
                 {t?.SeeMore}
               </Button>
 
-              {updatedImageUrls?.length > 1 && (
+              {item?.imageUrls?.length > 1 && (
                 <div className={styles.images}>
-                  {updatedImageUrls.slice(1).map((url, idx) => (
+                  {item?.imageUrls.slice(1).map((url, idx) => (
                     <img
                       key={idx}
-                      src={`https://parknaftalan.az/api/${url}`}
-                      alt={`Park Naftalan - ${item.category} - ${idx + 2}. şəkil`}
+                      src={`https://parknaftalan.az/${url}`}
+                      alt={`Park Naftalan - ${item.category} - ${
+                        idx + 2
+                      }. şəkil`}
                     />
                   ))}
                 </div>

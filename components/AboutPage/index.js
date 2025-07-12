@@ -11,7 +11,6 @@ import Loading from "../Loading";
 export default function AboutPageMain({ t, locale }) {
   const [about, setAbout] = useState([]);
 
-  console.log(about)
 
   const lanCode = useMemo(() => {
     if (locale === "en") return 1;
@@ -51,7 +50,7 @@ export default function AboutPageMain({ t, locale }) {
         <div className={styles.mainContent}>
           <div className={styles.imageBox}>
             <img
-              src={`https://parknaftalan.az/api/${updatedPath}`}
+              src={`https://parknaftalan.az/${updatedPath}`}
               alt="Park Naftalan Sanatoriyası"
             />
           </div>

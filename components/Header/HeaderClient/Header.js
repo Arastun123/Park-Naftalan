@@ -55,7 +55,7 @@ export default function HeaderClient({ locale, t }) {
             <div className={styles.links}>
               <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
               <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+              {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
               <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
 
@@ -70,7 +70,7 @@ export default function HeaderClient({ locale, t }) {
           <div className={styles.drawerColumns}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
             <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
+            {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
             <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           </div>
 

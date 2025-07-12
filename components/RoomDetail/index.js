@@ -52,10 +52,7 @@ export default function RoomDetail({ t, locale }) {
   // Helper function to build full image URL and replace "uploads/" to "uploads/images/"
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png";
-    return `https://parknaftalan.az/api/${url.replace(
-      "uploads/",
-      "uploads/images/"
-    )}`;
+    return `https://parknaftalan.az/${url}`;
   };
 
   return (

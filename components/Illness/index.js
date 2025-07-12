@@ -10,16 +10,13 @@ export default function Illness({ t, locale }) {
   const [treatment, setTreatment] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
 
-  console.log('treatment', treatment);
-  // console.log(illness);
-
   const lanCode = useMemo(() => {
     if (locale === "en") return 1;
     if (locale === "az") return 2;
     return 3;
   }, [locale]);
 
-   const treatmentLanCode = useMemo(() => {
+  const treatmentLanCode = useMemo(() => {
     if (locale === "en") return 0;
     if (locale === "az") return 1;
     return 2;
@@ -35,7 +32,9 @@ export default function Illness({ t, locale }) {
         setTreatment(treatmentData);
 
         const firstValidTab = treatmentData.find((cat) =>
-          cat.translations?.find((tr) => tr.language === treatmentLanCode && tr.name)
+          cat.translations?.find(
+            (tr) => tr.language === treatmentLanCode && tr.name
+          )
         );
 
         setActiveTab(firstValidTab?.id);
@@ -44,10 +43,11 @@ export default function Illness({ t, locale }) {
 
     fetchDatas();
   }, [lanCode]);
-  console.log(illness);
 
   const getTranslatedName = (translations = []) => {
-    const translation = translations.find((t) => t.language === treatmentLanCode);
+    const translation = translations.find(
+      (t) => t.language === treatmentLanCode
+    );
     return translation?.name || "-";
   };
 
@@ -84,7 +84,7 @@ export default function Illness({ t, locale }) {
           return (
             <div key={illnessItem.id}>
               <img
-                src={`http://localhost:5041/${illnessItem.id}`}
+                src={`https://parknaftalan.az/az/uploads/images/illness${illnessItem.id}.png`}
                 alt={`Park Naftalan Sanatoriyası - ${illnessItem.name}`}
               />
               <h3>{translation.name}</h3>
