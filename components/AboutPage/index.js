@@ -13,8 +13,8 @@ export default function AboutPageMain({ t, locale }) {
 
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 1;
-    if (locale === "az") return 2;
+    if (locale === "en") return 2;
+    if (locale === "az") return 1;
     return 3;
   }, [locale]);
 
@@ -35,7 +35,7 @@ export default function AboutPageMain({ t, locale }) {
   );
 
   const originalPath = about?.imageUrl || "";
-  const updatedPath = originalPath.replace("uploads/", "uploads/images/");
+  const updatedPath = originalPath.replace("uploads/", "uploads/");
 
   if (!about && !originalPath) return <Loading />;
 

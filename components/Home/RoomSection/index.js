@@ -40,10 +40,10 @@ export default function RoomSection({ t, locale, showBtn }) {
   }, []);
 
   const buildImageUrl = (url) => {
-    if (!url) return "/parkSuite.png"; // fallback image
-    return `https://parknaftalan.az/api/${url.replace(
+    if (!url) return "/parkSuite.png"; 
+    return `https://parknaftalan.az/${url.replace(
       "uploads/",
-      "uploads/images/"
+      "uploads/"
     )}`;
   };
 

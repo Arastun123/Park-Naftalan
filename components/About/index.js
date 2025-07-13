@@ -7,8 +7,8 @@ export default function About({ t, locale }) {
   const [about, setAbout] = useState([]);
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 1;
-    if (locale === "az") return 2;
+    if (locale === "en") return 2;
+    if (locale === "az") return 1;
     return 3;
   }, [locale]);
 
@@ -25,6 +25,7 @@ export default function About({ t, locale }) {
   const selectedTranslation = about.translations?.find(
     (t) => t.language === lanCode
   );
+  
 
   return <>{selectedTranslation?.description}</>;
 }

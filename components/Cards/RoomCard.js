@@ -12,9 +12,9 @@ import styles from "./styles.module.scss";
 
 export default function RoomCard({ t, locale }) {
   const lanCode = useMemo(() => {
-    if (locale === "en") return 0;
-    if (locale === "az") return 1;
-    return 2;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
+    return 3;
   }, [locale]);
 
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function RoomCard({ t, locale }) {
 
   if (!rooms || rooms.length === 0) {
     return <Loading />;
-  }
+  }  
   
   return (
     <div className={styles.roomGrid}>
