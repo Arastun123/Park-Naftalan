@@ -11,6 +11,7 @@ export default async function Reservations({ params }) {
   const t = await getTranslations(locale);
   const rooms = [];
   const category = params.category;
+
   return (
     <div className={global.container}>
       <div className={styles.form}>
@@ -41,7 +42,6 @@ export default async function Reservations({ params }) {
           />
         </div>
       </Section>
-      
     </div>
   );
 }

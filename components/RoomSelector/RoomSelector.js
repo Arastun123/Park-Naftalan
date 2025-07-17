@@ -1,62 +1,33 @@
-import { useState } from "react";
-import styles from "./style.module.scss";
-import Button from "../Button/Button";
-import { Minus, Plus } from "../Svg";
+"use clent";
+import { useEffect, useState } from "react";
 
-function Counter({ name }) {
-  const [count, setCount] = useState(0);
-  const maxCount = 3;
+import SelectBox from "../SelecBox";
 
-  const handleCount = (action) => {
-    switch (action) {
-      case "increase":
-        if (count < maxCount) {
-          setCount(count + 1);
-        }
-        break;
-      case "decrease":
-        if (count > 0) {
-          setCount(count - 1);
-        }
-        break;
-      default:
-        break;
-    }
-  };
+export default function RoomSelector({
+  t,
+  handleRoomSelect,
+  selectedRoom,
+  rooms,
+}) {
+  const [currency, setCurrecy] = useState(0.5877);
+
+  useEffect(() => {
+    // const getCurrency = async () => {
+    //   const currency = await getAznToUsdRate();
+    //   if (currency) setCurrecy(currency);
+    // };
+    // getCurrency();
+  }, []);
 
   return (
-    <div className={styles.counter}>
-      <div>
-        <p>{name}</p>
-      </div>
-      <div className={styles.btnBox}>
-        <Button
-          onClick={() => handleCount("decrease")}
-          className={styles.counterBtn}
-        >
-          <Minus />
-        </Button>
-        <span>{count}</span>
-        <Button
-          onClick={() => handleCount("increase")}
-          className={styles.counterBtn}
-        >
-          <Plus/>
-        </Button>
-      </div>
-    </div>
-  );
-}
-export default function RoomSelector({ t, params }) {
-  return (
-    <div className={styles.roomCard}>
-      <p className={styles.cardTitle}>{t?.Room} 1</p>
-      <Counter name={t?.Adult} />
-      <Counter name={t?.Child} />
-      <div className={styles.leftEndBtn}>
-        <Button className={styles.more}>{t?.AddRoom}</Button>
-        <Button className={styles.submit}>{t?.Submit}</Button>
-      </div>
+    <div>
+      <SelectBox
+        optionData={rooms}
+        name={t?.ChooseRoom}
+        value={selectedRoom}
+        onChange={handleRoomSelect}
+        label={t?.ChooseRoom}
+      />
     </div>
   );
 }

@@ -55,7 +55,7 @@ export default function HeaderClient({ locale, t }) {
             <div className={styles.links}>
               <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
               <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-              {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
+              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
               <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
             </div>
 
@@ -70,17 +70,10 @@ export default function HeaderClient({ locale, t }) {
           <div className={styles.drawerColumns}>
             <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
             <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
-            {/* <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem> */}
+            <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
             <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           </div>
 
-          {/* <div className={`${styles.drawerColumns} ${styles.fLeft}`}>
-              <LinkItem slug={`/${locale}/about`}>{t?.About}</LinkItem>
-              <LinkItem slug={`/${locale}/rooms`}>{t?.Otaqlar}</LinkItem>
-              <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
-              <LinkItem slug={`/${locale}/spa`}>{t?.Spa}</LinkItem>
-              <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-            </div> */}
           <SocialMediaIcon />
         </div>
       </nav>
@@ -104,15 +97,13 @@ export default function HeaderClient({ locale, t }) {
         {renderNavContent()}
 
         <div className={styles.reserve}>
-          <p className={styles.reserveTitle}>
-           {t?.HeaderTxt}
-          </p>
-          <span>
+          <p className={styles.reserveTitle}>{t?.HeaderTxt}</p>
+          <span className={styles.arrow}>
             <ArrowFlow className={styles.arrow} />
           </span>
-          {/* <div>
-            <ReserveCard className={styles.reserveCard} locale={locale} t={t} />
-          </div> */}
+          <div className={styles.reserveCard}>
+            <ReserveCard locale={locale} t={t} />
+          </div>
         </div>
       </div>
     );

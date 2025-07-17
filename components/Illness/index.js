@@ -84,7 +84,8 @@ export default function Illness({ t, locale }) {
           return (
             <div key={illnessItem.id}>
               <img
-                src={`https://parknaftalan.az/az/uploads/images/illness${illnessItem.id}.png`}
+              // http://localhost:5041/api/ 
+                src={`https://parknaftalan.az/uploads/images/illness${illnessItem.id}.png`}
                 alt={`Park Naftalan Sanatoriyası - ${illnessItem.name}`}
               />
               <h3>{translation.name}</h3>

@@ -49,10 +49,10 @@ export default function RoomDetail({ t, locale }) {
     (t) => t.language === lanCode
   );
 
-  // Helper function to build full image URL and replace "uploads/" to "uploads/images/"
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png";
-    return `https://parknaftalan.az/${url}`;
+    // http://localhost:5041/  https://parknaftalan.az/
+    return `http://localhost:5041/${url}`;
   };
 
   return (

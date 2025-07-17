@@ -163,42 +163,63 @@
 }
 
 .reserve {
+  max-width: $container-desktop;
   position: absolute;
-  inset: 0;
-  bottom: 0;
-  left: 0;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
+  height: max-content;
   z-index: 5;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
 
-  @include flex($direction: column, $align: start, $justify: center);
+  @include flex($direction: column, $align: start, $justify: space-between);
 
-  @media (min-width: 1024px) {
-    justify-content: flex-end;
+  @media (max-width: 768px) {
+    top: 0;
+    left: auto;
+    transform: translate(0, -5%);
 
-    padding: 0 7% 0;
+    max-width: 100%;
   }
-
   .reserveTitle {
     font-family: $inter;
     font-size: clamp(24px, 4vw, 56px);
     font-weight: 400;
     color: $whiteTxt;
-    max-width: 700px;
+    max-width: 500px;
     line-height: 1.15;
     padding: 0 10px;
+    @include flex($direction: column, $align: start, $justify: space-between);
+
+    @media (max-width: 768px) {
+      font-size: clamp(20px, 6vw, 36px);
+      max-width: 90%;
+      margin: 0 auto;
+      padding-top: 140px;
+    }
   }
-  span {
-    padding: 0 10px;
-  }
+
   .arrow {
-    margin-top: 24px;
+    margin-top: 15px;
+    padding: 0 20px;
+    @media (max-width: 768px) {
+      text-align: center;
+      width: max-content;
+      margin: 0 auto;
+      margin-top: 10px;
+    }
   }
+
   .reserveCard {
     margin-top: 48px;
-    max-width: 980px;
     width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 1023px) {
+      margin-top: 25px;
+      max-width: 100%;
+    }
   }
 }

@@ -1,4 +1,5 @@
 @import "../../styles/variable.scss";
+
 .wrapper {
   background-color: #fff;
   border-radius: 8px;
@@ -27,13 +28,8 @@
   }
 
   .calendars {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    flex-wrap: wrap;
     .customCalendarWrapper {
-      flex: 1;
-      max-width: 320px;
+      max-width: 100%;
       border-radius: 8px;
       overflow: hidden;
 
@@ -106,29 +102,25 @@
           color: #333;
           border-radius: 50%;
 
-          &:hover {
-            background-color: red;
-          }
-
           &--now {
-            background-color: #e0e0e0;
+            background-color: $mainBlueBack;
             font-weight: bold;
           }
 
           &--active {
-            background-color: #007bff !important;
+            background-color: $mainBlueBack !important;
             color: #fff !important;
           }
 
           &--rangeStart,
           &--rangeEnd {
-            background-color: #007bff !important;
+            background-color: $mainBlueBack !important;
             color: #fff !important;
             border-radius: 4px;
           }
 
           &--range {
-            background-color: #e6f7ff !important;
+            background-color: $greyTxt !important;
             color: #333;
             border-radius: 0;
           }
@@ -137,7 +129,7 @@
     }
 
     .selected {
-      background-color: #007bff !important;
+      background-color: $btnColor !important;
       color: #fff !important;
     }
 

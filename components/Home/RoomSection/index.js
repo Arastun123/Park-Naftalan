@@ -41,10 +41,7 @@ export default function RoomSection({ t, locale, showBtn }) {
 
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png"; 
-    return `https://parknaftalan.az/${url.replace(
-      "uploads/",
-      "uploads/"
-    )}`;
+    return `http://localhost:5041/${url}`;
   };
 
   if (!rooms || rooms.length === 0) {

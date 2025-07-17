@@ -97,7 +97,7 @@ function CustomCalendar({
     (date) => {
       const month = date.getMonth();
       const year = date.getFullYear();
-      const fallbackMonths = months[localeString] || months["az-AZ"];  
+      const fallbackMonths = months[localeString] || months["az-AZ"];
 
       const monthName = fallbackMonths[month];
 
@@ -173,21 +173,6 @@ function CustomCalendar({
 }
 
 export default function CustomDateRange({ onChange, locale, t }) {
-  const [width, setWidth] = useState(0);
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    const updateWidth = () => setWidth(window.innerWidth);
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    setHasMounted(true);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
-
-  const isMobile = width < 1024;
-
-  if (!hasMounted) return null;
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -198,22 +183,12 @@ export default function CustomDateRange({ onChange, locale, t }) {
       <div className={styles.calendars}>
         <CustomCalendar
           onChange={onChange}
-          initialMonthOffset={0}
-          isMobile={isMobile}
-          isSecondCalendar={false}
+          initialMonthOffset={1}
+          isMobile={true}
+          isSecondCalendar={true}
           localeString={locale}
           t={t}
         />
-        {!isMobile && (
-          <CustomCalendar
-            onChange={onChange}
-            initialMonthOffset={1}
-            isMobile={false}
-            isSecondCalendar={true}
-            localeString={locale}
-            t={t}
-          />
-        )}
       </div>
     </div>
   );
