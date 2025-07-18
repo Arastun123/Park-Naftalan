@@ -7,7 +7,7 @@ import Input from "@/components/Input";
 import { loginAdmin } from "@/lib/handleApiActions";
 
 export default function AdminLoginPage() {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
 
   const router = useRouter();
@@ -15,14 +15,14 @@ export default function AdminLoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
-    if (!formData.username.trim()) newErrors.username = true;
+    if (!formData.email.trim()) newErrors.email = true;
     if (!formData.password.trim()) newErrors.password = true;
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
       try {
         const { token } = await loginAdmin(
-          formData.username,
+          formData.email,
           formData.password
         );
 
@@ -43,13 +43,13 @@ export default function AdminLoginPage() {
       </div>
       <form onSubmit={handleSubmit}>
         <Input
-          name="username"
+          name="email"
           placeholder="Admin"
-          value={formData.username}
+          value={formData.email}
           onChange={(e) =>
-            setFormData({ ...formData, username: e.target.value })
+            setFormData({ ...formData, email: e.target.value })
           }
-          hasError={errors.username}
+          hasError={errors.email}
         />
         <Input
           name="password"

@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default async function AdminLayout({ children }) {
-  const cookieStore = await cookies(); // await lazım deyil burda!
+  const cookieStore = await cookies(); 
   const token =  cookieStore.get("admin_token")?.value;
 
   return (
