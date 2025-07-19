@@ -14,7 +14,7 @@ export default async function Reservations({ params }) {
   return (
     <div className={global.container}>
       <div className={styles.form}>
-        <h1>Reservation Formu</h1>
+        <h1>{t?.ReservForm}</h1>
         <ReservationForm
           t={t}
           locale={locale}

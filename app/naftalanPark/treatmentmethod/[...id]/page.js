@@ -7,7 +7,11 @@ import Button from "@/components/Button/Button";
 
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
-import { createData, getDataById, updateData } from "@/lib/handleApiActions";
+import {
+  createData,
+  getDataById,
+  updateDataNoId,
+} from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
 
 export default function createTreatmentMethod() {
@@ -19,9 +23,9 @@ export default function createTreatmentMethod() {
 
   const [values, setValues] = useState({
     treatmentMethodTranslationDtos: {
-      1: { name: "", description: "" },
-      2: { name: "", description: "" },
-      3: { name: "", description: "" },
+      1: { name: "", description: "null" },
+      2: { name: "", description: "null" },
+      3: { name: "", description: "null" },
     },
   });
 
@@ -31,6 +35,7 @@ export default function createTreatmentMethod() {
 
   const handleSubmit = async () => {
     const payload = {
+      id: isEdit === "edit" ? Number(id) : 0,
       treatmentMethodTranslationDtos: Object.entries(
         values.treatmentMethodTranslationDtos
       ).map(([language, { name, description }]) => ({
@@ -39,11 +44,11 @@ export default function createTreatmentMethod() {
         description,
       })),
     };
+
     const res =
       isEdit === "edit"
-        ? await updateData("treatmentMethod", id, payload)
+        ? await updateDataNoId("TreatmentMethod", payload)
         : await createData("treatmentMethod", payload);
-    
 
     if (res.status === 200 || res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
@@ -56,17 +61,18 @@ export default function createTreatmentMethod() {
   const fetchDatas = async () => {
     if (isEdit === "edit") {
       const data = await getDataById("treatmentMethod", id);
-      if (data) {
-        setValues((prev) => ({
-          ...prev,
-          treatmentMethodTranslationDtos: {
-            ...prev.treatmentMethodTranslationDtos,
-            [data.language]: {
-              name: data.name,
-              description: data.description,
-            },
-          },
-        }));
+      if (data?.translations?.length > 0) {
+        const formatted = data.translations.reduce((acc, item) => {
+          acc[item.language] = {
+            name: item.name,
+            description: item.description,
+          };
+          return acc;
+        }, {});
+
+        setValues({
+          treatmentMethodTranslationDtos: formatted,
+        });
       }
     }
   };

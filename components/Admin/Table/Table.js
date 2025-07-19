@@ -11,7 +11,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
 
   const handleLogout = async () => {
     await logoutAdmin();
-    router.push("/admin");
+    router.push("/naftalanPark");
   };
 
   const normalizedData = Array.isArray(data) ? data : [data];
@@ -34,6 +34,12 @@ export default function Table({ data, th, handleDelete, createSlug }) {
 
   return (
     <>
+      <Button
+        className={`${table.actionBtn} ${table.edit}`}
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
       <table className={table.table}>
         <thead className={table.thead}>
           <tr>

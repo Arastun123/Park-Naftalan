@@ -16,23 +16,21 @@ export default function Illness({ t, locale }) {
     return 3;
   }, [locale]);
 
-
   useEffect(() => {
     const fetchDatas = async () => {
       const illnessData = await getDatas("Illness");
       const treatmentData = await getDatas("TreatmentCategory");
+      console.log(treatmentData);
 
       if (illnessData && treatmentData) {
         setIllness(illnessData);
         setTreatment(treatmentData);
 
         const firstValidTab = treatmentData.find((cat) =>
-          cat.translations?.find(
-            (tr) => tr.language === treatmentLanCode && tr.name
-          )
+          cat.translations?.some((tr) => tr.language === lanCode && tr.name)
         );
 
-        setActiveTab(firstValidTab?.id);
+        setActiveTab(firstValidTab?.id || null);
       }
     };
 
@@ -40,9 +38,7 @@ export default function Illness({ t, locale }) {
   }, [lanCode]);
 
   const getTranslatedName = (translations = []) => {
-    const translation = translations.find(
-      (t) => t.language === treatmentLanCode
-    );
+    const translation = translations.find((t) => t.language === lanCode);
     return translation?.name || "-";
   };
 
@@ -61,7 +57,7 @@ export default function Illness({ t, locale }) {
             <Button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
-              className={`${cat.id === activeTab && styles.active}`}
+              className={cat.id === activeTab ? styles.active : ""}
             >
               {name}
             </Button>
@@ -77,13 +73,13 @@ export default function Illness({ t, locale }) {
           if (!translation) return null;
 
           return (
-            <div key={illnessItem.id}>
+            <div key={illnessItem.id} className={styles.illnessItem}>
               <img
-              // http://localhost:5041/api/ 
-                src={`https://parknaftalan.az/uploads/images/illness${illnessItem.id}.png`}
-                alt={`Park Naftalan Sanatoriyası - ${illnessItem.name}`}
+                src={`http://localhost:5041/${illnessItem.imageUrls}`}
+                alt={`Park Naftalan - ${translation.name}`}
               />
               <h3>{translation.name}</h3>
+              {/* <p>{translation.description}</p> */}
             </div>
           );
         })}

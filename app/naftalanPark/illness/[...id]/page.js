@@ -11,7 +11,7 @@ import {
   createData,
   getDataById,
   getDatas,
-  updateData,
+  updateDataWithImage,
 } from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
 
@@ -22,6 +22,9 @@ export default function createRoom() {
 
   const isEdit = id === "create" ? "create" : "edit";
   const [treatmentCategory, setTreatmentCategory] = useState([]);
+  const [image, setImage] = useState("");
+  const [newImage, setNewImage] = useState(null);
+
   const [values, setValues] = useState({
     treatmentCategoryId: "",
     translations: {
@@ -46,21 +49,32 @@ export default function createRoom() {
   }, []);
 
   const handleSubmit = async () => {
-    const payload = {
-      ...values,
-      translations: Object.entries(values.translations).map(([lang, item]) => ({
-        language: Number(lang),
-        name: item.name,
-        description: item.description,
-      })),
-    };
+    const formData = new FormData();
+
+    if (isEdit === "edit") {
+      formData.append("id", id);
+    }
+
+    if (newImage) {
+      formData.append("ImageFile", newImage);
+    }
+
+    if (values.treatmentCategoryId) {
+      formData.append("TreatmentCategoryId", values.treatmentCategoryId);
+    }
+
+    Object.entries(values.translations).forEach(([lang, item], index) => {
+      formData.append(`Translations[${index}].language`, lang);
+      formData.append(`Translations[${index}].name`, item.name);
+      formData.append(`Translations[${index}].description`, item.description);
+    });
 
     const res =
       isEdit === "edit"
-        ? await updateData("Illness", id, payload)
-        : await createData("Illness", payload);
+        ? await updateDataWithImage("Illness", id, formData)
+        : await createData("Illness", formData);
 
-    if (res.status === 204 || res.status === 200) {
+    if (res.status === 201 || res.status === 200 || res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
       router.back();
     } else {
@@ -73,12 +87,18 @@ export default function createRoom() {
       const data = await getDataById("Illness", id);
       if (data) {
         const newTranslations = { ...values.translations };
+
         data.translations.forEach((t) => {
           newTranslations[t.language] = {
             name: t.name || "",
             description: t.description || "",
           };
         });
+
+        if (data.imageUrls) {
+          setImage(data.imageUrls);
+        }
+
         setValues((prev) => ({
           ...prev,
           treatmentCategoryId: data.treatmentCategoryId,
@@ -86,6 +106,7 @@ export default function createRoom() {
         }));
       }
     }
+
     let treatmentCategory = await getDatas("TreatmentCategory");
     if (treatmentCategory) {
       treatmentCategory = treatmentCategory.map((item) => {
@@ -110,6 +131,8 @@ export default function createRoom() {
 
   return (
     <div className={global.container}>
+      <br />
+      <br />
       <form className={admin.form}>
         <>
           <label>Müalicə növü</label>
@@ -126,6 +149,36 @@ export default function createRoom() {
             ))}
           </select>
 
+          <div>
+            <label>Şəkil</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setNewImage(file);
+                }
+              }}
+            />
+          </div>
+          <p>Köhnə şəkil (serverdəki)</p>
+          {image && (
+            <img
+              className={admin.img}
+              src={`http://localhost:5041/${image}`}
+              alt="Old Image"
+            />
+          )}
+
+          <p>Yeni yüklənən şəkil (preview)</p>
+          {newImage && (
+            <img
+              className={admin.img}
+              src={URL.createObjectURL(newImage)}
+              alt="New Image Preview"
+            />
+          )}
           <div className={admin.dFlex}>
             {[
               { lang: "en", code: 1 },

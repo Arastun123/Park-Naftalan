@@ -13,8 +13,8 @@ export default function AboutPageMain({ t, locale }) {
 
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 1;
-    if (locale === "az") return 2;
+    if (locale === "en") return 2;
+    if (locale === "az") return 1;
     return 3;
   }, [locale]);
 
