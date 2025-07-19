@@ -1,16 +1,10 @@
 import styles from "./style.module.scss";
-export default async function ImageWithText({ t, locale }) {
+export default async function ImageWithText({ t }) {
   return (
     <div className={styles.imageWithText}>
       <img src="/Rectangle 75.png" alt="Park Naftalan Sanatoriyası" />
       <div className={styles.text}>
-        <p>
-          Azərbaycanın Naftalan şəhərində çıxarılan və adını da bu şəhərdən alan
-          Naftalan nefti, dünyanın unikal tibbi neft növlərindən biridir.
-          Tərkibindəki bioloji aktiv maddələr sayəsində bu neft əsrlər boyu
-          müalicəvi xüsusiyyətləri ilə tanınmış və bir çox xəstəliklərin təbii
-          yolla sağalmasında istifadə edilmişdir{" "}
-        </p>
+        <p>{t?.TextForNaftalan}</p>
       </div>
     </div>
   );

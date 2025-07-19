@@ -25,9 +25,9 @@ export default function MedicalProcedures({ t, locale }) {
   const [data, setData] = useState([]);
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 0;
-    if (locale === "az") return 1;
-    return 2;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
+    return 3;
   }, [locale]);
 
   useEffect(() => {

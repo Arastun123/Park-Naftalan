@@ -16,11 +16,6 @@ export default function Illness({ t, locale }) {
     return 3;
   }, [locale]);
 
-  const treatmentLanCode = useMemo(() => {
-    if (locale === "en") return 0;
-    if (locale === "az") return 1;
-    return 2;
-  }, [locale]);
 
   useEffect(() => {
     const fetchDatas = async () => {

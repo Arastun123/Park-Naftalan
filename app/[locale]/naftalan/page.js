@@ -10,7 +10,7 @@ export default async function Naftalan({ params }) {
 
   return (
     <div className={global.container}>
-      <ImageWithText />
+      <ImageWithText t={t}/>
       {/* <MedicalProcedures t={t} locale={locale} /> */}
       <h3 className={global.medical}>{t?.Medical}</h3>
       <Illness t={t} locale={locale}/>

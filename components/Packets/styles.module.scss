@@ -1,230 +1,181 @@
 @import "../../styles//variable.scss";
 
+ 
+
 .banner {
-  @include flex($direction: row, $align: center, $justify: center);
-  gap: 20px;
+  @include flex($direction: column, $align: center, $justify: center);
   width: 100%;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 
   .item {
     max-width: 800px;
-    display: flex;
-    background: #0e3c61;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
     width: 100%;
+    height: 200px;
+    @include flex($direction: row, $align: stretch, $justify: space-between);
+    // background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    align-items: stretch;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .left {
-    background: #0e3c61;
-    color: white;
-    padding: 20px;
-    flex: 0 0 200px;
-    text-align: center;
-    @include flex($direction: column, $align: center, $justify: center);
-    position: relative;
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-    z-index: 2;
-  }
-
-  .offer {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  .text {
-    font-size: 16px;
-    margin-top: 5px;
-  }
-
-  .mainContentArea {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-between;
-    // align-items: stretch;
-    background-color: white;
-    padding: 0;
-    position: relative;
-    clip-path: polygon(15% 0, 100% 0, 90% 100%, 0% 100%);
-
     z-index: 1;
-  }
-
-  .center {
-    flex: 1;
-    text-align: center;
-    @include flex($direction: column, $align: center, $justify: center);
-    color: #0e3c61;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  .center h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #0e3c61;
-  }
-
-  .highlight {
-    font-size: 18px;
-    color: #0e3c61;
-    line-height: 1.4;
-    margin-top: 0;
-  }
-
-  .rightDiagonal {
-    background-color: #0e3c61;
-    flex: 0 0 250px;
-    @include flex($direction: roü, $align: center, $justify: center);
-    padding: 20px;
-    color: white;
-    margin-left: -50px;
-    z-index: 3;
-    box-sizing: border-box;
-
-    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%); //
-  }
-
-  .reserveBtn {
-    background: #36c6f0;
-    border: none;
-    padding: 12px 24px;
-    font-weight: bold;
-    font-size: 16px;
-    color: black;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-bottom: 10px;
-    white-space: nowrap;
-  }
-
-  .reserveBtn:hover {
-    background-color: #2da1cc;
-    color: white;
-  }
-
-  .logoPlaceholder {
-    width: 80px;
-    height: 40px;
-    @include flex($direction: row, $align: center, $justify: center);
-    font-size: 10px;
-    color: #0e3c61;
-  }
-
-  @media (max-width: 992px) {
-    .banner {
-      gap: 10px;
-    }
-
-    .item {
-      flex-direction: column;
-      align-items: center;
-      width: calc(100% - 20px);
-      margin: 0 10px;
-    }
-
-    .left,
-    .mainContentArea,
-    .rightDiagonal {
-      clip-path: none;
-      margin-left: 0;
-      flex: 1 1 100%;
-      padding: 15px;
-      text-align: center;
-    }
 
     .left {
-      background-color: #0e3c61;
-      color: white;
-      height: auto;
+      background: $mainBlueBack;
+      color: #fff;
+      width: 250px;
+      height: 100%;
+      // clip-path: polygon(0 0, 50% 0, 100% 100%, 0 100%);
+      @include flex($direction: column, $align: center, $justify: center);
+      position: relative;
+      z-index: 2;
+
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+
+      //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='139' height='216' viewBox='0 0 139 216' fill='none'><path d='M0.547745 0.034668L119.992 214.275C126.043 214.275 132.225 215.146 138.302 215.146C128.702 198.782 119.618 182.087 110.402 165.505C80.5931 111.893 50.9412 58.1584 20.5482 4.86815L19.7286 0.034668C13.3466 0.0433769 6.92104 0.034668 0.547745 0.034668Z' fill='%23D4D4D4'/></svg>");
+      //   background-repeat: no-repeat;
+      //   background-size: cover;
+      //   background-position: right center;
+      //   overflow: visible;
+      //   transform: translateX(75px);
+      //   z-index: 999;
+      //   pointer-events: none;
+      // }
+
+      p {
+        margin: 0;
+        font: 400 34px $inter;
+        white-space: nowrap;
+
+        &.offer {
+          font-size: 38px;
+          font-weight: bold;
+        }
+
+        &.text {
+          font-size: 26px;
+        }
+
+        @media (max-width: 998px) {
+          font-size: 20px;
+          &.offer {
+            font-size: 24px;
+          }
+          &.text {
+            font-size: 18px;
+          }
+        }
+      }
     }
 
     .mainContentArea {
-      background-color: white;
-      padding-left: 20px;
-      padding-right: 20px;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .center {
-      padding: 0;
-    }
-
-    .rightDiagonal {
-      background-color: #0e3c61;
-      color: white;
-      flex-direction: row;
-      justify-content: center;
-      padding-top: 15px;
-      padding-bottom: 15px;
-      flex-wrap: wrap;
-    }
-
-    .reserveBtn {
-      margin-bottom: 0;
-      margin-right: 10px;
-    }
-
-    .logoPlaceholder {
-      margin-top: 0;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .banner {
-      gap: 0;
-    }
-
-    .item {
-      width: 100%;
-      margin: 0;
-      border-radius: 0;
-    }
-
-    .left {
-      flex: 1 1 100%;
-      padding: 15px 10px;
-    }
-
-    .mainContentArea {
-      flex: 1 1 100%;
-      padding: 15px 10px;
-    }
-
-    .rightDiagonal {
-      flex: 1 1 100%;
-      flex-direction: column;
-      padding: 15px 10px;
-      gap: 10px;
-    }
-
-    .reserveBtn {
-      margin-right: 0;
-      margin-bottom: 10px;
-      width: 100%;
+      width: calc(100% - 250px);
+      height: 100%;
+      @include flex(
+        $direction: column,
+        $align: stretch,
+        $justify: space-between
+      );
       box-sizing: border-box;
-    }
+      padding: 0;
+      position: relative;
+      z-index: 3;
 
-    .logoPlaceholder {
-      width: auto;
-      height: auto;
+      .center {
+        flex-grow: 1;
+        padding: 10px;
+        @include flex($direction: column, $align: center, $justify: center);
+        text-align: center;
+
+        h2 {
+          font-family: $inter;
+          font-weight: 400;
+          font-size: 30px;
+          color: $mainBlueBack;
+          margin-bottom: 5px;
+
+          @media (max-width: 998px) {
+            font-size: 22px;
+          }
+        }
+
+        p {
+          font-family: $inter;
+          font-weight: 700;
+          font-size: 22px;
+          color: $mainBlueBack;
+          line-height: 1.3;
+
+          @media (max-width: 998px) {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .rightDiagonal {
+        width: 100%;
+        height: 60px;
+        background: $accentBlue;
+        // clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+        @include flex($direction: row, $align: center, $justify: space-between);
+        position: relative;
+
+        // &::after {
+        //   content: "";
+        //   position: absolute;
+        //   inset: 0;
+        //   clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+        //   background: rgba(0, 0, 0, 0.15);
+        //   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        //   z-index: -1;
+        // }
+
+        > .global-reserveBtn-class {
+          width: 50%;
+          box-sizing: border-box;
+          text-align: center;
+          background-color: transparent;
+          border: none;
+          color: #fff;
+          font-size: 18px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        .logoPlaceholder {
+          background: $mainBlueBack;
+          height: 100%;
+          width: 50%;
+          @include flex($direction: row, $align: center, $justify: center);
+          position: relative;
+          // clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+          z-index: 1;
+
+          // &::after {
+          //   content: "";
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   width: 100%;
+          //   height: 100%;
+          //   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+          //   background: rgba(0, 0, 0, 0.15);
+          //   filter: blur(4px);
+          //   z-index: -1;
+          // }
+        }
+      }
     }
   }
 }
 
-@mixin flex($direction: row, $align: flex-start, $justify: flex-start) {
-  display: flex;
-  flex-direction: $direction;
-  align-items: $align;
-  justify-content: $justify;
+.logoPlaceholder img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 5px;
 }

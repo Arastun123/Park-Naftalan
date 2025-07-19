@@ -13,7 +13,6 @@ import SelectBox from "../SelecBox";
 export default function ReserveCard({ locale, t }) {
   const [openType, setOpenType] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState("");
-  const [selectedRoomId, setSelectedRoomId] = useState("");
   const [date, setDate] = useState("");
   const [rooms, setRooms] = useState([]);
 

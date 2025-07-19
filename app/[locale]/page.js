@@ -27,28 +27,28 @@ export default async function Home({ params }) {
             <About locale={locale} />
           </p>
         </Section>
-      </div>
-      <Section
-        name={t?.Rooms}
-        oneLine={true}
-        t={t}
-        locale={locale}
-        slug="rooms"
-        showBtn={true}
-        className={styles.section}
-      >
-        <div className={styles.roomSection}>
-          <RoomSection
-            name={t?.Rooms}
-            oneLine={true}
-            t={t}
-            locale={locale}
-            showBtn={true}
-          />
-        </div>
-      </Section>
 
-      <div className={global.container}>
+        <Section
+          name={t?.Rooms}
+          oneLine={true}
+          t={t}
+          locale={locale}
+          slug="rooms"
+          showBtn={true}
+          className={styles.section}
+        >
+          <div className={styles.roomSection}>
+            <RoomSection
+              name={t?.Rooms}
+              oneLine={true}
+              t={t}
+              locale={locale}
+              showBtn={true}
+            />
+          </div>
+        </Section>
+
+        <Packets t={t} locale={locale} />
         <WriteUs t={t} locale={locale} />
       </div>
     </>

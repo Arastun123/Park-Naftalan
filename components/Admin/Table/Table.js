@@ -70,11 +70,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
                     <Button
                       className={`${table.actionBtn} ${table.edit}`}
                       onClick={() => {
-                        createSlug === "equipment"
-                          ? router.push(
-                              `${createSlug}/${row.id}/${row.language || "az"}`
-                            )
-                          : router.push(`${createSlug}/${row.id || ""}`);
+                        router.push(`${createSlug}/${row.id || ""}`);
                       }}
                     >
                       Edit

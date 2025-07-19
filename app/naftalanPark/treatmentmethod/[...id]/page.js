@@ -39,11 +39,11 @@ export default function createTreatmentMethod() {
         description,
       })),
     };
-
     const res =
       isEdit === "edit"
         ? await updateData("treatmentMethod", id, payload)
         : await createData("treatmentMethod", payload);
+    
 
     if (res.status === 200 || res.status === 204) {
       toast.success("Proses uğurla başa çatdı");

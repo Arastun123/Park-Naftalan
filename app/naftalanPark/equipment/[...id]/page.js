@@ -9,6 +9,7 @@ import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 import {
   createData,
+  getDataById,
   getDataByIdLang,
   updateData,
 } from "@/lib/handleApiActions";
@@ -22,7 +23,7 @@ export default function createEquipment() {
   const isEdit = params.id[0] !== "create";
 
   const id = isEdit ? Number(params.id[0]) : null;
-  const language = Number(params.id[1]);
+
   const [values, setValues] = useState({
     1: "",
     2: "",
@@ -54,16 +55,18 @@ export default function createEquipment() {
 
   const fetchDatas = async () => {
     if (isEdit) {
-      const data = await getDataByIdLang("Equipment", id);
+      const data = await getDataById("Equipment", id);
 
-      if (data)
-        setValues((prev) => ({
-          ...prev,
-          [data.language]: data.name,
-        }));
+      if (data?.translations?.length) {
+        const updatedValues = data.translations.reduce((acc, item) => {
+          acc[item.language] = item.name;
+          return acc;
+        }, {});
+
+        setValues(updatedValues);
+      }
     }
   };
-
 
   return (
     <div className={global.container}>
