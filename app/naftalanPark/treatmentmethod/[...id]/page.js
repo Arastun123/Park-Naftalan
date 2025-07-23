@@ -1,31 +1,33 @@
 "use client";
-import { useEffect, useState } from "react";
 
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import Button from "@/components/Button/Button";
-
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
+
 import {
-  createData,
+  updateDataWithImage,
+  createDataWithImage,
   getDataById,
-  updateDataNoId,
 } from "@/lib/handleApiActions";
+
 import { toast } from "react-toastify";
 
 export default function createTreatmentMethod() {
   const params = useParams();
   const router = useRouter();
   const id = params.id[0];
-
   const isEdit = id === "create" ? "create" : "edit";
 
+  const [image, setImage] = useState("");
+  const [newImage, setNewImage] = useState(null);
   const [values, setValues] = useState({
-    treatmentMethodTranslationDtos: {
-      1: { name: "", description: "null" },
-      2: { name: "", description: "null" },
-      3: { name: "", description: "null" },
+    translations: {
+      1: { name: "", description: "", id: null },
+      2: { name: "", description: "", id: null },
+      3: { name: "", description: "", id: null },
     },
   });
 
@@ -33,75 +35,112 @@ export default function createTreatmentMethod() {
     fetchDatas();
   }, []);
 
-  const handleSubmit = async () => {
-    const payload = {
-      id: isEdit === "edit" ? Number(id) : 0,
-      treatmentMethodTranslationDtos: Object.entries(
-        values.treatmentMethodTranslationDtos
-      ).map(([language, { name, description }]) => ({
-        language: Number(language),
-        name,
-        description,
-      })),
-    };
-
-    const res =
-      isEdit === "edit"
-        ? await updateDataNoId("TreatmentMethod", payload)
-        : await createData("treatmentMethod", payload);
-
-    if (res.status === 200 || res.status === 204) {
-      toast.success("Proses uğurla başa çatdı");
-      router.back();
-    } else {
-      toast.error(res.statusText);
-    }
-  };
-
   const fetchDatas = async () => {
     if (isEdit === "edit") {
       const data = await getDataById("treatmentMethod", id);
       if (data?.translations?.length > 0) {
         const formatted = data.translations.reduce((acc, item) => {
           acc[item.language] = {
+            id: item.id, // <-- BURADA ID DAXİL EDİLİR
             name: item.name,
             description: item.description,
           };
           return acc;
         }, {});
-
-        setValues({
-          treatmentMethodTranslationDtos: formatted,
-        });
+        if (data.imageUrl) {
+          setImage(data.imageUrl);
+        }
+        setValues({ translations: formatted });
       }
+    }
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+
+    if (isEdit === "edit") {
+      formData.append("Id", id);
+    }
+
+    if (newImage) {
+      formData.append("ImageFile", newImage);
+    }
+
+    Object.entries(values.translations).forEach(
+      ([lang, { id, name, description }], index) => {
+        if (isEdit === "edit" && id) {
+          formData.append(`Translations[${index}].Id`, id); // <-- ID ƏLAVƏ OLUNUR
+        }
+        formData.append(`Translations[${index}].Language`, lang);
+        formData.append(`Translations[${index}].Name`, name);
+        formData.append(`Translations[${index}].Description`, description);
+      }
+    );
+
+    const res =
+      isEdit === "edit"
+        ? await updateDataWithImage("TreatmentMethod", id, formData)
+        : await createDataWithImage("TreatmentMethod", formData);
+
+    if (res?.status === 200 || res?.status === 201 || res?.status === 204) {
+      toast.success("Proses uğurla başa çatdı");
+      router.back();
+    } else {
+      toast.error(res?.statusText || "Xəta baş verdi");
     }
   };
 
   return (
     <div className={global.container}>
       <form className={admin.form}>
-        <>
-          <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 1 },
-              { lang: "az", code: 2 },
-              { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => (
+        <div>
+          <label>Şəkil</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setNewImage(file);
+              }
+            }}
+          />
+        </div>
+
+        <p>Köhnə şəkil (serverdəki)</p>
+        {image && (
+          <img
+            className={admin.img}
+            src={`http://localhost:5041/${image}`}
+            alt="Old"
+          />
+        )}
+
+        <p>Yeni yüklənən şəkil (preview)</p>
+        {newImage && (
+          <img
+            className={admin.img}
+            src={URL.createObjectURL(newImage)}
+            alt="New Preview"
+          />
+        )}
+
+        <div className={admin.dFlex}>
+          {[{ lang: "en", code: 1 }, { lang: "az", code: 2 }, { lang: "ru", code: 3 }].map(
+            ({ lang, code }) => (
               <div key={code}>
                 <label>
-                  Müalicə methodunun adı ({lang.toUpperCase()}):
+                  Müalicə metodunun adı ({lang.toUpperCase()}):
                   <input
                     type="text"
-                    value={
-                      values.treatmentMethodTranslationDtos[code]?.name || ""
-                    }
+                    value={values.translations[code]?.name || ""}
                     onChange={(e) =>
                       setValues((prev) => ({
                         ...prev,
-                        treatmentMethodTranslationDtos: {
-                          ...prev.treatmentMethodTranslationDtos,
+                        translations: {
+                          ...prev.translations,
                           [code]: {
-                            ...prev.treatmentMethodTranslationDtos[code],
+                            ...prev.translations[code],
                             name: e.target.value,
                           },
                         },
@@ -113,17 +152,14 @@ export default function createTreatmentMethod() {
                 <label>
                   Əlavə məlumat ({lang.toUpperCase()}):
                   <textarea
-                    value={
-                      values.treatmentMethodTranslationDtos[code]
-                        ?.description || ""
-                    }
+                    value={values.translations[code]?.description || ""}
                     onChange={(e) =>
                       setValues((prev) => ({
                         ...prev,
-                        treatmentMethodTranslationDtos: {
-                          ...prev.treatmentMethodTranslationDtos,
+                        translations: {
+                          ...prev.translations,
                           [code]: {
-                            ...prev.treatmentMethodTranslationDtos[code],
+                            ...prev.translations[code],
                             description: e.target.value,
                           },
                         },
@@ -132,56 +168,19 @@ export default function createTreatmentMethod() {
                   />
                 </label>
               </div>
-            ))}
-            <p>
-              Əlavə məlumat hazırda görünmür gələcəkdə lazım olarsa ayrıca
-              səhifə halında göstərmək üçün nəzərdə tutlub
-            </p>
-          </div>
-          {/* <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 0 },
-              { lang: "az", code: 1 },
-              { lang: "ru", code: 2 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                name: "",
-                description: "",
-              };
+            )
+          )}
+        </div>
 
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    Description ({lang.toUpperCase()}):
-                    <textarea
-                      value={translation.description}
-                      rows="5"
-                      cols="33"
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          translations: {
-                            ...prev.translations,
-                            [code]: {
-                              ...prev.translations?.[code],
-                              description: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      required={code === 1}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div> */}
-        </>
+        <p>
+          Əlavə məlumat hazırda görünmür, gələcəkdə lazım olarsa ayrıca səhifə
+          halında göstərmək üçün nəzərdə tutulub.
+        </p>
       </form>
 
       <Button
         className={`${admin.actionBtn} ${admin.create}`}
-        onClick={() => handleSubmit()}
+        onClick={handleSubmit}
       >
         Təsdiq et
       </Button>

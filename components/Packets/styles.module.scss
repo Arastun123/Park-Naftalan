@@ -1,6 +1,4 @@
-@import "../../styles//variable.scss";
-
- 
+@import "../../styles/variable.scss";
 
 .banner {
   @include flex($direction: column, $align: center, $justify: center);
@@ -9,81 +7,77 @@
   box-sizing: border-box;
 
   .item {
-    max-width: 800px;
     width: 100%;
-    height: 200px;
-    @include flex($direction: row, $align: stretch, $justify: space-between);
-    // background-color: #fff;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 1;
 
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+
     .left {
-      background: $mainBlueBack;
+      background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22245%22%20height%3D%22216%22%20viewBox%3D%220%200%20245%20216%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M-3.05176e-05%203.95392V215.147C4.62953%20215.173%209.31142%20215.112%2013.9497%20215.147C19.4511%20215.19%2025.0049%20215.12%2030.515%20215.147C34.8569%20215.173%2039.2424%20215.138%2043.5929%20215.147C46.7752%20215.155%2049.9924%20215.147%2053.1834%20215.147H54.0552C56.0867%20215.155%2058.1181%20215.147%2060.1583%20215.147C88.9122%20215.181%20117.71%20215.147%20146.472%20215.147H183.962C200.51%20215.155%20217.102%20215.147%20233.658%20215.147C237.477%20215.147%20242.168%20214.276%20244.992%20214.276L125.548%200.0348799H67.1331C49.0246%200.0610069%2030.89%200.0348799%2012.764%200.0348799H2.17088C0.0958557%200.00875302-3.05176e-05%202.40372-3.05176e-05%203.95392Z%22%20fill%3D%22%23113A5D%22/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
       color: #fff;
-      width: 250px;
-      height: 100%;
-      // clip-path: polygon(0 0, 50% 0, 100% 100%, 0 100%);
+      width: 100%;
+      height: 150px;
       @include flex($direction: column, $align: center, $justify: center);
       position: relative;
       z-index: 2;
 
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   width: 100%;
-      //   height: 100%;
+      @media (min-width: 768px) {
+        width: 250px;
+        height: 100%;
+      }
 
-      //   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='139' height='216' viewBox='0 0 139 216' fill='none'><path d='M0.547745 0.034668L119.992 214.275C126.043 214.275 132.225 215.146 138.302 215.146C128.702 198.782 119.618 182.087 110.402 165.505C80.5931 111.893 50.9412 58.1584 20.5482 4.86815L19.7286 0.034668C13.3466 0.0433769 6.92104 0.034668 0.547745 0.034668Z' fill='%23D4D4D4'/></svg>");
-      //   background-repeat: no-repeat;
-      //   background-size: cover;
-      //   background-position: right center;
-      //   overflow: visible;
-      //   transform: translateX(75px);
-      //   z-index: 999;
-      //   pointer-events: none;
-      // }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='119' height='216' viewBox='0 0 119 216' fill='none'%3E%3Cpath d='M0.547745 0.034668L119.992 214.275C126.043 214.275 132.225 215.146 138.302 215.146C128.702 198.782 119.618 182.087 110.402 165.505C80.5931 111.893 50.9412 58.1584 20.5482 4.86815L19.7286 0.034668C13.3466 0.0433769 6.92104 0.034668 0.547745 0.034668Z' fill='%23D4D4D4'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: right center;
+        transform: translateX(45px);
+        z-index: -1;
+        pointer-events: none;
+      }
 
       p {
         margin: 0;
-        font: 400 34px $inter;
-        white-space: nowrap;
+        font-family: $inter;
+        color: #fff;
+        text-align: center;
 
         &.offer {
-          font-size: 38px;
+          font-size: clamp(24px, 5vw, 38px);
           font-weight: bold;
         }
 
         &.text {
-          font-size: 26px;
-        }
-
-        @media (max-width: 998px) {
-          font-size: 20px;
-          &.offer {
-            font-size: 24px;
-          }
-          &.text {
-            font-size: 18px;
-          }
+          font-size: clamp(18px, 4vw, 26px);
         }
       }
     }
 
     .mainContentArea {
-      width: calc(100% - 250px);
-      height: 100%;
-      @include flex(
-        $direction: column,
-        $align: stretch,
-        $justify: space-between
-      );
+      width: 100%;
       box-sizing: border-box;
-      padding: 0;
+      @include flex($direction: column, $align: stretch, $justify: space-between);
       position: relative;
       z-index: 3;
+
+      @media (min-width: 768px) {
+        width: calc(100% - 250px);
+      }
 
       .center {
         flex-grow: 1;
@@ -94,50 +88,32 @@
         h2 {
           font-family: $inter;
           font-weight: 400;
-          font-size: 30px;
+          font-size: clamp(20px, 4vw, 30px);
           color: $mainBlueBack;
           margin-bottom: 5px;
-
-          @media (max-width: 998px) {
-            font-size: 22px;
-          }
         }
 
         p {
           font-family: $inter;
           font-weight: 700;
-          font-size: 22px;
+          font-size: clamp(16px, 3.5vw, 22px);
           color: $mainBlueBack;
           line-height: 1.3;
-
-          @media (max-width: 998px) {
-            font-size: 18px;
-          }
         }
       }
 
       .rightDiagonal {
         width: 100%;
-        height: 60px;
-        background: $accentBlue;
-        // clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+        height: 62px;
+        background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22459%22%20height%3D%2262%22%20viewBox%3D%220%200%20459%2062%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0.402008%2012.1915C9.61755%2028.7734%2018.7023%2045.4685%2028.3015%2061.8327C102.68%2061.8588%20177.11%2061.8501%20251.497%2061.8327H268.063L241.907%2012.2002H459C459%208.37698%20458.991%204.08345%20459%20-0.00106143H176.727L20.0624%20-0.00976562C17.1155%200.373429%2025.4505%2010.7197%2023.9335%2012.1915H0.402008Z%22%20fill%3D%22%2323C0DE%22/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
         @include flex($direction: row, $align: center, $justify: space-between);
         position: relative;
 
-        // &::after {
-        //   content: "";
-        //   position: absolute;
-        //   inset: 0;
-        //   clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
-        //   background: rgba(0, 0, 0, 0.15);
-        //   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-        //   z-index: -1;
-        // }
-
-        > .global-reserveBtn-class {
+        .global-reserveBtn-class {
           width: 50%;
-          box-sizing: border-box;
-          text-align: center;
           background-color: transparent;
           border: none;
           color: #fff;
@@ -147,35 +123,23 @@
         }
 
         .logoPlaceholder {
-          background: $mainBlueBack;
-          height: 100%;
-          width: 50%;
+          background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22232%22%20height%3D%2262%22%20viewBox%3D%220%200%20232%2062%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M231.987%200.00107052H0.957291L28.7922%2061.801C30.0262%2061.801%2031.2695%2061.801%2032.5035%2061.801C45.2983%2061.801%2057.8796%2061.801%2070.5445%2061.801C75.4805%2061.801%2080.4537%2061.801%2085.3898%2061.801C114.134%2061.7794%20142.934%2061.8444%20171.678%2061.801C172.3%2061.801%20172.912%2061.801%20173.534%2061.801C174.461%2061.801%20175.389%2061.801%20176.317%2061.801C179.407%2061.801%20182.506%2061.801%20185.595%2061.801C190.838%2061.7902%20196.126%2061.8336%20201.368%2061.801C207.232%2061.7685%20213.133%2061.8661%20218.997%2061.801C223.312%2061.7577%20227.672%2061.8336%20231.996%2061.801C232.015%2041.2119%20231.959%2020.5794%20231.996%20-0.00976562L231.987%200.00107052Z%22%20fill%3D%22%23113A5D%22/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          width: 100%;
+          height: 62px;
           @include flex($direction: row, $align: center, $justify: center);
-          position: relative;
-          // clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
           z-index: 1;
 
-          // &::after {
-          //   content: "";
-          //   position: absolute;
-          //   top: 0;
-          //   left: 0;
-          //   width: 100%;
-          //   height: 100%;
-          //   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
-          //   background: rgba(0, 0, 0, 0.15);
-          //   filter: blur(4px);
-          //   z-index: -1;
-          // }
+          img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            padding: 5px;
+          }
         }
       }
     }
   }
-}
-
-.logoPlaceholder img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  padding: 5px;
 }

@@ -5,7 +5,6 @@ import { getDatas } from "@/lib/handleApiActions";
 import styles from "@/styles/naftalan.module.scss";
 import Button from "@/components/Button/Button";
 import { ArrowLeft, ArrowRight } from "@/components/Svg";
-
 import Loading from "@/components/Loading";
 import useScrollCarousel from "@/helper/corusel";
 
@@ -20,6 +19,7 @@ function Card({ src, name, stil }) {
     </div>
   );
 }
+
 export default function MedicalProcedures({ t, locale }) {
   const carouselRef = useRef(null);
   const [data, setData] = useState([]);
@@ -44,10 +44,20 @@ export default function MedicalProcedures({ t, locale }) {
     fetchDatas();
   }, []);
 
-  const filteredData = useMemo(
-    () => data.filter((item) => item.language === lanCode),
-    [data, lanCode]
-  );
+  const filteredData = useMemo(() => {
+    return data
+      .map((item) => {
+        const translation = item.translations.find(t => t.language === lanCode);
+        if (!translation) return null;
+        return {
+          id: item.id,
+          name: translation.name,
+          description: translation.description,
+          imageUrl: item.imageUrl,
+        };
+      })
+      .filter(Boolean);
+  }, [data, lanCode]);
 
   const {
     canScrollLeft,
@@ -55,9 +65,9 @@ export default function MedicalProcedures({ t, locale }) {
     activeIndex,
     scrollCarousel,
     scrollToDot,
-  } = useScrollCarousel(carouselRef, data);
+  } = useScrollCarousel(carouselRef, filteredData);
 
-  if (!data || data.length === 0) {
+  if (!filteredData || filteredData.length === 0) {
     return <Loading />;
   }
 
@@ -67,13 +77,11 @@ export default function MedicalProcedures({ t, locale }) {
         <div className={styles.cards} ref={carouselRef}>
           {filteredData.map((item, i) => (
             <Card
-              src={item?.name}
-              name={item?.name}
+              src={`http://localhost:5041/${item.imageUrl}`}
+              name={item.name}
               key={`${item.name}_${i}`}
               isActive={i === activeIndex}
-              stil={`${styles.card} ${
-                i === activeIndex ? styles.activeCard : ""
-              }`}
+              stil={`${styles.card} ${i === activeIndex ? styles.activeCard : ""}`}
             />
           ))}
         </div>
@@ -81,9 +89,7 @@ export default function MedicalProcedures({ t, locale }) {
         <div className={styles.carouselNavButtons}>
           <Button
             onClick={() => scrollCarousel("left")}
-            className={`${styles.carouselNavButton} ${
-              !canScrollLeft ? styles.disabled : ""
-            }`}
+            className={`${styles.carouselNavButton} ${!canScrollLeft ? styles.disabled : ""}`}
             aria-label="Scroll left"
             disabled={!canScrollLeft}
           >
@@ -91,9 +97,7 @@ export default function MedicalProcedures({ t, locale }) {
           </Button>
           <Button
             onClick={() => scrollCarousel("right")}
-            className={`${styles.carouselNavButton} ${
-              !canScrollRight ? styles.disabled : ""
-            }`}
+            className={`${styles.carouselNavButton} ${!canScrollRight ? styles.disabled : ""}`}
             aria-label="Scroll right"
             disabled={!canScrollRight}
           >

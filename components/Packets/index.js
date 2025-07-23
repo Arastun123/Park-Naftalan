@@ -11,14 +11,14 @@ export default function Packets({ t, locale }) {
     <div className={styles.banner}>
       <div className={styles.item}>
         <div className={styles.left}>
-          <p className={styles.offer}>5+1</p>
-          <p className={styles.text}>Kampaniyası</p>
+          <p className="offer">5+1</p>
+          <p className="text">Kampaniyası</p>
         </div>
 
         <div className={styles.mainContentArea}>
           <div className={styles.center}>
             <h2>Yay ayına özəl</h2>
-            <p className={styles.highlight}>
+            <p className="highlight">
               <strong>
                 5 günlük otaq rezerv edənə <br /> 1 gün hədiyyə
               </strong>
@@ -27,10 +27,10 @@ export default function Packets({ t, locale }) {
           <div className={styles.rightDiagonal}>
             <Button
               onClick={() => router.push(`/${locale}/reservations`)}
-              className={global.reserveBtn}
+              className="global-reserveBtn-class"
             >
               {t?.Reservation}
-            </Button>{" "}
+            </Button>
             <div className={styles.logoPlaceholder}>
               <Logo />
             </div>

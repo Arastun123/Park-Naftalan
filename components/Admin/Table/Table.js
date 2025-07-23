@@ -14,6 +14,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
     router.push("/naftalanPark");
   };
 
+  console.log(data);
   const normalizedData = Array.isArray(data) ? data : [data];
 
   const idColorMap = useMemo(() => {

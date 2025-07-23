@@ -20,7 +20,7 @@ export default function Illness({ t, locale }) {
     const fetchDatas = async () => {
       const illnessData = await getDatas("Illness");
       const treatmentData = await getDatas("TreatmentCategory");
-      console.log(treatmentData);
+      
 
       if (illnessData && treatmentData) {
         setIllness(illnessData);

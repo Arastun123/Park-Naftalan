@@ -48,7 +48,7 @@ export default async function Home({ params }) {
           </div>
         </Section>
 
-        <Packets t={t} locale={locale} />
+        {/* <Packets t={t} locale={locale} /> */}
         <WriteUs t={t} locale={locale} />
       </div>
     </>

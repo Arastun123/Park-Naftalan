@@ -19,7 +19,8 @@ export default function TreatmentMethod() {
   }, [data]);
 
   const fetchDatas = async () => {
-    const data = await getDatas(model);
+    let data = await getDatas(model);
+    data = data.find((item) => item.translations);
     if (data) setData(data);
   };
 
@@ -32,7 +33,7 @@ export default function TreatmentMethod() {
       fetchDatas();
     }
   };
-
+  
   return (
     <div className={global.container}>
       <Table

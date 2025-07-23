@@ -78,6 +78,7 @@ export default function RoomDetail({ t, locale }) {
       <img
         src={buildImageUrl(room.imageUrls?.[0])}
         alt={`Park Naftalan Sanatoriyası - ${room?.category}`}
+        className={style.main}
       />
 
       <p className={style.centerText}>{room?.miniTitle}</p>

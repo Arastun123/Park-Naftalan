@@ -15,35 +15,33 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     name: "",
     surname: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     date: "",
     message: "",
     dayCount: "",
-    childCount: 1,
+    childCount: 0,
     roomCount: 1,
   });
+
   const [selectedRoom, setSelectedRoom] = useState(currentRoom || "Deluxe");
   const [guest, setGuest] = useState(1);
   const [errors, setErrors] = useState({});
   const [rooms, setRooms] = useState([]);
   const [price, setPrice] = useState(0);
-  const [currency, setCurrecy] = useState(0.5877);
+  const [currency, setCurrency] = useState(0.5877);
 
   useEffect(() => {
     const fetchRooms = async () => {
       const data = await getDatas("Room");
-      if (Array.isArray(data)) {
-        setRooms(data);
-      } else {
-        setRooms([]);
-      }
+      setRooms(Array.isArray(data) ? data : []);
     };
     fetchRooms();
-    const getCurrency = async () => {
-      const currency = await getAznToUsdRate();
-      if (currency) setCurrecy(currency);
+
+    const fetchCurrency = async () => {
+      const cur = await getAznToUsdRate();
+      if (cur) setCurrency(cur);
     };
-    getCurrency();
+    fetchCurrency();
   }, []);
 
   useEffect(() => {
@@ -78,15 +76,14 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     e.preventDefault();
     const newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = true;
-    if (!formData.surname.trim()) newErrors.surname = true;
-    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email))
+    if (!formData.name?.trim()) newErrors.name = true;
+    if (!formData.surname?.trim()) newErrors.surname = true;
+    if (!formData.email?.trim() || !/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = true;
-    if (!formData.phone.trim()) newErrors.phone = true;
-    if (!formData.date.trim()) newErrors.date = true;
-    if (formData.childCount < 1) newErrors.childCount = true;
+    if (!formData.phoneNumber?.trim()) newErrors.phoneNumber = true;
+    if (!formData.date?.trim()) newErrors.date = true;
     if (formData.roomCount < 1) newErrors.roomCount = true;
-    if (!selectedRoom.trim()) newErrors.selectedRoom = true;
+    if (!selectedRoom?.trim()) newErrors.selectedRoom = true;
     if (guest < 1) newErrors.guest = true;
 
     setErrors(newErrors);
@@ -96,39 +93,23 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         ...formData,
         selectedRoom,
         guest,
+        price,
       };
 
-      const emailBody = `
-        Yeni rezervasiya:
-        - Ad: ${finalData.name}
-        - Soyad: ${finalData.surname}
-        - Email: ${finalData.email}
-        - Əlaqə nömrəsi: ${finalData.phone}
-        - Seçilmiş otaq: ${finalData.selectedRoom}
-        - Uşaq sayı: ${finalData.childCount}
-        - Tarix: ${finalData.date || "Seçilməyib"}
-        - Otaq sayı: ${finalData.roomCount || 1}
-        - Əlavə qeyd: ${finalData.message || 1}
-        - Ümumi Qiymət: ${price} ₼
-      `;
-
       try {
-        const res = await sendMail(
-          "Reservation@parknaftalan.az",
-          "Reservation",
-          emailBody
-        );
-        if (res.status === 200) {
+        const res = await sendMail(finalData);
+
+        if (res?.status === 200) {
           toast.success(t?.Success);
           setFormData({
             name: "",
             surname: "",
             email: "",
-            phone: "",
+            phoneNumber: "",
             date: "",
             message: "",
             dayCount: 1,
-            childCount: 1,
+            childCount: 0,
             roomCount: 1,
           });
           setSelectedRoom(currentRoom || "Deluxe");
@@ -136,14 +117,14 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           setErrors({});
           setPrice(0);
         } else {
-          toast.error(t?.Error);
+          toast.error(t?.Error || "Error sending email.");
         }
       } catch (error) {
-        console.error("Mail göndərmə xətası:", error);
-        toast.error(t?.BackError);
+        console.error("Mail error:", error);
+        toast.error(t?.BackError || "Something went wrong.");
       }
     } else {
-      toast.error(t?.FillInput);
+      toast.error(t?.FillInput || "Please fill all required fields.");
     }
   };
 
@@ -211,7 +192,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               value={formData.childCount}
               onChange={handleChange}
               hasError={errors.childCount}
-              min="1"
+              min="0"
             />
             <Input
               type="text"
@@ -245,11 +226,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             />
             <Input
               type="tel"
-              name="phone"
+              name="phoneNumber"
               label={t?.Phone}
-              value={formData.phone}
+              value={formData.phoneNumber}
               onChange={handleChange}
-              hasError={errors.phone}
+              hasError={errors.phoneNumber}
               placeholder={t?.Phone}
             />
             <div
