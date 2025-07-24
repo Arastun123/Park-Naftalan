@@ -42,8 +42,7 @@ export default function ContactForm({ t, locale }) {
       `;
       try {
         const res = await sendMail(
-          "info@parknaftalan.az",
-          "Yeni Mesaj Formu",
+          `send?to=ekbr03@gmail.com&subject=Yeni Mesaj Formu&message=${emailBody}`,
           emailBody
         );
 

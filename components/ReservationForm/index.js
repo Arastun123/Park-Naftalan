@@ -99,7 +99,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       console.log(finalData);
 
       try {
-        const res = await sendMail(finalData);
+        const res = await sendMail("send-reservation-confirmation", finalData);
 
         if (res?.status === 200) {
           toast.success(t?.Success);

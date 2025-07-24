@@ -5,14 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import Button from "@/components/Button/Button";
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
-import { 
-  getDatas, 
-  updateDataNoId,
-} from "@/lib/handleApiActions";
+import { getDatas, updateDataNoId } from "@/lib/handleApiActions";
 
 import table from "@/styles/table.module.scss";
 import { toast } from "react-toastify";
-
 
 export default function createContact() {
   const params = useParams();
@@ -66,9 +62,21 @@ export default function createContact() {
   };
 
   const handleSubmit = async () => {
-    const payload = { ...values };
+    const payload = {
+      ...values,
+      number:
+        typeof values.number === "string"
+          ? values.number.split(",").map((num) => num.trim())
+          : values.number,
+    };
 
     const res = await updateDataNoId("Contact", payload);
+
+    if (!res) {
+      toast.error("Xəta baş verdi: Server cavab vermədi");
+      return;
+    }
+
     if (res.status === 204) {
       toast.success("Proses uğurla başa çatdı");
       router.back();
@@ -96,8 +104,8 @@ export default function createContact() {
             className={`${table.actionBtn} ${table.create}`}
           >
             Yeni nömrə əlavə et
-          </Button> <br/> <br/>
-
+          </Button>{" "}
+          <br /> <br />
           <label>Mail</label>
           <input
             type="email"
@@ -105,7 +113,6 @@ export default function createContact() {
             value={values.mail}
             onChange={handleInputChange}
           />
-
           <label>Ünvan</label>
           <input
             type="text"
@@ -113,7 +120,6 @@ export default function createContact() {
             value={values.adress}
             onChange={handleInputChange}
           />
-
           <label>Instagram Link</label>
           <input
             type="url"
@@ -121,7 +127,6 @@ export default function createContact() {
             value={values.instagramLink}
             onChange={handleInputChange}
           />
-
           <label>Facebook Link</label>
           <input
             type="url"
@@ -129,7 +134,6 @@ export default function createContact() {
             value={values.facebookLink}
             onChange={handleInputChange}
           />
-
           <label>TikTok Link</label>
           <input
             type="url"
@@ -137,7 +141,6 @@ export default function createContact() {
             value={values.tiktokLink}
             onChange={handleInputChange}
           />
-
           <label>YouTube Link</label>
           <input
             type="url"
@@ -145,7 +148,6 @@ export default function createContact() {
             value={values.youtubeLink}
             onChange={handleInputChange}
           />
-
           <label>WhatsApp Nömrə</label>
           <input
             type="text"

@@ -7,8 +7,8 @@ export default function About({ t, locale }) {
   const [about, setAbout] = useState([]);
 
   const lanCode = useMemo(() => {
-    if (locale === "en") return 2;
-    if (locale === "az") return 1;
+    if (locale === "en") return 1;
+    if (locale === "az") return 2;
     return 3;
   }, [locale]);
 

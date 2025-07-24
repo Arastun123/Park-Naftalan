@@ -10,28 +10,19 @@ import { toast } from "react-toastify";
 
 export default function TreatmentCategory() {
   const [data, setData] = useState([]);
+  const model = "treatmentCategory";
 
-  const th = ["name"];
+  const th = ["id", "name_az", "name_en", "name_ru"];
+
+  const fetchDatas = async () => {
+    let rawData = await getDatas(model);
+    const normalized = normalizeTreatmentMethods(rawData);
+    setData(normalized);
+  };
 
   useEffect(() => {
     fetchDatas();
-  }, [data]);
-
-  const fetchDatas = async () => {
-    let data = await getDatas("TreatmentCategory");
-    if (data) {
-      data = data.map((item) => {
-        const translation = item.translations?.[1] || {};
-        return {
-          ...item,
-          name: translation.name || "-",
-          language: translation.language || "-",
-        };
-      });
-
-      setData(data);
-    }
-  };
+  }, []);
 
   const handleDelete = async (id) => {
     const res = await deleteData("TreatmentCategory", id);
@@ -53,4 +44,23 @@ export default function TreatmentCategory() {
       />
     </div>
   );
+}
+
+function normalizeTreatmentMethods(data) {
+  return (Array.isArray(data) ? data : [data])
+    .filter((item) => item.translations)
+    .map((item) => {
+      const flat = {
+        id: item.id,
+        imageUrl: item.imageUrl,
+      };
+
+      item.translations.forEach((t) => {
+        const lang = t.language === 1 ? "en" : t.language === 2 ? "az" : "ru";
+        flat[`name_${lang}`] = t.name;
+        flat[`description_${lang}`] = t.description;
+      });
+
+      return flat;
+    });
 }

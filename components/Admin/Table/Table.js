@@ -15,7 +15,7 @@ export default function Table({ data, th, handleDelete, createSlug }) {
   };
 
   const normalizedData = Array.isArray(data) ? data : [data];
-
+ 
   const idColorMap = useMemo(() => {
     const colors = ["color1", "color2", "color3", "color4", "color5"];
     const map = {};
