@@ -94,7 +94,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         selectedRoom,
         guest,
         price,
+        language: locale,
       };
+      console.log(finalData);
 
       try {
         const res = await sendMail(finalData);
