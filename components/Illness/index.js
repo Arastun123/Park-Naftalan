@@ -20,7 +20,6 @@ export default function Illness({ t, locale }) {
     const fetchDatas = async () => {
       const illnessData = await getDatas("Illness");
       const treatmentData = await getDatas("TreatmentCategory");
-      
 
       if (illnessData && treatmentData) {
         setIllness(illnessData);
@@ -75,7 +74,7 @@ export default function Illness({ t, locale }) {
           return (
             <div key={illnessItem.id} className={styles.illnessItem}>
               <img
-                src={`http://localhost:5041/${illnessItem.imageUrls}`}
+                src={`https://parknaftalan.az/${illnessItem.imageUrls}`}
                 alt={`Park Naftalan - ${translation.name}`}
               />
               <h3>{translation.name}</h3>

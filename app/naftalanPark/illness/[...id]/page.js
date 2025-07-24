@@ -166,7 +166,7 @@ export default function createRoom() {
           {image && (
             <img
               className={admin.img}
-              src={`http://localhost:5041/${image}`}
+              src={`https://parknaftalan.az/${image}`}
               alt="Old Image"
             />
           )}

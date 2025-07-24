@@ -23,7 +23,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     roomCount: 1,
   });
 
-  const [selectedRoom, setSelectedRoom] = useState(currentRoom || "Deluxe");
+  const [selectedRoom, setSelectedRoom] = useState(currentRoom || "Standart Room");
   const [guest, setGuest] = useState(1);
   const [errors, setErrors] = useState({});
   const [rooms, setRooms] = useState([]);
@@ -252,15 +252,17 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             </div>
 
             <div className={styles.priceSubmitWrapper}>
-              <p className={styles.priceInfo}>
-                {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
-                {formData.childCount} {t?.DayFor}
-                {t?.PriceIs} {t?.PriceEnd}
-                <span className={styles.totalPrice}>
-                  {" "}
-                  {price} ₼ / {(Number(price) * currency).toFixed(0)} $
-                </span>
-              </p>
+              {selectedRoom !== "Standart Room" && (
+                <p className={styles.priceInfo}>
+                  {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
+                  {formData.childCount} {t?.DayFor}
+                  {t?.PriceIs} {t?.PriceEnd}
+                  <span className={styles.totalPrice}>
+                    {" "}
+                    {price} ₼ / {(Number(price) * currency).toFixed(0)} $
+                  </span>
+                </p>
+              )}
               <Input
                 type="submit"
                 value={t?.Reserv}

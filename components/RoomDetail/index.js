@@ -51,8 +51,7 @@ export default function RoomDetail({ t, locale }) {
 
   const buildImageUrl = (url) => {
     if (!url) return "/parkSuite.png";
-    // http://localhost:5041/  https://parknaftalan.az/
-    return `http://localhost:5041/${url}`;
+    return `https://parknaftalan.az/${url}`;
   };
 
   return (

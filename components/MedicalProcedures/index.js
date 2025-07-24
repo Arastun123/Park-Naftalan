@@ -11,10 +11,7 @@ import useScrollCarousel from "@/helper/corusel";
 function Card({ src, name, stil }) {
   return (
     <div className={stil}>
-      <img
-        src={src}
-        alt={`Park Naftalan Sanatoriyası - ${name}`}
-      />
+      <img src={src} alt={`Park Naftalan Sanatoriyası - ${name}`} />
       <p>{name}</p>
     </div>
   );
@@ -47,7 +44,9 @@ export default function MedicalProcedures({ t, locale }) {
   const filteredData = useMemo(() => {
     return data
       .map((item) => {
-        const translation = item.translations.find(t => t.language === lanCode);
+        const translation = item.translations.find(
+          (t) => t.language === lanCode
+        );
         if (!translation) return null;
         return {
           id: item.id,
@@ -77,11 +76,13 @@ export default function MedicalProcedures({ t, locale }) {
         <div className={styles.cards} ref={carouselRef}>
           {filteredData.map((item, i) => (
             <Card
-              src={`http://localhost:5041/${item.imageUrl}`}
+              src={`https://parknaftalan.az/${item.imageUrl}`}
               name={item.name}
               key={`${item.name}_${i}`}
               isActive={i === activeIndex}
-              stil={`${styles.card} ${i === activeIndex ? styles.activeCard : ""}`}
+              stil={`${styles.card} ${
+                i === activeIndex ? styles.activeCard : ""
+              }`}
             />
           ))}
         </div>
@@ -89,7 +90,9 @@ export default function MedicalProcedures({ t, locale }) {
         <div className={styles.carouselNavButtons}>
           <Button
             onClick={() => scrollCarousel("left")}
-            className={`${styles.carouselNavButton} ${!canScrollLeft ? styles.disabled : ""}`}
+            className={`${styles.carouselNavButton} ${
+              !canScrollLeft ? styles.disabled : ""
+            }`}
             aria-label="Scroll left"
             disabled={!canScrollLeft}
           >
@@ -97,7 +100,9 @@ export default function MedicalProcedures({ t, locale }) {
           </Button>
           <Button
             onClick={() => scrollCarousel("right")}
-            className={`${styles.carouselNavButton} ${!canScrollRight ? styles.disabled : ""}`}
+            className={`${styles.carouselNavButton} ${
+              !canScrollRight ? styles.disabled : ""
+            }`}
             aria-label="Scroll right"
             disabled={!canScrollRight}
           >

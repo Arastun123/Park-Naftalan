@@ -50,8 +50,7 @@ export default function AboutPageMain({ t, locale }) {
         <div className={styles.mainContent}>
           <div className={styles.imageBox}>
             <img
-            // http://localhost:5041/  https://parknaftalan.az/
-              src={`http://localhost:5041/${updatedPath}`}
+              src={`https://parknaftalan.az/${updatedPath}`}
               alt="Park Naftalan Sanatoriyası"
             />
           </div>
