@@ -93,7 +93,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         ...formData,
         selectedRoom,
         guest,
-        price,
+        // price,
         language: locale,
       };
       console.log(finalData);
@@ -252,7 +252,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             </div>
 
             <div className={styles.priceSubmitWrapper}>
-              {selectedRoom !== "Standart Room" && (
+              {/* {selectedRoom !== "Standart Room" && (
                 <p className={styles.priceInfo}>
                   {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
                   {formData.childCount} {t?.DayFor}
@@ -262,7 +262,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                     {price} ₼ / {(Number(price) * currency).toFixed(0)} $
                   </span>
                 </p>
-              )}
+              )} */}
               <Input
                 type="submit"
                 value={t?.Reserv}
