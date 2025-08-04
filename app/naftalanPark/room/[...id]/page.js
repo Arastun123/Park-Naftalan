@@ -5,17 +5,16 @@ import { useParams, useRouter } from "next/navigation";
 
 import Button from "@/components/Button/Button";
 
-import global from "@/styles/global.module.scss";
-import admin from "@/styles/admin.module.scss";
 import {
-  createData,
   createDataWithImage,
   getDataById,
   getDatas,
-  updateData,
   updateDataWithImage,
 } from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
+
+import global from "@/styles/global.module.scss";
+import admin from "@/styles/admin.module.scss";
 
 export default function createRoom() {
   const params = useParams();
@@ -24,6 +23,7 @@ export default function createRoom() {
 
   const isEdit = id === "create" ? "create" : "edit";
   const [equipment, setEquipment] = useState([]);
+  const [child, setChild] = useState([]);
   const [values, setValues] = useState({
     category: "",
     area: "",
@@ -32,6 +32,7 @@ export default function createRoom() {
     picture: "",
     youtubeVideoLink: "https://gemini.google.com/app/a0f1069ff4bdc9c7",
     equipmentIds: [],
+    childIds: [],
     imageUrls: [],
     translations: {
       1: {
@@ -75,6 +76,10 @@ export default function createRoom() {
       formData.append("EquipmentIds", id);
     });
 
+    values.childIds.forEach((id) => {
+      formData.append("childIds", id);
+    });
+    
     if (values.pictures && values.pictures.length > 0) {
       values.pictures.forEach((file) => {
         formData.append(
@@ -130,6 +135,7 @@ export default function createRoom() {
             miniTitle: t.miniTitle || "",
           };
         });
+
         setValues((prev) => ({
           ...prev,
           category: data.category,
@@ -139,12 +145,17 @@ export default function createRoom() {
           picture: data.picture,
           youtubeVideoLink: data.youtubeVideoLink,
           equipmentIds: data.equipmentIds || [],
+          childIds: data.children?.map((child) => child.id) || [], // ✅ FIXED HERE
+          imageUrls: data.imageUrls || [],
           translations: newTranslations,
         }));
       }
     }
     const equipment = await getDatas("Equipment");
     setEquipment(equipment);
+
+    const child = await getDatas("Children");
+    setChild(child);
   };
 
   const handleFileChange = (e) => {
@@ -423,6 +434,33 @@ export default function createRoom() {
               }
             >
               {item.name}
+            </Button>
+          );
+        })}
+      </div>
+      <div className={admin.btns}>
+        {child.map((item, i) => {
+          const isSelected = values.childIds.includes(item.id);
+
+          return (
+            <Button
+              key={`${i}_${item.name}`}
+              className={`${admin.actionBtn} ${
+                isSelected ? admin.selected : ""
+              }`}
+              onClick={() =>
+                setValues((prev) => {
+                  const alreadySelected = prev.childIds.includes(item.id);
+                  return {
+                    ...prev,
+                    childIds: alreadySelected
+                      ? prev.childIds.filter((id) => id !== item.id)
+                      : [...prev.childIds, item.id],
+                  };
+                })
+              }
+            >
+              {item?.ageRange} yaş - {item?.price}₼
             </Button>
           );
         })}

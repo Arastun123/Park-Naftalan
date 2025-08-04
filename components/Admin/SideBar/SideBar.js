@@ -18,6 +18,8 @@ export default function SideBar() {
         <LinkItem slug="/naftalanPark/treatmentCategory">Müalicə Növü</LinkItem>
         <LinkItem slug="/naftalanPark/equipment">Təhcizat</LinkItem>
         <LinkItem slug="/naftalanPark/room">Otaqlar</LinkItem>
+        <LinkItem slug="/naftalanPark/children">Uşaqlar üçün qiymət</LinkItem>
+
       </div>
       <LinkItem slug="/">Əsas sayta kec</LinkItem>
     </div>

@@ -1,14 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 import { getAznToUsdRate, getDatas, sendMail } from "@/lib/handleApiActions";
-import Input from "../Input";
-import SelectBox from "../SelecBox";
+import Input from "../Input"; 
 import Calendar from "../Calendar/Calendar";
 
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./style.module.scss";
+import SelectBox from "../SelecBox";
 
 export default function ReservationForm({ t, locale, currentRoom }) {
   const [formData, setFormData] = useState({
@@ -18,12 +18,14 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     phoneNumber: "",
     date: "",
     message: "",
-    dayCount: "",
-    childCount: 0,
+    dayCount: 1,
+    childCount: [],
     roomCount: 1,
   });
 
-  const [selectedRoom, setSelectedRoom] = useState(currentRoom || "Standart Room");
+  const [selectedRoom, setSelectedRoom] = useState(
+    currentRoom || "Standart Room"
+  );
   const [guest, setGuest] = useState(1);
   const [errors, setErrors] = useState({});
   const [rooms, setRooms] = useState([]);
@@ -47,21 +49,74 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   useEffect(() => {
     if (rooms.length > 0 && selectedRoom) {
       const selected = rooms.find((item) => item.category === selectedRoom);
-      if (selected?.price) {
-        setPrice(
-          Number(selected.price) *
-            Number(formData.dayCount || 1) *
-            Number(formData.roomCount || 1)
-        );
-      } else {
-        setPrice(0);
-      }
+      const basePrice = Number(selected?.price || 0);
+      const guestCount = Number(guest || 1);
+      const dayCount = Number(formData.dayCount || 1);
+      const roomCount = Number(formData.roomCount || 1);
+
+      const selectedChildren =
+        selected?.children?.filter((child) =>
+          formData.childCount.includes(String(child.id))
+        ) || [];
+
+      const childPriceTotal = selectedChildren.reduce(
+        (acc, child) => acc + Number(child.price || 0),
+        0
+      );
+
+      const total =
+        (basePrice * guestCount + childPriceTotal) * dayCount * roomCount;
+
+      setPrice(total);
     } else {
       setPrice(0);
     }
-  }, [rooms, selectedRoom, formData.dayCount, formData.roomCount]);
+  }, [
+    rooms,
+    selectedRoom,
+    formData.dayCount,
+    formData.roomCount,
+    guest,
+    formData.childCount,
+  ]);
 
   const roomOptions = rooms.map((item) => item.category);
+
+  const childOptions = useMemo(() => {
+    const selected = rooms.find((room) => room.category === selectedRoom);
+    if (!selected?.children) return [];
+
+    return selected.children.map((child) => {
+      let label = "";
+
+      switch (locale) {
+        case "az":
+          label = `1 Uşaq ${child.ageRange} yaş${
+            child.hasTreatment ? " (Müalicə ilə)" : ""
+          }`;
+          break;
+        case "en":
+          label = `1 Child ${child.ageRange} years${
+            child.hasTreatment ? " (With Treatment)" : ""
+          }`;
+          break;
+        case "ru":
+          label = `1 Ребенок ${child.ageRange} лет${
+            child.hasTreatment ? " (С лечением)" : ""
+          }`;
+          break;
+        default:
+          label = `1 Child ${child.ageRange} years${
+            child.hasTreatment ? " (With Treatment)" : ""
+          }`;
+      }
+
+      return {
+        value: String(child.id),
+        label,
+      };
+    });
+  }, [rooms, selectedRoom, locale]);
 
   const handleRoomSelect = (e) => {
     setSelectedRoom(e.target.value);
@@ -70,6 +125,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleChildCountChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions, (o) => o.value);
+    setFormData((prev) => ({ ...prev, childCount: selected }));
   };
 
   const handleSubmit = async (e) => {
@@ -89,14 +149,20 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      // ✅ Seçilmiş uşaqların label-larını tapırıq:
+      const selectedChildren = childOptions.filter((opt) =>
+        formData.childCount.includes(opt.value)
+      );
+      const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
+
       const finalData = {
         ...formData,
         selectedRoom,
         guest,
-        // price,
+        price,
         language: locale,
+        childCount: selectedChildrenLabels.join(", "), // ✉️ mail üçün tam təsvirlər
       };
-      console.log(finalData);
 
       try {
         const res = await sendMail("send-reservation-confirmation", finalData);
@@ -111,7 +177,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             date: "",
             message: "",
             dayCount: 1,
-            childCount: 0,
+            childCount: [],
             roomCount: 1,
           });
           setSelectedRoom(currentRoom || "Deluxe");
@@ -161,7 +227,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           <div className={styles.formGroup}>
             <SelectBox
               optionData={roomOptions}
-              name={t?.ChooseRoom}
+              name="selectedRoom"
               value={selectedRoom}
               onChange={handleRoomSelect}
               hasError={errors.selectedRoom}
@@ -178,7 +244,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             />
             <SelectBox
               optionData={[1, 2, 3, 4, 5, 6]}
-              name={t?.Guest}
+              name="guest"
               value={guest}
               onChange={(e) => setGuest(Number(e.target.value))}
               hasError={errors.guest}
@@ -187,15 +253,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           </div>
 
           <div className={styles.formGroup}>
-            <Input
-              type="number"
+            <SelectBox
+              optionData={childOptions}
               name="childCount"
-              label={t?.ChildCount}
               value={formData.childCount}
-              onChange={handleChange}
+              onChange={handleChildCountChange}
               hasError={errors.childCount}
-              min="0"
+              label={t?.ChildCount}
+              multiple={true}
             />
+
             <Input
               type="text"
               name="name"
@@ -252,17 +319,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             </div>
 
             <div className={styles.priceSubmitWrapper}>
-              {/* {selectedRoom !== "Standart Room" && (
+              {selectedRoom !== "Standart Room" && (
                 <p className={styles.priceInfo}>
-                  {formData.roomCount} {selectedRoom} {t?.RoomFor}{" "}
-                  {formData.childCount} {t?.DayFor}
-                  {t?.PriceIs} {t?.PriceEnd}
+                  {formData.roomCount} {selectedRoom} × {guest} {t?.Guest},{" "}
+                  {formData.childCount.length} {t?.Child} × {formData.dayCount}{" "}
+                  {t?.Day} — {t?.PriceIs}
                   <span className={styles.totalPrice}>
-                    {" "}
                     {price} ₼ / {(Number(price) * currency).toFixed(0)} $
                   </span>
                 </p>
-              )} */}
+              )}
               <Input
                 type="submit"
                 value={t?.Reserv}

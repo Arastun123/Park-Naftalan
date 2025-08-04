@@ -1,6 +1,6 @@
- 
 import React from "react";
-import styles from '../Input/style.module.scss'
+import styles from "../Input/style.module.scss";
+
 const SelectBox = ({
   label,
   optionData,
@@ -8,7 +8,7 @@ const SelectBox = ({
   value,
   onChange,
   hasError,
-  className,
+  multiple = false, 
 }) => {
   return (
     <div className={`${styles.selectWrapper} ${hasError ? styles.error : ""}`}>
@@ -18,11 +18,12 @@ const SelectBox = ({
         name={name}
         value={value}
         onChange={onChange}
-        className={`${styles.selectField} ${className || ""}`}
+        multiple={multiple} 
+        className={styles.select}
       >
-        {optionData.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
+        {optionData.map((option) => (
+          <option key={option.value ?? option} value={option.value ?? option}>
+            {option.label ?? option}
           </option>
         ))}
       </select>
