@@ -3,12 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 import { getAznToUsdRate, getDatas, sendMail } from "@/lib/handleApiActions";
-import Input from "../Input"; 
+import Input from "../Input";
 import Calendar from "../Calendar/Calendar";
 
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./style.module.scss";
 import SelectBox from "../SelecBox";
+import CustomMultiSelect from "../CustomMultiSelect";
 
 export default function ReservationForm({ t, locale, currentRoom }) {
   const [formData, setFormData] = useState({
@@ -87,28 +88,28 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     if (!selected?.children) return [];
 
     return selected.children.map((child) => {
-      let label = "";
+      let label = child.ageRange;
 
       switch (locale) {
-        case "az":
-          label = `1 Uşaq ${child.ageRange} yaş${
-            child.hasTreatment ? " (Müalicə ilə)" : ""
-          }`;
-          break;
         case "en":
-          label = `1 Child ${child.ageRange} years${
-            child.hasTreatment ? " (With Treatment)" : ""
-          }`;
+          label = label.replace(/uşaq/g, "child").replace(/yaş/g, "years");
           break;
         case "ru":
-          label = `1 Ребенок ${child.ageRange} лет${
-            child.hasTreatment ? " (С лечением)" : ""
-          }`;
+          label = label.replace(/uşaq/g, "pебенок").replace(/yaş/g, "лет");
           break;
+        case "az":
         default:
-          label = `1 Child ${child.ageRange} years${
-            child.hasTreatment ? " (With Treatment)" : ""
-          }`;
+          break;
+      }
+
+      const treatmentText = {
+        az: " (Müalicə ilə)",
+        en: " (With Treatment)",
+        ru: " (С лечением)",
+      };
+
+      if (child.hasTreatment) {
+        label += treatmentText[locale];
       }
 
       return {
@@ -127,10 +128,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleChildCountChange = (e) => {
-    const selected = Array.from(e.target.selectedOptions, (o) => o.value);
-    setFormData((prev) => ({ ...prev, childCount: selected }));
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -149,7 +147,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // ✅ Seçilmiş uşaqların label-larını tapırıq:
       const selectedChildren = childOptions.filter((opt) =>
         formData.childCount.includes(opt.value)
       );
@@ -161,7 +158,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         guest,
         price,
         language: locale,
-        childCount: selectedChildrenLabels.join(", "), // ✉️ mail üçün tam təsvirlər
+        childCount: selectedChildrenLabels.join(", "),
       };
 
       try {
@@ -253,14 +250,15 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           </div>
 
           <div className={styles.formGroup}>
-            <SelectBox
-              optionData={childOptions}
-              name="childCount"
-              value={formData.childCount}
-              onChange={handleChildCountChange}
-              hasError={errors.childCount}
+            <CustomMultiSelect
               label={t?.ChildCount}
-              multiple={true}
+              options={childOptions}
+              name="childCount"
+              selectedValues={formData.childCount}
+              onChange={(selected) =>
+                setFormData((prev) => ({ ...prev, childCount: selected }))
+              }
+              hasError={errors.childCount}
             />
 
             <Input
@@ -323,7 +321,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                 <p className={styles.priceInfo}>
                   {formData.roomCount} {selectedRoom} × {guest} {t?.Guest},{" "}
                   {formData.childCount.length} {t?.Child} × {formData.dayCount}{" "}
-                  {t?.Day} — {t?.PriceIs}
+                  {t?.Day} — {t?.PriceIs}{" "}
                   <span className={styles.totalPrice}>
                     {price} ₼ / {(Number(price) * currency).toFixed(0)} $
                   </span>

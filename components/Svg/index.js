@@ -14,3 +14,6 @@ export { default as Youtube } from "./Youtube";
 export { default as Phone } from "./Phone";
 export { default as Reservation } from "./Reservation";
 export { default as Tiktok } from "./Tiktok";
+export { default as Reserve} from "./Reserve";
+export {default as Download} from "./Download";
+export {default as Clock} from "./Clock";

@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 export default function createChildren() {
   const params = useParams();
   const router = useRouter();
+  const [count, setCount] = useState(1);
   const [values, setValues] = useState({
     ageRange: "",
     hasTreatment: false,
@@ -33,9 +34,15 @@ export default function createChildren() {
   }, [isEdit]);
 
   const handleSubmit = async () => {
+    const finalData = {
+      ageRange: `${count} uşaq ${values.ageRange} yaş`,
+      hasTreatment: values.hasTreatment,
+      price: values.price,
+    };
+
     const res = isEdit
-      ? await updateData("Children", id, values)
-      : await createData("Children", values);
+      ? await updateData("Children", id, finalData)
+      : await createData("Children", finalData);
 
     if (res.status === 201 || res.status === 200) {
       toast.success("Proses uğurla başa çatdı");
@@ -59,6 +66,14 @@ export default function createChildren() {
     <div className={global.container}>
       <form className={admin.form}>
         <>
+          <label>
+            Uşaq sayı :
+            <input
+              type="text"
+              value={count}
+              onChange={(e) => setCount(e.target.value)}
+            />
+          </label>
           <label>
             Yaş aralıqı :
             <input
