@@ -26,7 +26,14 @@ export default function RoomCard({ t, locale }) {
       try {
         const data = await getDatas("Room");
         if (Array.isArray(data)) {
-          setRooms(data);
+          const sortedData = data
+            .map((item) => ({
+              ...item,
+              category: item.category.trim(),
+            }))
+            .sort((a, b) => a.category.localeCompare(b.category, "az"));
+
+          setRooms(sortedData);
         } else {
           setRooms([]);
         }
@@ -47,11 +54,11 @@ export default function RoomCard({ t, locale }) {
 
   if (!rooms || rooms.length === 0) {
     return <Loading />;
-  }  
-  
+  }
+
   return (
     <div className={styles.roomGrid}>
-      {[...rooms].reverse().map((item) => {
+      {[...rooms].map((item) => {
         const currentTranslation = item.translations.find(
           (t) => t.language === lanCode
         );

@@ -81,10 +81,12 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     formData.childCount,
   ]);
 
-  const roomOptions = rooms.map((item) => ({
-    value: item.category,
-    label: `${item.category} ${item.member} ${t?.Person}`,
-  }));
+  const roomOptions = rooms
+    .map((item) => ({
+      value: item.category,
+      label: `${item.category} ${item.member} ${t?.Person}`,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label, "az"));
 
   const childOptions = useMemo(() => {
     const selected = rooms.find((room) => room.category === selectedRoom);
