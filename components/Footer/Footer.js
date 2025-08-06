@@ -21,7 +21,7 @@ export default async function Footer({ params }) {
           <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
           <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
           <LinkItem slug={`/${locale}/reservations`}>{t?.Reservation}</LinkItem>
-          {/* <LinkItem slug={`/${locale}/restaurant`}>{t?.Restaurant}</LinkItem> */}
+          <LinkItem slug={`/${locale}/restaurant`}>{t?.Restaurant}</LinkItem>
         </div>
         <SocialMediaIcon />
         <div className={styles.bottom}>

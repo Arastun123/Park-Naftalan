@@ -57,9 +57,9 @@ export default function HeaderClient({ locale, t }) {
               <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
               <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
               <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-              {/* <LinkItem slug={`/${locale}/restaurant`}>
+              <LinkItem slug={`/${locale}/restaurant`}>
                 {t?.Restaurant}
-              </LinkItem> */}
+              </LinkItem>
             </div>
 
             <div className={styles.icons}>
@@ -75,7 +75,7 @@ export default function HeaderClient({ locale, t }) {
             <LinkItem slug={`/${locale}/rooms`}>{t?.Rooms}</LinkItem>
             <LinkItem slug={`/${locale}/naftalan`}>{t?.Naftalan}</LinkItem>
             <LinkItem slug={`/${locale}/contact`}>{t?.Contact}</LinkItem>
-            {/* <LinkItem slug={`/${locale}/restaurant`}>{t?.Restaurant}</LinkItem> */}
+            <LinkItem slug={`/${locale}/restaurant`}>{t?.Restaurant}</LinkItem>
           </div>
 
           <SocialMediaIcon />

@@ -3,12 +3,13 @@ import Button from "@/components/Button/Button";
 import { Clock, Download, Phone, Reserve } from "@/components/Svg";
 
 import global from "@/styles/global.module.scss";
-import styles from "@/styles/restaurant.module.scss";
+import styles from "@/styles/restaurant.module.scss"; 
+import LinkItem from "../Header/LinkItem/LinkItem";
 
 export default function Restaurant({ t, locale }) {
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = `/files/menu${locale}qiymet.pdf`;
+    link.href = `/files/menu${locale}.pdf`;
     link.download = "menu.pdf";
     document.body.appendChild(link);
     link.click();
@@ -27,9 +28,9 @@ export default function Restaurant({ t, locale }) {
           <h2>{t?.Park}</h2>
           <p>{t?.ResTxt}</p>
           <div className={styles.actions}>
-            <Button>
+            <LinkItem slug="tel:+994502342459">
               <Reserve /> {t?.Reserv}
-            </Button>
+            </LinkItem>
             <Button onClick={handleDownload}>
               <Download /> {t?.Menu}
             </Button>
@@ -54,15 +55,14 @@ export default function Restaurant({ t, locale }) {
             <div className={styles.cards}>
               <div className={styles.card}>
                 <Clock />
-                <p>Open hours</p>
-                <p>09:00 - 24:00</p>
-                <p>Every day</p>
+                <p>{t?.open_hours}</p>
+                <p>09:00 - 00:00</p>
+                <p>{t?.every_day}</p>
               </div>
               <div className={styles.card}>
                 <Phone color="#333" width="30" height="30" />
-                <p>Open hours</p>
-                <p>09:00 - 24:00</p>
-                <p>Every day</p>
+                <p>{t?.Reserv}</p>
+                <p>+994502342459</p> 
               </div>
             </div>
           </div>
