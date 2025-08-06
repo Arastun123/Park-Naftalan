@@ -27,7 +27,7 @@
 .formGroup {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 20px;
   flex-wrap: wrap;
 
@@ -93,6 +93,19 @@
       text-align: center;
     }
   }
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .priceInfo {

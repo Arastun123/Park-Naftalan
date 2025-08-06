@@ -14,7 +14,7 @@ export default function SideBar() {
         <LinkItem slug="/naftalanPark/about">Haqqımızda</LinkItem>
         <LinkItem slug="/naftalanPark/contact">Əlaqə məlumatları</LinkItem>
         <LinkItem slug="/naftalanPark/illness">Xəstəliklər</LinkItem>
-        <LinkItem slug="/naftalanPark/treatmentmethod">Müalicəsi Nethodu</LinkItem>
+        <LinkItem slug="/naftalanPark/treatmentmethod">Müalicəsi Mailethodu</LinkItem>
         <LinkItem slug="/naftalanPark/treatmentCategory">Müalicə Növü</LinkItem>
         <LinkItem slug="/naftalanPark/equipment">Təhcizat</LinkItem>
         <LinkItem slug="/naftalanPark/room">Otaqlar</LinkItem>

@@ -84,5 +84,7 @@
     "end": " Take just one step to experience the beauty — Park Terrace is waiting for you!"
   },
    "open_hours": "Open hours",
-  "every_day": "Every day"
+  "every_day": "Every day",
+  "Person": "person",
+  "addGuest":"+1 person (70 ₼)"
 }
