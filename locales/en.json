@@ -69,7 +69,18 @@
   "TextForNaftalan": "Naftalan oil, extracted in the city of Naftalan, Azerbaijan, is one of the world’s unique types of therapeutic oil. Thanks to its biologically active components, this oil has been known for centuries for its healing properties and has been used in the natural treatment of various diseases.",
   "Restaurant": "Restaurant",
   "Park": "Park Terrace",
-  "ResTxt": "In the heart of our luxury hotel where refined cuisine meets an elegant atmosphere.",
+  "ResTxt": "An exclusive open-air retreat in the heart of Naftalan.",
   "Menu": "View Menu",
-  "Discover":"Discover Our Restaurant"
+  "Discover": "Discover Our Restaurant",
+ "park_text": {
+    "title": "Park Terrace – Moments Full of Taste",
+    "intro": "Located away from the noise of the city, nestled in nature, Park Terrace is a unique place where comfort and quality come together.",
+    "choice": "An ideal choice for a pleasant evening with your family or an unforgettable gathering with friends.",
+    "here_you_can": " Here you can:",
+    "item_1": "• Enjoy a delicious and diverse menu",
+    "item_2": "• Relax with a stunning view",
+    "item_3": "• Unwind with live music nights",
+    "music": " Live music programs on weekends, a unique atmosphere, friendly staff, and high-quality service make every visit to Park Terrace special.",
+    "end": " Take just one step to experience the beauty — Park Terrace is waiting for you!"
+  }
 }

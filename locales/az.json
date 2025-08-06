@@ -69,7 +69,18 @@
   "TextForNaftalan": " Azərbaycanın Naftalan şəhərində çıxarılan və adını da bu şəhərdən alan Naftalan nefti, dünyanın unikal tibbi neft növlərindən biridir. Tərkibindəki bioloji aktiv maddələr sayəsində bu neft əsrlər boyu müalicəvi xüsusiyyətləri ilə tanınmış və bir çox xəstəliklərin təbii yolla sağalmasında istifadə edilmişdir",
   "Restaurant": "Restoran",
   "Park": "Park Terrace",
-  "ResTxt": "Zərif mətbəxlə eleqant atmosferin qovuşduğu lüks otelimizin ürəyində.",
+  "ResTxt": "Naftalanın mərkəzində seçkin açıq hava istirahət.",
   "Menu": "Menyuya bax",
-  "Discover":"Restoranımızı Kəşf Edin"
+  "Discover": "Restoranımızı Kəşf Edin",
+  "park_text": {
+    "title": "Park Terrace – Zövqlə Dolu Anlar",
+    "intro": "Şəhərin səs-küyündən uzaq, təbiətin qoynunda yerləşən Park Terrace, rahatlıq və keyfiyyətin bir araya gəldiyi unikal məkandır.",
+    "choice": "İstər ailənizlə xoş bir axşam, istərsə də dostlarınızla unudulmaz görüş üçün ideal seçimdir.",
+    "here_you_can": " Burada siz:",
+    "item_1": "• Dadlı və çeşidli menyudan ləzzət ala bilərsiniz",
+    "item_2": "• Möhtəşəm mənzərə ilə istirahət edə bilərsiniz",
+    "item_3": "• Canlı musiqi gecələrində ruhunuzu dinləndirə bilərsiniz",
+    "music": " Həftəsonları baş tutan canlı musiqi proqramları, fərqli atmosfer, gülərüz personal və xidmət keyfiyyəti ilə Park Terrace hər ziyarəti özəl edir.",
+    "end": " Gözəlliyi yaşamaq üçün tək bir addım atın – Park Terrace sizi gözləyir!"
+  }
 }
