@@ -47,7 +47,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   useEffect(() => {
     if (rooms.length > 0 && selectedRoom) {
-      const selected = rooms.find((item) => item.category === selectedRoom);
+      const selected = rooms.find((item) => String(item.id) === String(selectedRoom));
       const basePrice = Number(selected?.price || 0);
       const guestCount = Number(guest || 1);
       const dayCount = Number(formData.dayCount || 1);
@@ -83,13 +83,13 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   const roomOptions = rooms
     .map((item) => ({
-      value: item.category,
+      value: String(item.id),
       label: `${item.category} ${item.member} ${t?.Person}`,
     }))
     .sort((a, b) => a.label.localeCompare(b.label, "az"));
 
   const childOptions = useMemo(() => {
-    const selected = rooms.find((room) => room.category === selectedRoom);
+    const selected = rooms.find((room) => String(room.id) === String(selectedRoom));
     if (!selected?.children) return [];
 
     return selected.children.map((child) => {
@@ -144,7 +144,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     if (!formData.date?.trim()) newErrors.date = true;
     if (formData.roomCount < 1) newErrors.roomCount = true;
     if (!selectedRoom?.trim()) newErrors.selectedRoom = true;
-    // if (guest < 1) newErrors.guest = true;
 
     setErrors(newErrors);
 
@@ -154,12 +153,10 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       );
       const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
 
-      const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
+      const selectedRoomData = rooms.find((r) => String(r.id) === String(selectedRoom));
       const totalPeople =
         Number(selectedRoomData?.member || 0) + Number(guest || 0);
-      const selectedRoomLabel = `${
-        selectedRoomData?.category || selectedRoom
-      } (${totalPeople} nəfər)`;
+      const selectedRoomLabel = `${selectedRoomData?.category || ""} (${totalPeople} nəfər)`;
 
       const finalData = {
         ...formData,
@@ -171,8 +168,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       };
 
       try {
-        console.log(finalData);
-
         const res = await sendMail("send-reservation-confirmation", finalData);
 
         if (res?.status === 200) {
@@ -332,7 +327,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             <div className={styles.priceSubmitWrapper}>
               {selectedRoom && (
                 <p className={styles.priceInfo}>
-                  {formData.roomCount} {selectedRoom} × {guest} {t?.Guest},{" "}
+                  {formData.roomCount} {roomOptions.find((r) => r.value === selectedRoom)?.label} × {guest} {t?.Guest},{" "}
                   {formData.childCount.length} {t?.Child} × {formData.dayCount}{" "}
                   {t?.Day} — {t?.PriceIs}{" "}
                   <span className={styles.totalPrice}>
