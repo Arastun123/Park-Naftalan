@@ -18,6 +18,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     email: "",
     phoneNumber: "",
     date: "",
+    member: 1,
     message: "",
     dayCount: 1,
     childCount: [],
@@ -26,6 +27,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   const [selectedRoom, setSelectedRoom] = useState(currentRoom || "");
   const [guest, setGuest] = useState(0);
+  const [maxGuestCount, setMaxGuestCount] = useState(1);
   const [errors, setErrors] = useState({});
   const [rooms, setRooms] = useState([]);
   const [price, setPrice] = useState(0);
@@ -48,8 +50,25 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   useEffect(() => {
     if (rooms.length > 0 && selectedRoom) {
       const selected = rooms.find((item) => item.category === selectedRoom);
-      const basePrice = Number(selected?.price || 0);
-      const guestCount = Number(guest || 1);
+
+      if (selected?.pricesByOccupancy?.length > 0) {
+        const maxOcc = Math.max(
+          ...selected.pricesByOccupancy.map((p) => p.occupancy)
+        );
+        setMaxGuestCount(maxOcc);
+      } else {
+        setMaxGuestCount(selected?.member || 1);
+      }
+
+      const occupancyPrice = selected?.pricesByOccupancy?.find(
+        (p) => p.occupancy === Number(guest || 1)
+      )?.price;
+
+      const basePrice =
+        occupancyPrice !== undefined
+          ? occupancyPrice
+          : Number(selected?.price || 0);
+
       const dayCount = Number(formData.dayCount || 1);
       const roomCount = Number(formData.roomCount || 1);
 
@@ -63,10 +82,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         0
       );
 
-      const total =
-        (basePrice * guestCount + childPriceTotal + (guest ? 70 : 0)) *
-        dayCount *
-        roomCount;
+      const total = (basePrice + childPriceTotal) * dayCount * roomCount;
 
       setPrice(total);
     } else {
@@ -75,9 +91,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   }, [
     rooms,
     selectedRoom,
+    guest,
     formData.dayCount,
     formData.roomCount,
-    guest,
     formData.childCount,
   ]);
 
@@ -125,6 +141,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   const handleRoomSelect = (e) => {
     setSelectedRoom(e.target.value);
+    setGuest(0);
   };
 
   const handleChange = (e) => {
@@ -144,7 +161,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     if (!formData.date?.trim()) newErrors.date = true;
     if (formData.roomCount < 1) newErrors.roomCount = true;
     if (!selectedRoom?.trim()) newErrors.selectedRoom = true;
-    // if (guest < 1) newErrors.guest = true;
+    if (member < 1) newErrors.member = true;
 
     setErrors(newErrors);
 
@@ -155,8 +172,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
 
       const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
-      const totalPeople =
-        Number(selectedRoomData?.member || 0) + Number(guest || 0);
+      const totalPeople = Number(guest || 0);
       const selectedRoomLabel = `${
         selectedRoomData?.category || selectedRoom
       } (${totalPeople} nəfər)`;
@@ -167,6 +183,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         guest: totalPeople,
         price,
         language: locale,
+        dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${t?.Day}`,
         childCount: selectedChildrenLabels.join(", "),
       };
 
@@ -183,14 +200,14 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             date: "",
             message: "",
             dayCount: 1,
+            member: 1,
             childCount: [],
             roomCount: 1,
           });
           setSelectedRoom(currentRoom || "");
-          setGuest(1);
+          setGuest(0);
           setErrors({});
           setPrice(0);
-          setGuest(false);
         } else {
           toast.error(t?.Error || "Error sending email.");
         }
@@ -249,16 +266,28 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               hasError={errors.roomCount}
               min="1"
             />
-            <label className={styles.optionItem}>
+            <div className={styles.group}>
               <Input
-                type="checkbox"
-                name="guest"
-                value={guest}
-                checked={guest}
-                onChange={(e) => setGuest(e.target.checked ? 1 : 0)}
+                type="number"
+                name="member"
+                label={t?.Guest}
+                value={formData.member}
+                onChange={handleChange}
+                hasError={errors.member}
+                min="1"
+                max={maxGuestCount}
               />
-              <span>{t?.addGuest}</span>
-            </label>
+              <label>
+                <Input
+                  type="checkbox"
+                  name="guest"
+                  value={guest}
+                  checked={guest}
+                  onChange={(e) => setGuest(e.target.checked ? 1 : 0)}
+                />
+                <span>{t?.addGuest}</span>
+              </label>
+            </div>
           </div>
 
           <div className={styles.formGroup}>

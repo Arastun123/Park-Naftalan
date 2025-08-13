@@ -86,5 +86,8 @@
   "open_hours": "İş saatları",
   "every_day": "Hər gün",
   "Person": "nəfər",
-  "addGuest": "+1 nəfər (70₼)"
+  "addGuest": "+1 nəfər (70₼)",
+  "Prices":"Qiymətlər",
+  "Night": "gecə",
+  "Day": "gün"
 }

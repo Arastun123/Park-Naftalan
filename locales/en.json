@@ -72,7 +72,7 @@
   "ResTxt": "An exclusive open-air retreat in the heart of Naftalan.",
   "Menu": "View Menu",
   "Discover": "Discover Our Restaurant",
- "park_text": {
+  "park_text": {
     "title": "Park Terrace – Moments Full of Taste",
     "intro": "Located away from the noise of the city, nestled in nature, Park Terrace is a unique place where comfort and quality come together.",
     "choice": "An ideal choice for a pleasant evening with your family or an unforgettable gathering with friends.",
@@ -83,8 +83,11 @@
     "music": " Live music programs on weekends, a unique atmosphere, friendly staff, and high-quality service make every visit to Park Terrace special.",
     "end": " Take just one step to experience the beauty — Park Terrace is waiting for you!"
   },
-   "open_hours": "Open hours",
+  "open_hours": "Open hours",
   "every_day": "Every day",
   "Person": "person",
-  "addGuest":"+1 person (70 ₼)"
+  "addGuest": "+1 person (70 ₼)",
+  "Prices": "Prices",
+  "Night": "nights",
+  "Day": "days"
 }

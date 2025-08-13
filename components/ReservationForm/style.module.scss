@@ -31,6 +31,18 @@
   gap: 20px;
   flex-wrap: wrap;
 
+  .group {
+    display: flex;
+    flex-direction: column;
+    // justify-content: end;
+    margin-top: 35px;
+    label {
+      display: flex;
+      flex-direction: row;
+      margin: 5px 0;
+    }
+  }
+
   > div {
     flex: 1 1 calc(33.333% - 20px);
     min-width: 250px;

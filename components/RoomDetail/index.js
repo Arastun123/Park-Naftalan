@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import { getDataById, getDatas } from "@/lib/handleApiActions";
+import { getAznToUsdRate, getDataById, getDatas } from "@/lib/handleApiActions";
 
 import Video from "../Video/VIdeo";
 import Loading from "../Loading";
@@ -12,6 +12,7 @@ import Button from "../Button/Button";
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);
+  const [currency, setCurrency] = useState(0.5877);
 
   const [equipment, setEquipment] = useState([]);
   const router = useRouter();
@@ -28,6 +29,11 @@ export default function RoomDetail({ t, locale }) {
     fetchDatas();
   }, []);
 
+  const getCurrency = async () => {
+    const currency = await getAznToUsdRate();
+    if (currency) setCurrency(currency);
+  };
+
   const fetchDatas = async () => {
     const data = await getDataById("Room", id);
 
@@ -37,6 +43,7 @@ export default function RoomDetail({ t, locale }) {
 
     const equipmentData = await getDatas("Equipment");
     setEquipment(equipmentData);
+    getCurrency();
   };
 
   if (!room) return <Loading />;
@@ -115,10 +122,18 @@ export default function RoomDetail({ t, locale }) {
         </div>
       </div>
       <h2>{t?.Price}</h2>
-      <ul className={style.equipments}>
+      <ul className={style.pricesByOccupancies}>
         {room.pricesByOccupancy?.map((item, index) => (
           <li key={`${index}-${item.occupancy}`}>
-            • {item.occupancy} - {item.price}₼
+            <span>
+              {" "}
+              {item.occupancy} {t?.Person}{" "}
+            </span>
+            <span>
+              {" "}
+              {item.price} ₼ <br />{" "}
+              {(Number(item?.price) * currency).toFixed(0)} $
+            </span>
           </li>
         ))}
       </ul>

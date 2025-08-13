@@ -137,6 +137,37 @@
     }
   }
 
+  .pricesByOccupancies {
+    @include flex($direction: row, $align: center, $justify: center);
+    gap: 10px;
+    li {
+      padding: 10px;
+      transition: all 0.3s;
+      span {
+        display: block;
+        text-align: center;
+        padding: 20px;
+        color: #fff;
+        margin: 5px auto;
+        cursor: pointer;
+        border: 1px solid;
+        &:first-of-type {
+          background: $blueTxt;
+        }
+        &:last-of-type {
+          background: $mainBlueBack;
+        }
+      }
+      &:hover {
+        span {
+          background: transparent;
+          color: #000;
+          border: 1px solid $mainBlueBack;
+        }
+      }
+    }
+  }
+
   .images {
     display: flex;
     img {
