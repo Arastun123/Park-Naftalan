@@ -1,10 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-
 import { useParams, useRouter } from "next/navigation";
-
 import Button from "@/components/Button/Button";
-
 import {
   createDataWithImage,
   getDataById,
@@ -12,27 +9,27 @@ import {
   updateDataWithImage,
 } from "@/lib/handleApiActions";
 import { toast } from "react-toastify";
-
 import global from "@/styles/global.module.scss";
 import admin from "@/styles/admin.module.scss";
 
-export default function createRoom() {
+export default function CreateRoom() {
   const params = useParams();
   const router = useRouter();
   const id = params.id[0];
+  const isCreate = id === "create";
 
-  const isEdit = id === "create" ? "create" : "edit";
   const [equipment, setEquipment] = useState([]);
   const [child, setChild] = useState([]);
+
   const [values, setValues] = useState({
     category: "",
     area: "",
     price: "",
     member: "",
-    picture: "",
     youtubeVideoLink: "https://gemini.google.com/app/a0f1069ff4bdc9c7",
     equipmentIds: [],
     childIds: [],
+    pictures: [],
     imageUrls: [],
     translations: {
       1: {
@@ -57,6 +54,7 @@ export default function createRoom() {
         miniTitle: "",
       },
     },
+    pricesByOccupancy: [{ occupancy: "", price: "" }],
   });
 
   useEffect(() => {
@@ -77,15 +75,12 @@ export default function createRoom() {
     });
 
     values.childIds.forEach((id) => {
-      formData.append("childIds", id);
+      formData.append("ChildIds", id);
     });
-    
-    if (values.pictures && values.pictures.length > 0) {
+
+    if (values.pictures.length > 0) {
       values.pictures.forEach((file) => {
-        formData.append(
-          isEdit === "create" ? "ImageFiles" : "NewImageFiles",
-          file
-        );
+        formData.append(isCreate ? "ImageFiles" : "NewImageFiles", file);
       });
     }
 
@@ -101,14 +96,22 @@ export default function createRoom() {
     );
     formData.append("Translations", JSON.stringify(translationsArray));
 
-    if (isEdit !== "create") {
+    const cleanedPrices = values.pricesByOccupancy.map((p) => ({
+      occupancy: Number(p.occupancy),
+      price: Number(p.price),
+    }));
+
+    formData.append("PricesByOccupancy", JSON.stringify(cleanedPrices));
+
+    if (!isCreate) {
       formData.append("Id", id);
     }
 
-    const res =
-      isEdit === "create"
-        ? await createDataWithImage("Room", formData)
-        : await updateDataWithImage("Room", id, formData);
+    console.log("Sending to backend:", formData);
+
+    const res = isCreate
+      ? await createDataWithImage("Room", formData)
+      : await updateDataWithImage("Room", id, formData);
 
     if (
       res &&
@@ -122,7 +125,7 @@ export default function createRoom() {
   };
 
   const fetchDatas = async () => {
-    if (isEdit === "edit") {
+    if (!isCreate) {
       const data = await getDataById("Room", id);
       if (data) {
         const newTranslations = { ...values.translations };
@@ -142,20 +145,22 @@ export default function createRoom() {
           area: data.area,
           price: data.price,
           member: data.member,
-          picture: data.picture,
           youtubeVideoLink: data.youtubeVideoLink,
           equipmentIds: data.equipmentIds || [],
-          childIds: data.children?.map((child) => child.id) || [], // ✅ FIXED HERE
+          childIds: data.children?.map((child) => child.id) || [],
+          pictures: [],
           imageUrls: data.imageUrls || [],
           translations: newTranslations,
+          pricesByOccupancy: data.pricesByOccupancy || [],
         }));
       }
     }
-    const equipment = await getDatas("Equipment");
-    setEquipment(equipment);
 
-    const child = await getDatas("Children");
-    setChild(child);
+    const equipmentData = await getDatas("Equipment");
+    setEquipment(equipmentData);
+
+    const childData = await getDatas("Children");
+    setChild(childData);
   };
 
   const handleFileChange = (e) => {
@@ -178,243 +183,196 @@ export default function createRoom() {
     }
   };
 
+  const handleAddPrice = () => {
+    setValues((prev) => ({
+      ...prev,
+      pricesByOccupancy: [
+        ...prev.pricesByOccupancy,
+        { occupancy: "", price: "" },
+      ],
+    }));
+  };
+
+  const handleRemovePrice = (index) => {
+    setValues((prev) => {
+      const newPrices = prev.pricesByOccupancy.filter((_, i) => i !== index);
+      return { ...prev, pricesByOccupancy: newPrices };
+    });
+  };
+
+  const handleChangePrice = (index, field, value) => {
+    setValues((prev) => {
+      const newPrices = [...prev.pricesByOccupancy];
+      newPrices[index][field] = value; // store as string
+      return { ...prev, pricesByOccupancy: newPrices };
+    });
+  };
+
   return (
     <div className={global.container}>
-      <form className={admin.form}>
-        <>
-          <label>Şəkil</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-          />
+      <form className={admin.form} onSubmit={(e) => e.preventDefault()}>
+        <label>Şəkil</label>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+        />
 
-          <label>Otaqın adı</label>
-          <input
-            type="text"
-            value={values.category}
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, category: e.target.value }))
-            }
-          />
+        {values.imageUrls.length > 0 && (
+          <div>
+            {values.imageUrls.map((url, i) => (
+              <img key={i} src={url} alt={`Room image ${i + 1}`} width="100" />
+            ))}
+          </div>
+        )}
 
-          <label>Otaqın ərazisi</label>
-          <input
-            type="number"
-            value={values.area}
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, area: e.target.value }))
-            }
-          />
+        <label>Otaqın adı</label>
+        <input
+          type="text"
+          value={values.category}
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, category: e.target.value }))
+          }
+        />
 
-          <label>Qiymət</label>
-          <input
-            type="number"
-            value={values.price}
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, price: e.target.value }))
-            }
-          />
+        <label>Otaqın ərazisi</label>
+        <input
+          type="number"
+          value={values.area}
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, area: e.target.value }))
+          }
+        />
 
-          <label>Qonaq sayı</label>
-          <input
-            type="number"
-            value={values.member}
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, member: e.target.value }))
-            }
-          />
-          <div className={admin.dFlex}>
+        <label>Qiymət</label>
+        <input
+          type="number"
+          value={values.price}
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, price: e.target.value }))
+          }
+        />
+
+        <label>Qonaq sayı</label>
+        <input
+          type="number"
+          value={values.member}
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, member: e.target.value }))
+          }
+        />
+
+        <div>
+          <label>
+            Qonaq sayı və qiymət <span> </span>
+            <Button
+              className={`${admin.actionBtn} ${admin.create}`}
+              onClick={() =>
+                setValues((prev) => ({
+                  ...prev,
+                  pricesByOccupancy: [
+                    ...prev.pricesByOccupancy,
+                    { days: 1, price: 0 },
+                  ],
+                }))
+              }
+            >
+              +
+            </Button>
+          </label>
+          {values.pricesByOccupancy.map((item, index) => (
+            <div
+              key={index}
+              style={{ display: "flex", gap: "10px", marginBottom: "8px" }}
+            >
+              <input
+                type="number"
+                placeholder="Gün sayı"
+                value={item.occupancy ?? ""}
+                onChange={(e) =>
+                  handleChangePrice(index, "occupancy", e.target.value)
+                }
+              />
+              <input
+                type="number"
+                placeholder="Qiymət"
+                value={item.price ?? ""}
+                onChange={(e) =>
+                  handleChangePrice(index, "price", e.target.value)
+                }
+              />
+              <button type="button" onClick={() => handleRemovePrice(index)}>
+                X
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {[
+          "service",
+          "description",
+          "miniDescription",
+          "title",
+          "miniTitle",
+        ].map((field) => (
+          <div key={field} className={admin.dFlex}>
             {[
               { lang: "en", code: 1 },
               { lang: "az", code: 2 },
               { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                service: "",
-              };
-
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    Xidmətlər ({lang.toUpperCase()}):
+            ].map(({ lang, code }) => (
+              <div key={`${field}_${lang}`} className={admin.dFlex}>
+                <label>
+                  {field} ({lang.toUpperCase()}):
+                  {field.includes("description") ? (
+                    <textarea
+                      value={values.translations[code][field]}
+                      rows="5"
+                      cols="33"
+                      onChange={(e) =>
+                        setValues((prev) => ({
+                          ...prev,
+                          translations: {
+                            ...prev.translations,
+                            [code]: {
+                              ...prev.translations[code],
+                              [field]: e.target.value,
+                            },
+                          },
+                        }))
+                      }
+                      required={code === 1}
+                    />
+                  ) : (
                     <input
                       type="text"
-                      value={translation.service}
+                      value={values.translations[code][field]}
                       onChange={(e) =>
                         setValues((prev) => ({
                           ...prev,
                           translations: {
                             ...prev.translations,
                             [code]: {
-                              ...prev.translations?.[code],
-                              service: e.target.value,
+                              ...prev.translations[code],
+                              [field]: e.target.value,
                             },
                           },
                         }))
                       }
                       required={code === 1}
                     />
-                  </label>
-                </div>
-              );
-            })}
+                  )}
+                </label>
+              </div>
+            ))}
           </div>
-          <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 1 },
-              { lang: "az", code: 2 },
-              { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                description: "",
-              };
-
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    Otaq haqqında məlumat ({lang.toUpperCase()}):
-                    <textarea
-                      value={translation.description}
-                      rows="5"
-                      cols="33"
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          translations: {
-                            ...prev.translations,
-                            [code]: {
-                              ...prev.translations?.[code],
-                              description: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      required={code === 1}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 1 },
-              { lang: "az", code: 2 },
-              { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                miniDescription: "",
-              };
-
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    Kiçik məlumat ({lang.toUpperCase()}):
-                    <textarea
-                      value={translation.miniDescription}
-                      rows="5"
-                      cols="33"
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          translations: {
-                            ...prev.translations,
-                            [code]: {
-                              ...prev.translations?.[code],
-                              miniDescription: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      required={code === 1}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 1 },
-              { lang: "az", code: 2 },
-              { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                title: "",
-              };
-
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    Otaqın sloganı ({lang.toUpperCase()}):
-                    <textarea
-                      value={translation.title}
-                      rows="5"
-                      cols="33"
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          translations: {
-                            ...prev.translations,
-                            [code]: {
-                              ...prev.translations?.[code],
-                              title: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      required={code === 1}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          <div className={admin.dFlex}>
-            {[
-              { lang: "en", code: 1 },
-              { lang: "az", code: 2 },
-              { lang: "ru", code: 3 },
-            ].map(({ lang, code }) => {
-              const translation = values.translations?.[code] || {
-                miniTitle: "",
-              };
-
-              return (
-                <div key={lang} className={admin.dFlex}>
-                  <label>
-                    MiniTitle ({lang.toUpperCase()}):
-                    <textarea
-                      value={translation.miniTitle}
-                      rows="5"
-                      cols="33"
-                      onChange={(e) =>
-                        setValues((prev) => ({
-                          ...prev,
-                          translations: {
-                            ...prev.translations,
-                            [code]: {
-                              ...prev.translations?.[code],
-                              miniTitle: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      required={code === 1}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        </>
+        ))}
       </form>
+
       <div className={admin.btns}>
         {equipment.map((item, i) => {
           const isSelected = values.equipmentIds.includes(item.id);
-
           return (
             <Button
               key={`${i}_${item.name}`}
@@ -438,10 +396,10 @@ export default function createRoom() {
           );
         })}
       </div>
+
       <div className={admin.btns}>
         {child.map((item, i) => {
           const isSelected = values.childIds.includes(item.id);
-
           return (
             <Button
               key={`${i}_${item.name}`}
@@ -465,9 +423,10 @@ export default function createRoom() {
           );
         })}
       </div>
+
       <Button
         className={`${admin.actionBtn} ${admin.create}`}
-        onClick={() => handleSubmit()}
+        onClick={handleSubmit}
       >
         Təsdiq et
       </Button>

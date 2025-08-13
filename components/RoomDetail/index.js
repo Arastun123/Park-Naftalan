@@ -114,6 +114,14 @@ export default function RoomDetail({ t, locale }) {
           </div>
         </div>
       </div>
+      <h2>{t?.Price}</h2>
+      <ul className={style.equipments}>
+        {room.pricesByOccupancy?.map((item, index) => (
+          <li key={`${index}-${item.occupancy}`}>
+            • {item.occupancy} - {item.price}₼
+          </li>
+        ))}
+      </ul>
 
       <h2>{t?.Equipment}</h2>
       <ul className={style.equipments}>

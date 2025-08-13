@@ -55,6 +55,7 @@ export default function RoomCard({ t, locale }) {
   if (!rooms || rooms.length === 0) {
     return <Loading />;
   }
+  
 
   return (
     <div className={styles.roomGrid}>
