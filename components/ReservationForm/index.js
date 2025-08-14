@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./style.module.scss";
 import SelectBox from "../SelecBox";
 import CustomMultiSelect from "../CustomMultiSelect";
+import { max } from "date-fns";
 
 export default function ReservationForm({ t, locale, currentRoom }) {
   const [formData, setFormData] = useState({
@@ -146,7 +147,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    console.log(maxGuestCount);
+
+    if (name === "member") {
+      if (value <= maxGuestCount) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -172,7 +182,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
 
       const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
-      const totalPeople = Number(guest || 0);
+      const totalPeople = Number(+guest + +formData.member || 0);
       const selectedRoomLabel = `${
         selectedRoomData?.category || selectedRoom
       } (${totalPeople} nəfər)`;
@@ -183,9 +193,13 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         guest: totalPeople,
         price,
         language: locale,
-        dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${t?.Day}`,
+        dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${
+          t?.Day
+        }`,
         childCount: selectedChildrenLabels.join(", "),
       };
+
+      console.log(finalData);
 
       try {
         const res = await sendMail("send-reservation-confirmation", finalData);
