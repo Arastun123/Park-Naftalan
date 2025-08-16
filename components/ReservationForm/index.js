@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./style.module.scss";
 import SelectBox from "../SelecBox";
 import CustomMultiSelect from "../CustomMultiSelect";
-import { max } from "date-fns";
 
 export default function ReservationForm({ t, locale, currentRoom }) {
   const [formData, setFormData] = useState({
@@ -49,6 +48,17 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   }, []);
 
   useEffect(() => {
+    if (rooms.length > 0 && !selectedRoom) {
+      const firstRoom = rooms[0];
+      setSelectedRoom(firstRoom.category);
+      setFormData((prev) => ({
+        ...prev,
+        member: firstRoom.member || 1,
+      }));
+    }
+  }, [rooms, selectedRoom]);
+
+  useEffect(() => {
     if (rooms.length > 0 && selectedRoom) {
       const selected = rooms.find((item) => item.category === selectedRoom);
 
@@ -62,7 +72,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       }
 
       const occupancyPrice = selected?.pricesByOccupancy?.find(
-        (p) => p.occupancy === Number(guest || 1)
+        (p) => p.occupancy === Number(formData.member || 1)
       )?.price;
 
       const basePrice =
@@ -92,7 +102,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   }, [
     rooms,
     selectedRoom,
-    guest,
+    formData.member,
     formData.dayCount,
     formData.roomCount,
     formData.childCount,
@@ -101,7 +111,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   const roomOptions = rooms
     .map((item) => ({
       value: item.category,
-      label: `${item.category} ${item.member} ${t?.Person}`,
+      label: `${item.category}`,
     }))
     .sort((a, b) => a.label.localeCompare(b.label, "az"));
 
@@ -142,13 +152,16 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
   const handleRoomSelect = (e) => {
     setSelectedRoom(e.target.value);
+    const selected = rooms.find((room) => room.category === e.target.value);
+    setFormData((prev) => ({
+      ...prev,
+      member: selected?.member || 1,
+    }));
     setGuest(0);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    console.log(maxGuestCount);
 
     if (name === "member") {
       if (value <= maxGuestCount) {
