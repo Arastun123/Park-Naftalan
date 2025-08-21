@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 export default function useScrollCarousel(carouselRef, rooms = []) {
-  // Hooks həmişə çağırılmalıdır!
+ 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);

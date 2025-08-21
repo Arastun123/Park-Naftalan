@@ -71,18 +71,20 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         setMaxGuestCount(selected?.member || 1);
       }
 
+      // Otaq qiyməti (occupancy varsa onu götürürük, yoxdursa adam sayı * baza qiymət)
       const occupancyPrice = selected?.pricesByOccupancy?.find(
         (p) => p.occupancy === Number(formData.member || 1)
       )?.price;
 
-      const basePrice =
-        occupancyPrice !== undefined
-          ? occupancyPrice
-          : Number(selected?.price || 0);
+      let roomBasePrice = 0;
+      if (occupancyPrice !== undefined) {
+        roomBasePrice = occupancyPrice;
+      } else {
+        roomBasePrice =
+          (Number(selected?.price) || 0) * Number(formData.member || 1);
+      }
 
-      const dayCount = Number(formData.dayCount || 1);
-      const roomCount = Number(formData.roomCount || 1);
-
+      // Uşaq qiyməti (gündəlik, seçilən uşaqlar üçün)
       const selectedChildren =
         selected?.children?.filter((child) =>
           formData.childCount.includes(String(child.id))
@@ -93,7 +95,17 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         0
       );
 
-      const total = (basePrice + childPriceTotal) * dayCount * roomCount;
+      // Əlavə guest qiyməti (gündəlik +70)
+      const extraGuestPrice = guest ? 70 : 0;
+
+      // Gündəlik ümumi qiymət
+      const dailyTotal = roomBasePrice + childPriceTotal + extraGuestPrice;
+
+      // Ümumi qiymət (gün və otaq sayına görə)
+      const dayCount = Number(formData.dayCount || 1);
+      const roomCount = Number(formData.roomCount || 1);
+
+      const total = dailyTotal * dayCount * roomCount;
 
       setPrice(total);
     } else {
@@ -106,6 +118,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     formData.dayCount,
     formData.roomCount,
     formData.childCount,
+    guest,
   ]);
 
   const roomOptions = rooms
@@ -121,6 +134,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
     return selected.children.map((child) => {
       let label = child.ageRange;
+      console.log(selected);
 
       switch (locale) {
         case "en":
@@ -212,8 +226,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         childCount: selectedChildrenLabels.join(", "),
       };
 
-      console.log(finalData);
-
       try {
         const res = await sendMail("send-reservation-confirmation", finalData);
 
@@ -260,7 +272,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     let dayCount = 1;
     if (startDate && endDate) {
       const timeDiff = endDate.getTime() - startDate.getTime();
-      dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) || 1;
+      dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1 || 1;
     }
 
     setFormData((prev) => ({
@@ -387,9 +399,11 @@ export default function ReservationForm({ t, locale, currentRoom }) {
             <div className={styles.priceSubmitWrapper}>
               {selectedRoom && (
                 <p className={styles.priceInfo}>
-                  {formData.roomCount} {selectedRoom} × {guest} {t?.Guest},{" "}
-                  {formData.childCount.length} {t?.Child} × {formData.dayCount}{" "}
-                  {t?.Day} — {t?.PriceIs}{" "}
+                  {formData.roomCount} {selectedRoom} × {formData.member}
+                  {guest === 0 ? "" : `+${guest}`} {t?.Guest},{" "}
+                  {formData.childCount.length !== 0 &&
+                    `${formData.childCount.length} ${t?.Child} ×`}{" "}
+                  {formData.dayCount} {t?.Day} — {t?.PriceIs}{" "}
                   <span className={styles.totalPrice}>
                     {price} ₼ / {(Number(price) * currency).toFixed(0)} $
                   </span>
