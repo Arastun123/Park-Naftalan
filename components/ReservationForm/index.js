@@ -59,73 +59,45 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   }, [rooms, selectedRoom]);
 
   useEffect(() => {
-    if (rooms.length > 0 && selectedRoom) {
-      const selected = rooms.find((item) => item.category === selectedRoom);
+    if (!rooms.length || !selectedRoom) return;
+    const selected = rooms.find((item) => item.category === selectedRoom);
 
-      if (selected?.pricesByOccupancy?.length > 0) {
-        const maxOcc = Math.max(
-          ...selected.pricesByOccupancy.map((p) => p.occupancy)
-        );
-        setMaxGuestCount(maxOcc);
-      } else {
-        setMaxGuestCount(selected?.member || 1);
-      }
+    const maxOcc = selected?.member || 1;
+    setMaxGuestCount(maxOcc);
 
-      // Otaq qiyməti (occupancy varsa onu götürürük, yoxdursa adam sayı * baza qiymət)
-      const occupancyPrice = selected?.pricesByOccupancy?.find(
-        (p) => p.occupancy === Number(formData.member || 1)
-      )?.price;
+    const occupancyPrice = selected?.pricesByOccupancy?.find(
+      (p) => p.occupancy === Number(formData.member)
+    )?.price;
+    const roomBasePrice =
+      occupancyPrice !== undefined
+        ? occupancyPrice
+        : Number(selected?.price || 0);
 
-      let roomBasePrice = 0;
-      if (occupancyPrice !== undefined) {
-        roomBasePrice = occupancyPrice;
-      } else {
-        roomBasePrice =
-          (Number(selected?.price) || 0) * Number(formData.member || 1);
-      }
+    const selectedChildren =
+      selected?.children?.filter((child) =>
+        formData.childCount.includes(String(child.id))
+      ) || [];
+    const childPriceTotal = selectedChildren.reduce(
+      (acc, child) => acc + Number(child.price || 0),
+      0
+    );
 
-      // Uşaq qiyməti (gündəlik, seçilən uşaqlar üçün)
-      const selectedChildren =
-        selected?.children?.filter((child) =>
-          formData.childCount.includes(String(child.id))
-        ) || [];
+    const extraGuestPrice = guest ? 70 : 0;
 
-      const childPriceTotal = selectedChildren.reduce(
-        (acc, child) => acc + Number(child.price || 0),
-        0
-      );
 
-      // Əlavə guest qiyməti (gündəlik +70)
-      const extraGuestPrice = guest ? 70 : 0;
+    console.log('roomBasePrice', roomBasePrice);
+    console.log('childPriceTotal', childPriceTotal);
+    console.log('extraGuestPrice', extraGuestPrice);
+    
+    const dailyTotal = roomBasePrice + childPriceTotal + extraGuestPrice;
+    const dayCount = Number(formData.dayCount || 1);
+    const roomCount = Number(formData.roomCount || 1);
 
-      // Gündəlik ümumi qiymət
-      const dailyTotal = roomBasePrice + childPriceTotal + extraGuestPrice;
-
-      // Ümumi qiymət (gün və otaq sayına görə)
-      const dayCount = Number(formData.dayCount || 1);
-      const roomCount = Number(formData.roomCount || 1);
-
-      const total = dailyTotal * dayCount * roomCount;
-
-      setPrice(total);
-    } else {
-      setPrice(0);
-    }
-  }, [
-    rooms,
-    selectedRoom,
-    formData.member,
-    formData.dayCount,
-    formData.roomCount,
-    formData.childCount,
-    guest,
-  ]);
+    setPrice(dailyTotal * dayCount * roomCount);
+  }, [rooms, selectedRoom, formData, guest]);
 
   const roomOptions = rooms
-    .map((item) => ({
-      value: item.category,
-      label: `${item.category}`,
-    }))
+    .map((item) => ({ value: item.category, label: item.category }))
     .sort((a, b) => a.label.localeCompare(b.label, "az"));
 
   const childOptions = useMemo(() => {
@@ -134,8 +106,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
     return selected.children.map((child) => {
       let label = child.ageRange;
-      console.log(selected);
-
       switch (locale) {
         case "en":
           label = label.replace(/uşaq/g, "child").replace(/yaş/g, "years");
@@ -143,24 +113,14 @@ export default function ReservationForm({ t, locale, currentRoom }) {
         case "ru":
           label = label.replace(/uşaq/g, "pебенок").replace(/yaş/g, "лет");
           break;
-        default:
-          break;
       }
-
       const treatmentText = {
         az: " (Müalicə ilə)",
         en: " (With Treatment)",
         ru: " (С лечением)",
       };
-
-      if (child.hasTreatment) {
-        label += treatmentText[locale];
-      }
-
-      return {
-        value: String(child.id),
-        label,
-      };
+      if (child.hasTreatment) label += treatmentText[locale];
+      return { value: String(child.id), label };
     });
   }, [rooms, selectedRoom, locale]);
 
@@ -170,26 +130,63 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     setFormData((prev) => ({
       ...prev,
       member: selected?.member || 1,
+      childCount: [],
     }));
     setGuest(0);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleMemberChange = (e) => {
+    let val = e.target.value;
 
-    if (name === "member") {
-      if (value <= maxGuestCount) {
-        setFormData((prev) => ({ ...prev, [name]: value }));
-      }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+ 
+    if (!/^\d*$/.test(val)) return;
+    if (val === "") {
+      setFormData((prev) => ({ ...prev, member: "" }));
+      return;
     }
+
+    val = parseInt(val, 10);
+    if (val < 1) val = 1;
+
+    const totalOther = guest + formData.childCount.length;
+    if (val + totalOther > maxGuestCount) val = maxGuestCount - totalOther;
+
+    setFormData((prev) => ({ ...prev, member: val }));
+  };
+
+  const handleGuestChange = (e) => {
+    const checked = e.target.checked ? 1 : 0;
+    const totalPeople = formData.member + checked + formData.childCount.length;
+    if (totalPeople <= maxGuestCount) setGuest(checked);
+    else toast.error(`Maksimum qonaq sayı: ${maxGuestCount}`);
+  };
+
+  const handleChildChange = (selected) => {
+    const totalPeople = formData.member + guest + selected.length;
+    if (totalPeople <= maxGuestCount)
+      setFormData((prev) => ({ ...prev, childCount: selected }));
+    else toast.error(`Maksimum qonaq sayı: ${maxGuestCount}`);
+  };
+
+  const handleDateChange = ({ startDate, endDate }) => {
+    const formattedStartDate =
+      startDate instanceof Date ? startDate.toLocaleDateString("az-AZ") : "";
+    const formattedEndDate =
+      endDate instanceof Date ? endDate.toLocaleDateString("az-AZ") : "";
+    let dayCount = 1;
+    if (startDate && endDate) {
+      dayCount = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+    }
+    setFormData((prev) => ({
+      ...prev,
+      date: `${formattedStartDate} - ${formattedEndDate}`,
+      dayCount,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
-
     if (!formData.name?.trim()) newErrors.name = true;
     if (!formData.surname?.trim()) newErrors.surname = true;
     if (!formData.email?.trim() || !/\S+@\S+\.\S+/.test(formData.email))
@@ -198,88 +195,59 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     if (!formData.date?.trim()) newErrors.date = true;
     if (formData.roomCount < 1) newErrors.roomCount = true;
     if (!selectedRoom?.trim()) newErrors.selectedRoom = true;
-    if (member < 1) newErrors.member = true;
 
     setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      const selectedChildren = childOptions.filter((opt) =>
-        formData.childCount.includes(opt.value)
-      );
-      const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
-
-      const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
-      const totalPeople = Number(+guest + +formData.member || 0);
-      const selectedRoomLabel = `${
-        selectedRoomData?.category || selectedRoom
-      } (${totalPeople} nəfər)`;
-
-      const finalData = {
-        ...formData,
-        selectedRoom: selectedRoomLabel,
-        guest: totalPeople,
-        price,
-        language: locale,
-        dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${
-          t?.Day
-        }`,
-        childCount: selectedChildrenLabels.join(", "),
-      };
-
-      try {
-        const res = await sendMail("send-reservation-confirmation", finalData);
-
-        if (res?.status === 200) {
-          toast.success(t?.Success);
-          setFormData({
-            name: "",
-            surname: "",
-            email: "",
-            phoneNumber: "",
-            date: "",
-            message: "",
-            dayCount: 1,
-            member: 1,
-            childCount: [],
-            roomCount: 1,
-          });
-          setSelectedRoom(currentRoom || "");
-          setGuest(0);
-          setErrors({});
-          setPrice(0);
-        } else {
-          toast.error(t?.Error || "Error sending email.");
-        }
-      } catch (error) {
-        console.error("Mail error:", error);
-        toast.error(t?.BackError || "Something went wrong.");
-      }
-    } else {
+    if (Object.keys(newErrors).length > 0) {
       toast.error(t?.FillInput || "Please fill all required fields.");
-    }
-  };
-
-  const handleDateChange = ({ startDate, endDate }) => {
-    const formattedStartDate =
-      startDate instanceof Date && !isNaN(startDate)
-        ? startDate.toLocaleDateString("az-AZ")
-        : "";
-    const formattedEndDate =
-      endDate instanceof Date && !isNaN(endDate)
-        ? endDate.toLocaleDateString("az-AZ")
-        : "";
-
-    let dayCount = 1;
-    if (startDate && endDate) {
-      const timeDiff = endDate.getTime() - startDate.getTime();
-      dayCount = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1 || 1;
+      return;
     }
 
-    setFormData((prev) => ({
-      ...prev,
-      date: `${formattedStartDate} - ${formattedEndDate}`,
-      dayCount,
-    }));
+    const selectedChildren = childOptions.filter((opt) =>
+      formData.childCount.includes(opt.value)
+    );
+    const selectedChildrenLabels = selectedChildren.map((opt) => opt.label);
+    const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
+    const totalPeople = formData.member + guest + formData.childCount.length;
+
+    const finalData = {
+      ...formData,
+      selectedRoom: `${
+        selectedRoomData?.category || selectedRoom
+      } (${totalPeople} nəfər)`,
+      guest: totalPeople,
+      price,
+      language: locale,
+      dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${
+        t?.Day
+      }`,
+      childCount: selectedChildrenLabels.join(", "),
+    };
+
+    try {
+      const res = await sendMail("send-reservation-confirmation", finalData);
+      if (res?.status === 200) {
+        toast.success(t?.Success);
+        setFormData({
+          name: "",
+          surname: "",
+          email: "",
+          phoneNumber: "",
+          date: "",
+          message: "",
+          dayCount: 1,
+          member: 1,
+          childCount: [],
+          roomCount: 1,
+        });
+        setSelectedRoom(currentRoom || "");
+        setGuest(0);
+        setErrors({});
+        setPrice(0);
+      } else toast.error(t?.Error || "Error sending email.");
+    } catch (err) {
+      console.error(err);
+      toast.error(t?.BackError || "Something went wrong.");
+    }
   };
 
   return (
@@ -301,17 +269,20 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               name="roomCount"
               label={t?.RoomCount}
               value={formData.roomCount}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, roomCount: Number(e.target.value) })
+              }
               hasError={errors.roomCount}
               min="1"
             />
+
             <div className={styles.group}>
               <Input
                 type="number"
                 name="member"
                 label={t?.Guest}
                 value={formData.member}
-                onChange={handleChange}
+                onChange={handleMemberChange}
                 hasError={errors.member}
                 min="1"
                 max={maxGuestCount}
@@ -320,9 +291,8 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                 <Input
                   type="checkbox"
                   name="guest"
-                  value={guest}
                   checked={guest}
-                  onChange={(e) => setGuest(e.target.checked ? 1 : 0)}
+                  onChange={handleGuestChange}
                 />
                 <span>{t?.addGuest}</span>
               </label>
@@ -335,18 +305,17 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               options={childOptions}
               name="childCount"
               selectedValues={formData.childCount}
-              onChange={(selected) =>
-                setFormData((prev) => ({ ...prev, childCount: selected }))
-              }
+              onChange={handleChildChange}
               hasError={errors.childCount}
             />
-
             <Input
               type="text"
               name="name"
               label={t?.Name}
               value={formData.name}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               hasError={errors.name}
               placeholder={t?.Name}
             />
@@ -355,7 +324,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               name="surname"
               label={t?.Surname}
               value={formData.surname}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, surname: e.target.value })
+              }
               hasError={errors.surname}
               placeholder={t?.Surname}
             />
@@ -367,7 +338,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               name="email"
               label={t?.Email}
               value={formData.email}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               hasError={errors.email}
               placeholder={t?.Email}
             />
@@ -376,10 +349,13 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               name="phoneNumber"
               label={t?.Phone}
               value={formData.phoneNumber}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, phoneNumber: e.target.value })
+              }
               hasError={errors.phoneNumber}
               placeholder={t?.Phone}
             />
+
             <div
               className={`${styles.textareaWrapper} ${
                 errors.message ? styles.error : ""
@@ -391,7 +367,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                 name="message"
                 rows="5"
                 value={formData.message}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
                 placeholder={t?.MessagePlaceholder}
               />
             </div>
@@ -400,7 +378,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
               {selectedRoom && (
                 <p className={styles.priceInfo}>
                   {formData.roomCount} {selectedRoom} × {formData.member}
-                  {guest === 0 ? "" : `+${guest}`} {t?.Guest},{" "}
+                  {guest ? `+${guest}` : ""} {t?.Guest},{" "}
                   {formData.childCount.length !== 0 &&
                     `${formData.childCount.length} ${t?.Child} ×`}{" "}
                   {formData.dayCount} {t?.Day} — {t?.PriceIs}{" "}
