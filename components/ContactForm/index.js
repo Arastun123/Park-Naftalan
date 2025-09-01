@@ -42,7 +42,7 @@ export default function ContactForm({ t, locale }) {
       `;
       try {
         const res = await sendMail(
-          `send?to=ekbr03@gmail.com&subject=Yeni Mesaj Formu&message=${emailBody}`,
+          `send?to=parknaftalanaz2024@gmail.com&subject=Yeni Mesaj Formu&message=${emailBody}`,
           emailBody
         );
 
