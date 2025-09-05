@@ -1,6 +1,5 @@
 "use client";
 import { getDatas } from "@/lib/handleApiActions";
-import { da } from "date-fns/locale";
 import { useEffect, useMemo, useState } from "react";
 
 export default function About({ t, locale }) {

@@ -33,7 +33,6 @@ export default function MedicalProcedures({ t, locale }) {
         const result = await getDatas("treatmentMethod");
         setData(Array.isArray(result) ? result : []);
       } catch (error) {
-        console.error("Failed to fetch treatment methods:", error);
         setData([]);
       }
     };

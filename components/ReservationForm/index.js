@@ -1,23 +1,26 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
-
 import { getAznToUsdRate, getDatas, sendMail } from "@/lib/handleApiActions";
 import Input from "../Input";
 import Calendar from "../Calendar/Calendar";
-
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./style.module.scss";
 import SelectBox from "../SelecBox";
 import CustomMultiSelect from "../CustomMultiSelect";
 
-export default function ReservationForm({ t, locale, currentRoom }) {
+export default function ReservationForm({
+  t,
+  locale,
+  currentRoom,
+  initialDate,
+}) {
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
     phoneNumber: "",
-    date: "",
+    date: initialDate || "",
     member: 1,
     message: "",
     dayCount: 1,
@@ -32,7 +35,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   const [rooms, setRooms] = useState([]);
   const [price, setPrice] = useState(0);
   const [currency, setCurrency] = useState(0.5877);
+  const [initialDateRange, setInitialDateRange] = useState(null);
 
+  // Fetch rooms and currency
   useEffect(() => {
     const fetchRooms = async () => {
       const data = await getDatas("Room");
@@ -41,23 +46,82 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     fetchRooms();
 
     const fetchCurrency = async () => {
-      const cur = await getAznToUsdRate();
-      if (cur) setCurrency(cur);
+      try {
+        const cur = await getAznToUsdRate();
+        if (cur && !isNaN(cur)) setCurrency(cur);
+      } catch {
+        console.warn("Using fallback currency rate");
+      }
     };
     fetchCurrency();
   }, []);
 
+  // Set default room and member
   useEffect(() => {
     if (rooms.length > 0 && !selectedRoom) {
       const firstRoom = rooms[0];
       setSelectedRoom(firstRoom.category);
       setFormData((prev) => ({
         ...prev,
-        member: firstRoom.member || 1,
+        member: firstRoom.minMember || 1,
       }));
+      setMaxGuestCount(firstRoom.member || 1);
     }
   }, [rooms, selectedRoom]);
 
+  // Set default room when no room is provided
+  useEffect(() => {
+    if (rooms.length > 0 && !currentRoom) {
+      const firstRoom = rooms[0];
+      setSelectedRoom(firstRoom.category);
+    }
+  }, [rooms, currentRoom]);
+
+  // Handle initial date from URL parameters
+  useEffect(() => {
+    if (initialDate && initialDate !== formData.date) {
+      setFormData((prev) => ({
+        ...prev,
+        date: initialDate,
+      }));
+
+      // Parse the date string to extract start and end dates
+      if (initialDate.includes(" - ")) {
+        const [startDateStr, endDateStr] = initialDate.split(" - ");
+        const startDate = parseDateString(startDateStr);
+        const endDate = parseDateString(endDateStr);
+
+        if (startDate && endDate) {
+          // Set initial date range for calendar
+          setInitialDateRange([startDate, endDate]);
+
+          // Calculate day count
+          const dayCount = Math.ceil(
+            (endDate - startDate) / (1000 * 60 * 60 * 24)
+          );
+          setFormData((prev) => ({
+            ...prev,
+            dayCount: dayCount > 0 ? dayCount : 1,
+          }));
+        }
+      }
+    }
+  }, [initialDate]);
+
+  // Helper function to parse date string in DD.MM.YYYY format
+  const parseDateString = (dateStr) => {
+    if (!dateStr) return null;
+    const parts = dateStr.split(".");
+    if (parts.length === 3) {
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
+    return null;
+  };
+
+  // Update price when form changes
   useEffect(() => {
     if (!rooms.length || !selectedRoom) return;
     const selected = rooms.find((item) => item.category === selectedRoom);
@@ -84,11 +148,6 @@ export default function ReservationForm({ t, locale, currentRoom }) {
 
     const extraGuestPrice = guest ? 70 : 0;
 
-
-    console.log('roomBasePrice', roomBasePrice);
-    console.log('childPriceTotal', childPriceTotal);
-    console.log('extraGuestPrice', extraGuestPrice);
-    
     const dailyTotal = roomBasePrice + childPriceTotal + extraGuestPrice;
     const dayCount = Number(formData.dayCount || 1);
     const roomCount = Number(formData.roomCount || 1);
@@ -96,6 +155,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     setPrice(dailyTotal * dayCount * roomCount);
   }, [rooms, selectedRoom, formData, guest]);
 
+  // Room and child options
   const roomOptions = rooms
     .map((item) => ({ value: item.category, label: item.category }))
     .sort((a, b) => a.label.localeCompare(b.label, "az"));
@@ -124,21 +184,26 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     });
   }, [rooms, selectedRoom, locale]);
 
+  // Room select handler
   const handleRoomSelect = (e) => {
-    setSelectedRoom(e.target.value);
-    const selected = rooms.find((room) => room.category === e.target.value);
+    const selectedCategory = e.target.value;
+    setSelectedRoom(selectedCategory);
+
+    const selected = rooms.find((room) => room.category === selectedCategory);
+    const minMember = selected?.minMember || 1;
+
     setFormData((prev) => ({
       ...prev,
-      member: selected?.member || 1,
+      member: minMember,
       childCount: [],
     }));
     setGuest(0);
+    setMaxGuestCount(selected?.member || 1);
   };
 
+  // Member change handler
   const handleMemberChange = (e) => {
     let val = e.target.value;
-
- 
     if (!/^\d*$/.test(val)) return;
     if (val === "") {
       setFormData((prev) => ({ ...prev, member: "" }));
@@ -146,37 +211,54 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     }
 
     val = parseInt(val, 10);
-    if (val < 1) val = 1;
+
+    const selected = rooms.find((r) => r.category === selectedRoom);
+    const roomMax = selected?.member || maxGuestCount || 1;
+    const roomMin = selected?.minMember || 1;
 
     const totalOther = guest + formData.childCount.length;
-    if (val + totalOther > maxGuestCount) val = maxGuestCount - totalOther;
+
+    if (val + totalOther > roomMax) val = roomMax - totalOther;
+    if (val < roomMin) val = roomMin;
 
     setFormData((prev) => ({ ...prev, member: val }));
   };
 
+  // Extra guest handler
   const handleGuestChange = (e) => {
     const checked = e.target.checked ? 1 : 0;
+    const selected = rooms.find((r) => r.category === selectedRoom);
+    const roomMax = selected?.member || maxGuestCount || 1;
+
     const totalPeople = formData.member + checked + formData.childCount.length;
-    if (totalPeople <= maxGuestCount) setGuest(checked);
-    else toast.error(`Maksimum qonaq sayı: ${maxGuestCount}`);
+    if (totalPeople <= roomMax) setGuest(checked);
+    else toast.error(`${t?.MaxGuest || "Maksimum qonaq sayı"}: ${roomMax}`);
   };
 
+  // Child select handler
   const handleChildChange = (selected) => {
+    const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
+    const roomMax = selectedRoomData?.member || maxGuestCount || 1;
+
     const totalPeople = formData.member + guest + selected.length;
-    if (totalPeople <= maxGuestCount)
+    if (totalPeople <= roomMax)
       setFormData((prev) => ({ ...prev, childCount: selected }));
-    else toast.error(`Maksimum qonaq sayı: ${maxGuestCount}`);
+    else toast.error(`${t?.MaxGuest || "Maksimum qonaq sayı"}: ${roomMax}`);
   };
 
+  // Date change handler
   const handleDateChange = ({ startDate, endDate }) => {
     const formattedStartDate =
       startDate instanceof Date ? startDate.toLocaleDateString("az-AZ") : "";
     const formattedEndDate =
       endDate instanceof Date ? endDate.toLocaleDateString("az-AZ") : "";
+
     let dayCount = 1;
     if (startDate && endDate) {
-      dayCount = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+      dayCount = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+      if (dayCount < 1) dayCount = 1;
     }
+
     setFormData((prev) => ({
       ...prev,
       date: `${formattedStartDate} - ${formattedEndDate}`,
@@ -184,6 +266,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
     }));
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -217,7 +300,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
       guest: totalPeople,
       price,
       language: locale,
-      dayCount: `${formData.dayCount - 1} ${t?.Night} ${formData.dayCount} ${
+      dayCount: `${formData.dayCount} ${t?.Night} / ${formData.dayCount + 1} ${
         t?.Day
       }`,
       childCount: selectedChildrenLabels.join(", "),
@@ -239,7 +322,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
           childCount: [],
           roomCount: 1,
         });
-        setSelectedRoom(currentRoom || "");
+        setSelectedRoom(currentRoom || rooms[0]?.category || "");
         setGuest(0);
         setErrors({});
         setPrice(0);
@@ -253,7 +336,13 @@ export default function ReservationForm({ t, locale, currentRoom }) {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.formSection}>
-        <Calendar t={t} locale={locale} handleDateChange={handleDateChange} />
+        <Calendar
+          t={t}
+          locale={locale}
+          handleDateChange={handleDateChange}
+          initialRange={initialDateRange}
+        />
+
         <form onSubmit={handleSubmit} className={styles.reservationForm}>
           <div className={styles.formGroup}>
             <SelectBox
@@ -284,7 +373,9 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                 value={formData.member}
                 onChange={handleMemberChange}
                 hasError={errors.member}
-                min="1"
+                min={
+                  rooms.find((r) => r.category === selectedRoom)?.minMember || 1
+                }
                 max={maxGuestCount}
               />
               <label>
@@ -381,7 +472,7 @@ export default function ReservationForm({ t, locale, currentRoom }) {
                   {guest ? `+${guest}` : ""} {t?.Guest},{" "}
                   {formData.childCount.length !== 0 &&
                     `${formData.childCount.length} ${t?.Child} ×`}{" "}
-                  {formData.dayCount} {t?.Day} — {t?.PriceIs}{" "}
+                  {formData.dayCount} {t?.Night} — {t?.PriceIs}{" "}
                   <span className={styles.totalPrice}>
                     {price} ₼ / {(Number(price) * currency).toFixed(0)} $
                   </span>

@@ -4,7 +4,7 @@ import Calendar from "../Calendar/Calendar";
 import { ArrowDown } from "../Svg";
 import Button from "../Button/Button";
 
-import styles from "./styel.module.scss";
+import styles from "./style.module.scss";
 import RoomSelector from "../RoomSelector/RoomSelector";
 import { useRouter } from "next/navigation";
 import { getDatas } from "@/lib/handleApiActions";
@@ -23,20 +23,24 @@ export default function ReserveCard({ locale, t }) {
       let data = await getDatas("Room");
       if (Array.isArray(data)) {
         setRooms(data);
+        // Set default room if none selected
+        if (data.length > 0 && !selectedRoom) {
+          setSelectedRoom(data[0].category);
+        }
       } else {
         setRooms([]);
       }
     };
     fetchRooms();
-  }, []);
+  }, [selectedRoom]);
 
   const handleRoomSelect = (e) => {
     const newRoom = e.target.value;
     if (newRoom === selectedRoom) return;
 
     setSelectedRoom(newRoom);
- 
-    setOpenType(null); 
+
+    setOpenType(null);
   };
 
   const handleDateChange = ({ startDate, endDate }) => {
@@ -58,7 +62,16 @@ export default function ReserveCard({ locale, t }) {
   };
 
   const handleReserve = () => {
-    router.push(`/${locale}/reservations/${selectedRoom}`);
+    // Create URL with room and date parameters
+    const params = new URLSearchParams();
+    if (selectedRoom) {
+      params.set("room", selectedRoom);
+    }
+    if (date) {
+      params.set("date", date);
+    }
+
+    router.push(`/${locale}/reservations?${params.toString()}`);
   };
 
   const optionalRoom = rooms.map((item) => item.category);

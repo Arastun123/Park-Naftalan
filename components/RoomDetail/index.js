@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import { getAznToUsdRate, getDataById, getDatas } from "@/lib/handleApiActions";
 
-import Video from "../Video/VIdeo";
+import Video from "../Video/Video";
 import Loading from "../Loading";
 
 import style from "./style.module.scss";
@@ -71,9 +71,11 @@ export default function RoomDetail({ t, locale }) {
         <div className={style.dFlex}>
           <p>{selectedTranslation?.miniDescription}</p>
           <Button
-            onClick={() =>
-              router.push(`/${locale}/reservations/${room?.category}`)
-            }
+            onClick={() => {
+              const params = new URLSearchParams();
+              params.set("room", room?.category);
+              router.push(`/${locale}/reservations?${params.toString()}`);
+            }}
             className={style.reserveBtn}
           >
             {t?.Reservation}

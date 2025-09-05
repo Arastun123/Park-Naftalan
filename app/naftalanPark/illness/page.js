@@ -26,7 +26,7 @@ export default function treatmentMethod() {
         return {
           ...item,
           name: translation.name || "-",
-          description: translation.description || "-",
+          description: translation.description ? translation.description.slice(0, 75) : "-",
           language: translation.language || "-",
         };
       });

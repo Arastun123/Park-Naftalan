@@ -60,7 +60,6 @@ export default function ContactForm({ t, locale }) {
           toast.error(t?.Error);
         }
       } catch (error) {
-        console.error("Mesaj göndərmə xətası:", error);
         toast.error(t?.BackError);
       }
     } else {

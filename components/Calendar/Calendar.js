@@ -9,7 +9,12 @@ const localeMap = {
   ru,
 };
 
-export default function Calendar({ locale, t, handleDateChange }) {
+export default function Calendar({
+  locale,
+  t,
+  handleDateChange,
+  initialRange = null,
+}) {
   const selectedLocale = localeMap[locale] || az;
 
   return (
@@ -17,6 +22,7 @@ export default function Calendar({ locale, t, handleDateChange }) {
       onChange={handleDateChange}
       locale={selectedLocale.code}
       t={t}
+      initialRange={initialRange}
     />
   );
 }

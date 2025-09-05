@@ -6,11 +6,15 @@ import styles from "@/styles/index.module.scss";
 import RoomSection from "@/components/Home/RoomSection";
 import Section from "@/components/Section/Section";
 
-export default async function Reservations({ params }) {
+export default async function Reservations({ params, searchParams }) {
   const { locale } = await params;
   const t = await getTranslations(locale);
   const rooms = [];
-  const category = params.category;
+
+  // Get room and date from URL parameters
+  const selectedRoom = searchParams?.room || "";
+  const selectedDate = searchParams?.date || "";
+
   return (
     <div className={global.container}>
       <div className={styles.form}>
@@ -19,7 +23,8 @@ export default async function Reservations({ params }) {
           t={t}
           locale={locale}
           rooms={rooms}
-          currentRoom={category}
+          currentRoom={selectedRoom}
+          initialDate={selectedDate}
         />
       </div>
 

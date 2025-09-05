@@ -1,5 +1,4 @@
-import Restaurant from "@/components/Restaurant/inde";
-
+import Restaurant from "@/components/Restaurant";
 import { getTranslations } from "@/lib/getTranslations";
 
 export default async function RestaurantPage({ params }) {
@@ -7,4 +6,5 @@ export default async function RestaurantPage({ params }) {
   const t = await getTranslations(locale);
 
   return <Restaurant t={t} locale={locale} />;
-}
+
+  }

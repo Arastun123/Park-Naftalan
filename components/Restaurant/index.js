@@ -1,9 +1,8 @@
 "use client";
 import Button from "@/components/Button/Button";
 import { Clock, Download, Phone, Reserve } from "@/components/Svg";
-
 import global from "@/styles/global.module.scss";
-import styles from "@/styles/restaurant.module.scss"; 
+import styles from "@/styles/restaurant.module.scss";
 import LinkItem from "../Header/LinkItem/LinkItem";
 
 export default function Restaurant({ t, locale }) {

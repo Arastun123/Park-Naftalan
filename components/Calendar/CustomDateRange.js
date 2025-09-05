@@ -10,8 +10,9 @@ function CustomCalendar({
   isMobile = false,
   isSecondCalendar = false,
   localeString,
+  initialRange = null,
 }) {
-  const [range, setRange] = useState([null, null]);
+  const [range, setRange] = useState(initialRange || [null, null]);
   const [activeStartDate, setActiveStartDate] = useState(null); // ✅ delay initialization
 
   useEffect(() => {
@@ -19,6 +20,13 @@ function CustomCalendar({
     today.setMonth(today.getMonth() + initialMonthOffset);
     setActiveStartDate(today);
   }, [initialMonthOffset]);
+
+  // Handle initial range changes
+  useEffect(() => {
+    if (initialRange && initialRange[0] && initialRange[1]) {
+      setRange(initialRange);
+    }
+  }, [initialRange]);
 
   function handleSelect(date) {
     const [start, end] = range;
@@ -172,7 +180,12 @@ function CustomCalendar({
   );
 }
 
-export default function CustomDateRange({ onChange, locale, t }) {
+export default function CustomDateRange({
+  onChange,
+  locale,
+  t,
+  initialRange = null,
+}) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -188,6 +201,7 @@ export default function CustomDateRange({ onChange, locale, t }) {
           isSecondCalendar={true}
           localeString={locale}
           t={t}
+          initialRange={initialRange}
         />
       </div>
     </div>

@@ -38,7 +38,6 @@ export default function RoomCard({ t, locale }) {
           setRooms([]);
         }
       } catch (error) {
-        console.error("Failed to fetch rooms:", error);
         setRooms([]);
       }
     };
@@ -98,7 +97,7 @@ export default function RoomCard({ t, locale }) {
                   {item?.imageUrls.slice(1).map((url, idx) => (
                     <img
                       key={idx}
-                      src={` https://parknaftalan.az/${url}`}
+                      src={`https://parknaftalan.az/${url}`}
                       alt={`Park Naftalan - ${item.category} - ${
                         idx + 2
                       }. şəkil`}
