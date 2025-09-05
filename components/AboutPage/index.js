@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-import Loading from "../Loading";
-import Video from "../Video/Video";
+import Loading from "../Loading"; 
 
 import global from "@/styles/global.module.scss";
 import styles from "@/styles/about.module.scss";
