@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-import Video from "@/components/Video/Video";
+ 
 
 import global from "@/styles/global.module.scss";
 import styles from "@/styles/about.module.scss";
 import { getDatas } from "@/lib/handleApiActions";
 import Loading from "../Loading";
+import Video from "../Video/Video";
 
 export default function AboutPageMain({ t, locale }) {
   const [about, setAbout] = useState([]);
