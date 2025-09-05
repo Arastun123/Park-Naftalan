@@ -8,7 +8,6 @@ import Loading from "../Loading";
 
 import style from "./style.module.scss";
 import Button from "../Button/Button";
-import Video from "../Video/Video";
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);

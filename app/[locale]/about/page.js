@@ -5,5 +5,5 @@ export default async function AboutPage({ params }) {
   const { locale } = await params;
   const t = await getTranslations(locale);
 
-  return <AboutPageMain t={t} locale={locale}/>;
+  return <AboutPageMain t={t} locale={locale} />;
 }
