@@ -40,7 +40,7 @@ export default function AboutPageMain({ t, locale }) {
 
   return (
     <div className={`${global.container} ${styles.about}`}>
-      <Video src={about?.videoLink} />
+      {/* <Video src={about?.videoLink} /> */}
       <section>
         <div className={styles.title}>
           <h2>{selectedTranslation?.title}</h2>
