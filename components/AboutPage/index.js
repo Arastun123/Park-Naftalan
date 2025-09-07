@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-import Loading from "../Loading"; 
+import Loading from "../Loading";
+import Video from "../Video/VIdeo";
 
 import global from "@/styles/global.module.scss";
 import styles from "@/styles/about.module.scss";
@@ -39,7 +40,7 @@ export default function AboutPageMain({ t, locale }) {
 
   return (
     <div className={`${global.container} ${styles.about}`}>
-      {/* <Video src={about?.videoLink} /> */}
+      <Video src={about?.videoLink} />
       <section>
         <div className={styles.title}>
           <h2>{selectedTranslation?.title}</h2>
