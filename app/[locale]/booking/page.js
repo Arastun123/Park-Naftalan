@@ -19,7 +19,6 @@ export async function generateMetadata({ params }) {
 }
 
 import BeBookingForm from "@/components/BeForms/be-booking-form";
-import Head from 'next/head';
 
 export default async function BookingPage({ params }) {
     const { locale } = await params;

@@ -16,7 +16,7 @@ export default function BeSearchForm({ locale, className }) {
                     a.onerror=a.onload=function(n,i){return function(){e[t]&&e[t][o]&&e[t][o].loaded||(g.removeChild(n),i())}}(a,(function(){n(i.slice(1,i.length))})),g.appendChild(a)}}(
                     ["az-ibe.hopenapi.com", "ibe.hopenapi.com", "ibe.behopenapi.com"])}
         }(window, [
-            ["setContext", "BE-INT-parknaftalan-az_2025-09-08", locale || "az"],
+            ["setContext", "BE-INT-parknaftalan-az_2025-09-08", locale],
             ["embed", "search-form", {
                 container: "be-search-form"
             }]
