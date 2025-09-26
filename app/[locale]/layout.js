@@ -93,10 +93,10 @@ export async function generateMetadata({ params }) {
 
   const title =
     locale === "az"
-      ? "Park Naftalan Sanatoriyası"
+      ? "Park Naftalan Sanatoriyası, Naftalan - Rəsmi veb sayt"
       : locale === "ru"
-      ? "Санаторий Парк Нафталан"
-      : "Park Naftalan Sanatorium";
+      ? "Санаторий Парк Нафталан, Нафталан - Официальный Сайт"
+      : "Park Naftalan Sanatorium, Naftalan - Official Site";
 
   const description =
     "Park Naftalan Sanatoriyası - sağlamlıq və rahatlıq üçün mükəmməl seçim. Qəbullar, müalicə paketləri və rezervasiyalar üçün rəsmi sayt.";
@@ -133,6 +133,9 @@ export async function generateMetadata({ params }) {
       images: [`${url}/twitter-image.jpg`],
     },
     metadataBase: new URL(url),
+    other: {
+      "google-site-verification": "Fxh4HtHbG5cSlVYo84ioYdkcW7m0oPRlPIka4hd5kAk",
+    },
   };
 }
 
@@ -147,25 +150,25 @@ export default async function LocaleLayout({ children, params }) {
           content="Fxh4HtHbG5cSlVYo84ioYdkcW7m0oPRlPIka4hd5kAk"
         />
 
-        <Script
-          id="exely-loader"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(e,n){
-                  var t="bookingengine",o="integration",i=e[t]=e[t]||{},a=i[o]=i[o]||{},r="__cq",c="__loader",d="getElementsByTagName";
-                  if(n=n||[],a[r]=a[r]?a[r].concat(n):n,!a[c]){a[c]=!0;var l=e.document,g=l[d]("head")[0]||l[d]("body")[0];
-                  !function n(i){if(0!==i.length){var a=l.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://"+i[0]+"/integration/loader.js",
-                  a.onerror=a.onload=function(n,i){return function(){e[t]&&e[t][o]&&e[t][o].loaded||(g.removeChild(n),i())}}(a,(function(){n(i.slice(1,i.length))})),g.appendChild(a)}}(
-                  ["az-ibe.hopenapi.com", "ibe.hopenapi.com", "ibe.behopenapi.com"])}
-              }(window, [
-                      ["setContext", "BE-INT-parknaftalan-az_2025-09-08", ${locale}],
-                      ["embed", "booking-form", { container: "be-booking-form" }],
-                      ["embed", "search-form", { container: "be-search-form" }]
-              ]);
-            `,
-          }}
-        />
+        {/*<Script*/}
+        {/*  id="exely-loader"*/}
+        {/*  strategy="beforeInteractive"*/}
+        {/*  dangerouslySetInnerHTML={{*/}
+        {/*    __html: `*/}
+        {/*      !function(e,n){*/}
+        {/*          var t="bookingengine",o="integration",i=e[t]=e[t]||{},a=i[o]=i[o]||{},r="__cq",c="__loader",d="getElementsByTagName";*/}
+        {/*          if(n=n||[],a[r]=a[r]?a[r].concat(n):n,!a[c]){a[c]=!0;var l=e.document,g=l[d]("head")[0]||l[d]("body")[0];*/}
+        {/*          !function n(i){if(0!==i.length){var a=l.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://"+i[0]+"/integration/loader.js",*/}
+        {/*          a.onerror=a.onload=function(n,i){return function(){e[t]&&e[t][o]&&e[t][o].loaded||(g.removeChild(n),i())}}(a,(function(){n(i.slice(1,i.length))})),g.appendChild(a)}}(*/}
+        {/*          ["az-ibe.hopenapi.com", "ibe.hopenapi.com", "ibe.behopenapi.com"])}*/}
+        {/*      }(window, [*/}
+        {/*              ["setContext", "BE-INT-parknaftalan-az_2025-09-08", ${locale}],*/}
+        {/*              ["embed", "booking-form", { container: "be-booking-form" }],*/}
+        {/*              ["embed", "search-form", { container: "be-search-form" }]*/}
+        {/*      ]);*/}
+        {/*    `,*/}
+        {/*  }}*/}
+        {/*/>*/}
       </head>
       <body>
         <Header params={params} />
