@@ -36,6 +36,13 @@ export default function ReservationForm({
   const [price, setPrice] = useState(0);
   const [currency, setCurrency] = useState(0.5877);
   const [initialDateRange, setInitialDateRange] = useState(null);
+  const [campaign, setCampaign] = useState(null);
+  const [campaignInfo, setCampaignInfo] = useState(null);
+
+  const getCampaignNames = () => ({
+    "5-percent": t?.FivePercent || "5%",
+    "free-transfer": t?.FreeTransfer || "Free Transfer",
+  });
 
   // Fetch rooms and currency
   useEffect(() => {
@@ -55,6 +62,53 @@ export default function ReservationForm({
     };
     fetchCurrency();
   }, []);
+
+  // Read campaign from sessionStorage
+  useEffect(() => {
+    try {
+      const c = sessionStorage.getItem("campaign");
+      if (c) {
+        setCampaign(c);
+        // Set campaign info based on selection
+        const campaignNames = getCampaignNames();
+        setCampaignInfo(campaignNames[c] || null);
+
+        // Auto-fill message with campaign text
+        if (campaignNames[c]) {
+          setFormData((prev) => ({
+            ...prev,
+            message: t?.CampaignAutoMessageTemplate
+              ? t.CampaignAutoMessageTemplate.replace(
+                  "{campaign}",
+                  campaignNames[c]
+                )
+              : `I would like to take advantage of the selected campaign: ${campaignNames[c]}.`,
+          }));
+        }
+      }
+    } catch {}
+  }, []);
+
+  const handleCampaignChange = (e) => {
+    const value = e.target.value || "";
+    setCampaign(value || null);
+    const names = getCampaignNames();
+    const label = value ? names[value] : null;
+    setCampaignInfo(label);
+    try {
+      if (value) sessionStorage.setItem("campaign", value);
+      else sessionStorage.removeItem("campaign");
+    } catch {}
+
+    if (label) {
+      setFormData((prev) => ({
+        ...prev,
+        message: t?.CampaignAutoMessageTemplate
+          ? t.CampaignAutoMessageTemplate.replace("{campaign}", label)
+          : `I would like to take advantage of the selected campaign: ${label}.`,
+      }));
+    }
+  };
 
   // Set default room and member
   useEffect(() => {
@@ -127,7 +181,9 @@ export default function ReservationForm({
     const selected = rooms.find((item) => item.category === selectedRoom);
 
     const maxOcc = selected?.member || 1;
-    setMaxGuestCount(maxOcc);
+    // Multiply max occupancy by roomCount
+    const multipliedMax = maxOcc * Number(formData.roomCount || 1);
+    setMaxGuestCount(multipliedMax);
 
     const occupancyPrice = selected?.pricesByOccupancy?.find(
       (p) => p.occupancy === Number(formData.member)
@@ -213,7 +269,8 @@ export default function ReservationForm({
     val = parseInt(val, 10);
 
     const selected = rooms.find((r) => r.category === selectedRoom);
-    const roomMax = selected?.member || maxGuestCount || 1;
+    const perRoomMax = selected?.member || maxGuestCount || 1;
+    const roomMax = (selected?.member || 1) * Number(formData.roomCount || 1);
     const roomMin = selected?.minMember || 1;
 
     const totalOther = guest + formData.childCount.length;
@@ -228,7 +285,7 @@ export default function ReservationForm({
   const handleGuestChange = (e) => {
     const checked = e.target.checked ? 1 : 0;
     const selected = rooms.find((r) => r.category === selectedRoom);
-    const roomMax = selected?.member || maxGuestCount || 1;
+    const roomMax = (selected?.member || 1) * Number(formData.roomCount || 1);
 
     const totalPeople = formData.member + checked + formData.childCount.length;
     if (totalPeople <= roomMax) setGuest(checked);
@@ -238,7 +295,8 @@ export default function ReservationForm({
   // Child select handler
   const handleChildChange = (selected) => {
     const selectedRoomData = rooms.find((r) => r.category === selectedRoom);
-    const roomMax = selectedRoomData?.member || maxGuestCount || 1;
+    const roomMax =
+      (selectedRoomData?.member || 1) * Number(formData.roomCount || 1);
 
     const totalPeople = formData.member + guest + selected.length;
     if (totalPeople <= roomMax)
@@ -279,6 +337,21 @@ export default function ReservationForm({
     if (formData.roomCount < 1) newErrors.roomCount = true;
     if (!selectedRoom?.trim()) newErrors.selectedRoom = true;
 
+    // Enforce campaign rules
+    const totalGuests = formData.member + guest + formData.childCount.length;
+    if (campaign === "free-transfer") {
+      // auto-apply transfer (implicitly via campaign) and min 4 guests
+      if (totalGuests < 4) {
+        newErrors.member = true;
+        toast.error("Pulsuz transfer üçün minimum 4 nəfər");
+      }
+    }
+    // 7-day minimum stay for both campaigns
+    if (campaign && formData.dayCount < 7) {
+      newErrors.date = true;
+      toast.error("Minimum qalma müddəti 7 gündür");
+    }
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
       toast.error(t?.FillInput || "Please fill all required fields.");
@@ -304,6 +377,8 @@ export default function ReservationForm({
         t?.Day
       }`,
       childCount: selectedChildrenLabels.join(", "),
+      campaign: campaign || undefined,
+      campaignInfo: campaignInfo || undefined,
     };
 
     try {
@@ -343,8 +418,34 @@ export default function ReservationForm({
           initialRange={initialDateRange}
         />
 
+        {campaignInfo && (
+          <div className={styles.campaignInfo}>
+            <h3>
+              {t?.SelectedCampaign}: {campaignInfo}
+            </h3>
+            {campaign === "free-transfer" && <p>• {t?.AutoTransferApplied}</p>}
+            {campaign === "5-percent" && <p>• {t?.DiscountApplied}</p>}
+            <p>• {t?.MinStay7}</p>
+            {campaign === "free-transfer" && <p>• {t?.MinGuests4}</p>}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className={styles.reservationForm}>
           <div className={styles.formGroup}>
+            <SelectBox
+              optionData={[
+                { value: "", label: t?.Campaign || "Campaign" },
+                { value: "5-percent", label: getCampaignNames()["5-percent"] },
+                {
+                  value: "free-transfer",
+                  label: getCampaignNames()["free-transfer"],
+                },
+              ]}
+              name="campaign"
+              value={campaign || ""}
+              onChange={handleCampaignChange}
+              label={t?.Campaign}
+            />
             <SelectBox
               optionData={roomOptions}
               name="selectedRoom"
@@ -463,6 +564,19 @@ export default function ReservationForm({
                 }
                 placeholder={t?.MessagePlaceholder}
               />
+              {campaign && (
+                <small
+                  style={{
+                    color: "#666",
+                    fontSize: "12px",
+                    marginTop: "4px",
+                    display: "block",
+                  }}
+                >
+                  {t?.CampaignAutoMessageNote ||
+                    "Campaign information has been automatically added"}
+                </small>
+              )}
             </div>
 
             <div className={styles.priceSubmitWrapper}>

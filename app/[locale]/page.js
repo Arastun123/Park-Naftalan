@@ -8,6 +8,7 @@ import RoomSection from "@/components/Home/RoomSection";
 import WriteUs from "@/components/WriteUs";
 import About from "@/components/About";
 import Packets from "@/components/Packets";
+import Campaigns from "@/components/Campaigns/Campaign";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -49,6 +50,7 @@ export default async function Home({ params }) {
         </Section>
 
         {/* <Packets t={t} locale={locale} /> */}
+        <Campaigns t={t} locale={locale} />
         <WriteUs t={t} locale={locale} />
       </div>
     </>

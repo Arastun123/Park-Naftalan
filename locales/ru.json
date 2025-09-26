@@ -48,6 +48,19 @@
   "PriceIs": "за цену",
   "PriceEnd": "составляет",
   "WriteUs": "Связаться с нами",
+  "Campaign": "Кампания",
+  "Campaigns": "Кампании",
+  "SelectCampaign": "Выбрать кампанию",
+  "Cancel": "Отменить",
+  "FreeTransfer": "Бесплатный трансфер",
+  "FivePercent": "Скидка 5%",
+  "SelectedCampaign": "Выбранная кампания",
+  "AutoTransferApplied": "Бесплатный трансфер применяется автоматически",
+  "DiscountApplied": "Применяется скидка 5%",
+  "MinStay7": "Минимальное пребывание: 7 дней",
+  "MinGuests4": "Минимальное количество гостей: 4 человека",
+  "CampaignAutoMessageNote": "Информация о кампании добавлена автоматически",
+  "CampaignAutoMessageTemplate": "Я хочу воспользоваться выбранной кампанией: {campaign}.",
   "Reservation": "Забронировать",
   "Message": "Дополнительная заметка",
   "MessagePlaceholder": "Ваша дополнительная заметка ...",
@@ -89,5 +102,7 @@
   "addGuest": "+1 человек (70 ₼)",
   "Prices": "Цены",
   "Night": "ночи",
-  "Day": "дни"
+  "Day": "дни",
+  "FreeTransferDescription": "Bakı-Gəncə-Goran transfer xidməti",
+  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 5% endirim"
 }
