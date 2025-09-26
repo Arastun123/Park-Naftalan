@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import { Facebook, Tiktok, Youtube, Instagram } from "@/components/Svg/index";
 import LinkItem from "../Header/LinkItem/LinkItem";
 import { getDatas } from "@/lib/handleApiActions";
+import { usePathname } from "next/navigation";
 
 import styles from "@/styles/global.module.scss";
 export default function SocialMediaIcon() {
+    const pathname = usePathname();
+    let isBooking = ["/en/booking", "/ru/booking", "/az/booking"].includes(pathname);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export default function SocialMediaIcon() {
   }, []);
 
   return (
-    <div className={styles.drawerIcons}>
+    <div className={`${styles.drawerIcons} ${isBooking ? "hidden" : ""}`}>
       <LinkItem slug={`${data?.instagramLink}`}>
         <Instagram />
       </LinkItem>

@@ -1,0 +1,60 @@
+#be-booking-form {
+    width: 100%;
+    max-width: 1320px;
+    margin: 10px auto;
+    padding: 0 5px;
+}
+
+#tl-booking-cart {
+    z-index: 1 !important;
+}
+
+#block-search,
+#block-search * {
+    box-sizing: border-box;
+}
+
+#block-search {
+    max-width: 1310px;
+    margin: 10px auto;
+    background: #fcf4e8;
+    border: 1px solid #ded3c3;
+    border-radius: 8px;
+}
+
+#block-search.mt-100 {
+    margin-top: 100px;
+}
+
+#block-search.block-search--home {
+    position: relative;
+    z-index: 5;
+    margin: -15rem auto 10rem auto;
+}
+
+.be-container {
+    padding: 0 30px;
+}
+
+.be-page {
+    margin-top: 120px;
+}
+
+.be-title {
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.Header_reserveCard__XxHkz,
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 1110px) {
+    #block-search.block-search--home {
+        position: static;
+        margin: 0 auto;
+    }
+}

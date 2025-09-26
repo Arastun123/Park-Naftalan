@@ -8,6 +8,7 @@ import Loading from "../Loading";
 
 import style from "./style.module.scss";
 import Button from "../Button/Button";
+import Link from "next/link";
 
 export default function RoomDetail({ t, locale }) {
   const [room, setRoom] = useState(null);
@@ -60,6 +61,29 @@ export default function RoomDetail({ t, locale }) {
     return `https://parknaftalan.az/${url}`;
   };
 
+    const beRoomTypes = [
+        {
+            roomId: "Deluxe Suite",
+            beRoomType: "5050034",
+        },
+        {
+            roomId: "Family Suite",
+            beRoomType: "5050038",
+        },
+        {
+            roomId: "Junior Room",
+            beRoomType: "",
+        },
+        {
+            roomId: "Park Suite",
+            beRoomType: "5050037",
+        },
+        {
+            roomId: "Standart Room",
+            beRoomType: "5050031,5050032",
+        },
+    ];
+
   return (
     <div className={style.detail}>
       <div className={style.head}>
@@ -69,16 +93,25 @@ export default function RoomDetail({ t, locale }) {
         </div>
         <div className={style.dFlex}>
           <p>{selectedTranslation?.miniDescription}</p>
-          <Button
-            onClick={() => {
-              const params = new URLSearchParams();
-              params.set("room", room?.category);
-              router.push(`/${locale}/reservations?${params.toString()}`);
-            }}
-            className={style.reserveBtn}
-          >
-            {t?.Reservation}
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={() => {*/}
+          {/*    const params = new URLSearchParams();*/}
+          {/*    params.set("room", room?.category);*/}
+          {/*    router.push(`/${locale}/reservations?${params.toString()}`);*/}
+          {/*  }}*/}
+          {/*  className={style.reserveBtn}*/}
+          {/*>*/}
+          {/*  {t?.Reservation}*/}
+          {/*</Button>*/}
+            <Link
+                href={
+                    `/${locale}/booking?room-type=` +
+                    (beRoomTypes.find(roomType => roomType.roomId === room?.category)?.beRoomType || '')
+                }
+                className={style.reserveBtn}
+            >
+                {t?.Reservation}
+            </Link>
         </div>
       </div>
 

@@ -16,7 +16,7 @@ export default function Restaurant({ t, locale }) {
   };
 
   return (
-    <div className={styles.restaurant}>
+      <div className={styles.restaurant}>
       <div className={styles.mainImageWrapper}>
         <img
           src="/main.jpg"
