@@ -6,20 +6,33 @@ import Perecetage from "../Svg/Percentage";
 import styles from "./styles.module.scss";
 
 export default function Modal({ locale, t }) {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState("5-percent");
 
   useEffect(() => {
-    setVisible(true);
+    try {
+      const shown = sessionStorage.getItem("roomsModalShown");
+      if (!shown) {
+        setVisible(true);
+      }
+    } catch {
+      setVisible(true);
+    }
   }, []);
 
   if (!visible) return null;
 
-  const handleCancel = () => setVisible(false);
+  const handleCancel = () => {
+    try {
+      sessionStorage.setItem("roomsModalShown", "1");
+    } catch {}
+    setVisible(false);
+  };
 
   const handleSelect = () => {
     try {
       sessionStorage.setItem("campaign", selected);
+      sessionStorage.setItem("roomsModalShown", "1");
     } catch {}
     if (locale) {
       window.location.href = `/${locale}/reservations`;
