@@ -27,13 +27,6 @@ export default async function BookingPage({ params }) {
 
     return (
         <>
-            <Head>
-                <title>{locale === "az"
-                    ? "Park Naftalan Sanatoriyası, Naftalan - Rəsmi veb sayt"
-                    : locale === "ru"
-                        ? "Санаторий Парк Нафталан, Нафталан - Официальный Сайт"
-                        : "Online reservation Park Naftalan Sanatorium, Naftalan - Official Site"}</title>
-            </Head>
             <div className="be-page">
                 <h1 className="be-title">{t?.Booking}</h1>
                 <BeBookingForm locale={locale} />
