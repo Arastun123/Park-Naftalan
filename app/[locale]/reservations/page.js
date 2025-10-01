@@ -5,6 +5,7 @@ import global from "@/styles/global.module.scss";
 import styles from "@/styles/index.module.scss";
 import RoomSection from "@/components/Home/RoomSection";
 import Section from "@/components/Section/Section";
+import Modal from "@/components/Modal/Modal";
 
 export default async function Reservations({ params, searchParams }) {
   const { locale } = await params;

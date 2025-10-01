@@ -1,0 +1,94 @@
+@import "../../styles/variable.scss";
+
+.wrapper {
+  margin: 0 auto;
+  gap: 40px;
+  @include flex($direction: column, $align: center, $justify: space-between);
+
+  div {
+    text-align: center;
+  }
+  .cards {
+    @include flex($direction: row, $align: stretch, $justify: center);
+    gap: 24px;
+    flex-wrap: wrap;
+
+    .card {
+      border: 1px solid #000;
+      border-radius: 16px;
+      padding: 16px 20px;
+      width: 100%;
+      max-width: 520px;
+      min-height: 280px;
+      @include flex(
+        $direction: column,
+        $align: center,
+        $justify: space-between
+      );
+
+      p {
+        font-family: $poppins;
+        font-weight: 700;
+        font-size: 22px;
+        color: #000;
+      }
+      span {
+        font-family: $poppins;
+        font-weight: 400;
+        font-size: 18px;
+        color: #717182;
+        text-align: center;
+      }
+      .btnContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        .btn {
+          font-family: $poppins;
+          font-weight: 500;
+          font-size: 14px;
+          background: $mainBlueBack;
+          color: $whiteTxt;
+          padding: 12px 28px;
+          border-radius: 8px;
+        }
+      }
+
+      @media (min-width: 1025px) {
+        flex: 0 1 calc(50% - 12px);
+      }
+
+      @media (max-width: 480px) {
+        padding: 14px;
+        p {
+          font-size: 20px;
+        }
+        span {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  h2 {
+    font-family: $poppins;
+    font-weight: 400;
+    font-size: 48px;
+    color: #000;
+  }
+  p {
+    font-family: $poppins;
+    font-weight: 700;
+    font-size: 24px;
+    color: #717182;
+  }
+
+  @media (max-width: 1024px) {
+    @include flex($direction: column, $align: center, $justify: flex-start);
+    h2 {
+      font-size: 34px;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+}
