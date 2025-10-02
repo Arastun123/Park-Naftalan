@@ -35,9 +35,9 @@ export default function Modal({ locale, t }) {
       sessionStorage.setItem("roomsModalShown", "1");
     } catch {}
     if (locale) {
-      window.location.href = `/${locale}/reservations`;
+      window.location.href = `/${locale}/booking`;
     } else {
-      window.location.href = "/reservations";
+      window.location.href = "/booking";
     }
   };
 

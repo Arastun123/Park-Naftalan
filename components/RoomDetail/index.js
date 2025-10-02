@@ -72,7 +72,7 @@ export default function RoomDetail({ t, locale }) {
         },
         {
             roomId: "Junior Room",
-            beRoomType: "",
+            beRoomType: "5050032",
         },
         {
             roomId: "Park Suite",
@@ -80,7 +80,7 @@ export default function RoomDetail({ t, locale }) {
         },
         {
             roomId: "Standart Room",
-            beRoomType: "5050031,5050032",
+            beRoomType: "5050031",
         },
     ];
 
@@ -106,7 +106,7 @@ export default function RoomDetail({ t, locale }) {
             <Link
                 href={
                     `/${locale}/booking?room-type=` +
-                    (beRoomTypes.find(roomType => roomType.roomId === room?.category)?.beRoomType || '')
+                    (beRoomTypes.find(roomType => roomType.roomId === room?.category.trim())?.beRoomType || '')
                 }
                 className={style.reserveBtn}
             >
