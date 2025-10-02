@@ -9,9 +9,9 @@ export default function Campaigns({ locale, t }) {
       sessionStorage.setItem("campaign", campaignType);
     } catch {}
     if (locale) {
-      window.location.href = `/${locale}/reservations`;
+      window.location.href = `/${locale}/booking`;
     } else {
-      window.location.href = "/reservations";
+      window.location.href = "/booking";
     }
   };
 

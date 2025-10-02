@@ -409,7 +409,7 @@ export default function ReservationForm({
   };
 
   return (
-    <div className={styles.mainContainer}>
+    <div className={`${styles.mainContainer} hidden`}>
       <div className={styles.formSection}>
         <Calendar
           t={t}
