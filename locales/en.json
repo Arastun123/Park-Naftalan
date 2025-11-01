@@ -96,14 +96,14 @@
   "SelectCampaign": "Select campaign",
   "Cancel": "Cancel",
   "FreeTransfer": "Free Transfer",
-  "FivePercent": "5% Discount",
+  "FivePercent": "15% Discount",
   "SelectedCampaign": "Selected Campaign",
   "AutoTransferApplied": "Free transfer service is automatically applied",
-  "DiscountApplied": "5% discount is applied",
+  "DiscountApplied": "15% discount is applied",
   "MinStay7": "Minimum stay: 7 days",
   "MinGuests4": "Minimum guests: 4 persons",
   "CampaignAutoMessageNote": "Campaign information has been automatically added",
   "CampaignAutoMessageTemplate": "I would like to take advantage of the selected campaign: {campaign}.",
   "FreeTransferDescription": "Bakı-Gəncə-Goran transfer xidməti",
-  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 5% endirim"
+  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 15% endirim"
 }

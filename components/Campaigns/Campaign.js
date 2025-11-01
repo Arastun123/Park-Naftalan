@@ -27,9 +27,9 @@ export default function Campaigns({ locale, t }) {
       <div className={styles.cards}>
         <div className={styles.card}>
           <Car />
-          <p>{t?.FivePercent || "5% Endirim"}</p>
-          <span>{t?.FivePercentDescription || "Qonaqlama xidməti ödənişindən 5% endirim"} </span>
-          <p>5%</p>
+          <p>{t?.FivePercent || "15% Endirim"}</p>
+          <span>{t?.FivePercentDescription || "Qonaqlama xidməti ödənişindən 15% endirim"} </span>
+          <p>15%</p>
           <div className={styles.btnContainer}>
             <Button
               className={styles.btn}
