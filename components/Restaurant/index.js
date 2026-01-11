@@ -1,9 +1,11 @@
 "use client";
 import Button from "@/components/Button/Button";
-import { Clock, Download, Phone, Reserve } from "@/components/Svg";
-import global from "@/styles/global.module.scss";
-import styles from "@/styles/restaurant.module.scss";
 import LinkItem from "../Header/LinkItem/LinkItem";
+
+import { Clock, Download, Phone, Reserve } from "@/components/Svg";
+
+import styles from "@/styles/restaurant.module.scss";
+import global from "@/styles/global.module.scss";
 
 export default function Restaurant({ t, locale }) {
   const handleDownload = () => {
@@ -16,7 +18,7 @@ export default function Restaurant({ t, locale }) {
   };
 
   return (
-      <div className={styles.restaurant}>
+    <div className={styles.restaurant}>
       <div className={styles.mainImageWrapper}>
         <img
           src="/main.jpg"
@@ -61,7 +63,7 @@ export default function Restaurant({ t, locale }) {
               <div className={styles.card}>
                 <Phone color="#333" width="30" height="30" />
                 <p>{t?.Reserv}</p>
-                <p>+994502342459</p> 
+                <p>+994502342459</p>
               </div>
             </div>
           </div>
