@@ -150,6 +150,7 @@ export default async function LocaleLayout({ children, params }) {
           content="Fxh4HtHbG5cSlVYo84ioYdkcW7m0oPRlPIka4hd5kAk"
         />
         <link rel="icon" href="/logo.png" sizes="any" />
+        <meta name="probely-verification" content="7f87362b-6c3c-45f9-80c5-a2119a726239" />
       </head>
       <body>
         <Header params={params} />
