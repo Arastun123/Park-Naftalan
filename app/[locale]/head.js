@@ -37,9 +37,9 @@ export default function Head({ params }) {
           name="twitter:image"
           content="https://yourdomain.com/twitter-image.jpg"
         />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="/logo.png" />
         <link rel="canonical" href="https://parknaftalan.az" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" />
         <link rel="alternate" hrefLang="az" href="https://parknaftalan.az/az" />
         <link rel="alternate" hrefLang="en" href="https://parknaftalan.az/en" />
         <link rel="alternate" hrefLang="ru" href="https://parknaftalan.az/ru" />
@@ -52,8 +52,8 @@ export default function Head({ params }) {
           {language === "az"
             ? "Park Naftalan Sanatoriyası"
             : language === "ru"
-            ? "Санаторий Парк Нафталан"
-            : "Park Naftalan Sanatorium"}
+              ? "Санаторий Парк Нафталан"
+              : "Park Naftalan Sanatorium"}
         </title>
       </Head>
       <html lang={language} />

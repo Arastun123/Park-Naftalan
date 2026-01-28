@@ -53,10 +53,10 @@
   "SelectCampaign": "Выбрать кампанию",
   "Cancel": "Отменить",
   "FreeTransfer": "Бесплатный трансфер",
-  "FivePercent": "Скидка 15%",
+  "FivePercent": "Скидка 25%",
   "SelectedCampaign": "Выбранная кампания",
   "AutoTransferApplied": "Бесплатный трансфер применяется автоматически",
-  "DiscountApplied": "Применяется скидка 15%",
+  "DiscountApplied": "Применяется скидка 25%",
   "MinStay7": "Минимальное пребывание: 7 дней",
   "MinGuests4": "Минимальное количество гостей: 4 человека",
   "CampaignAutoMessageNote": "Информация о кампании добавлена автоматически",
@@ -104,6 +104,7 @@
   "Night": "ночи",
   "Day": "дни",
   "Booking": "Бронирование",
-  "FreeTransferDescription": "Bakı-Gəncə-Goran transfer xidməti",
-  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 15% endirim"
+  "FreeTransferDescription": "Услуги трансфера по маршруту Баку-Гянджа-Горан",
+  "FivePercentDescription": "25%-ная скидка на оплату услуг по размещению",
+  "CampingDuration": "Акция действует до 25 марта."
 }

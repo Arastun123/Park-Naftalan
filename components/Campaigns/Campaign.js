@@ -18,38 +18,36 @@ export default function Campaigns({ locale, t }) {
   return (
     <div className={styles.wrapper}>
       <div>
-        <h2>{t?.Campaigns || "Kampaniyalar"}</h2>
-        <p>
-          {t?.MinStay7 ||
-            "Kampaniya yalnız minimum 7 günlük müalicə paketinə aiddir."}
-        </p>
+        <h2>{t?.Campaigns}</h2>
+        <p>{t?.MinStay7}</p>
+        <p>{t?.CampingDuration}</p>
       </div>
       <div className={styles.cards}>
         <div className={styles.card}>
           <Car />
-          <p>{t?.FivePercent || "15% Endirim"}</p>
-          <span>{t?.FivePercentDescription || "Qonaqlama xidməti ödənişindən 15% endirim"} </span>
-          <p>15%</p>
+          <p>{t?.FivePercent}</p>
+          <span>{t?.FivePercentDescription}</span>
+          <p>25%</p>
           <div className={styles.btnContainer}>
             <Button
               className={styles.btn}
               onClick={() => handleCampaignSelect("5-percent")}
             >
-              {t?.SelectCampaign || "Kampaniyanı seç"}
+              {t?.SelectCampaign}
             </Button>
           </div>
         </div>
         <div className={styles.card}>
           <Money />
-          <p>{t?.FreeTransfer || "Ödənişsiz Transfer"}</p>
-          <span> {t?.FreeTransferDescription || "Bakı-Gəncə-Goran transfer xidməti"} </span>
+          <p>{t?.FreeTransfer}</p>
+          <span>{t?.FreeTransferDescription}</span>
           <p>Pulsuz</p>
           <div className={styles.btnContainer}>
             <Button
               className={styles.btn}
               onClick={() => handleCampaignSelect("free-transfer")}
             >
-              {t?.SelectCampaign || "Kampaniyanı seç"}
+              {t?.SelectCampaign}
             </Button>
           </div>
         </div>

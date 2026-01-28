@@ -44,6 +44,7 @@ export default function Modal({ locale, t }) {
   return (
     <div className={styles.wrapper}>
       <p>{t?.SelectCampaign}</p>
+      <span> {t?.CampingDuration}</span>
       <div className={styles.sections}>
         <div
           className={styles.section}
@@ -57,8 +58,7 @@ export default function Modal({ locale, t }) {
           </span>
           <div>
             <p>{t?.FivePercent}</p>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
+            <span>{t?.FivePercentDescription}</span>
           </div>
         </div>
         <div
@@ -74,8 +74,7 @@ export default function Modal({ locale, t }) {
           </span>
           <div>
             <p>{t?.FreeTransfer}</p>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
+            <span>{t?.FreeTransferDescription}</span>
           </div>
         </div>
       </div>

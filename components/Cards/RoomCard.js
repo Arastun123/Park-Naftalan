@@ -54,13 +54,12 @@ export default function RoomCard({ t, locale }) {
   if (!rooms || rooms.length === 0) {
     return <Loading />;
   }
-  
 
   return (
     <div className={styles.roomGrid}>
       {[...rooms].map((item) => {
         const currentTranslation = item.translations.find(
-          (t) => t.language === lanCode
+          (t) => t.language === lanCode,
         );
 
         return (

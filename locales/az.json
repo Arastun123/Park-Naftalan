@@ -96,14 +96,15 @@
   "SelectCampaign": "Kampaniyanı seç",
   "Cancel": "Ləğv et",
   "FreeTransfer": "Pulsuz Transfer",
-  "FivePercent": "15% Endirim",
+  "FivePercent": "25% Endirim",
   "SelectedCampaign": "Seçilmiş Kampaniya",
   "AutoTransferApplied": "Pulsuz transfer xidməti avtomatik tətbiq edilir",
-  "DiscountApplied": "15% endirim tətbiq edilir",
+  "DiscountApplied": "25% endirim tətbiq edilir",
   "MinStay7": "Minimum qalma müddəti: 7 gün",
   "MinGuests4": "Minimum qonaq sayı: 4 nəfər",
   "CampaignAutoMessageNote": "Kampaniya məlumatları avtomatik əlavə edilmişdir",
   "CampaignAutoMessageTemplate": "Seçilmiş kampaniyadan yararlanmaq istəyirəm: {campaign}.",
   "FreeTransferDescription": "Bakı-Gəncə-Goran transfer xidməti",
-  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 15% endirim"
+  "FivePercentDescription": "Qonaqlama xidməti ödənişindən 25% endirim",
+  "CampingDuration": "Kampaniya martın 25-dək davam edəcək"
 }

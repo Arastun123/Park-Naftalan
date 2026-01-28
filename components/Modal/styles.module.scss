@@ -26,12 +26,18 @@
     width: 92vw;
     padding: 18px;
   }
-
+  span {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    color: #4d4c4c;
+    padding: 20px;
+  }
   .sections {
     @include flex($direction: column, $align: center, $justify: space-between);
 
     .section {
-      @include flex($direction: row, $align: start, $justify: space-between);
+      @include flex($direction: row, $align: start, $justify: start);
       gap: 10px;
       background: #ededed;
       border-radius: 9px;
@@ -62,7 +68,6 @@
         font-weight: 400;
         font-size: 20px;
         color: #353535;
-        // display: block;
       }
     }
   }

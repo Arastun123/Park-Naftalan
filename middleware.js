@@ -8,10 +8,23 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
   const response = NextResponse.next();
 
-  response.headers.set(
-    "Content-Security-Policy",
-    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';",
-  );
+  const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://www.google.com https://www.gstatic.com https://www.googletagmanager.com;
+    style-src 'self' 'unsafe-inline' https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://fonts.googleapis.com;
+    
+    
+    img-src 'self' data: blob: https://parknaftalan.az https://parknaftalan.az/api https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://www.google.com https://www.google-analytics.com;
+    
+    connect-src 'self' https://parknaftalan.az https://parknaftalan.az/api https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://api.exchangerate.host https://v6.exchangerate-api.com https://api.exchangerate-api.com https://www.google-analytics.com https://stats.g.doubleclick.net;
+    
+    font-src 'self' data: https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://fonts.gstatic.com;
+    frame-src 'self' https://az-ibe.hopenapi.com https://ibe.hopenapi.com https://ibe.behopenapi.com https://www.google.com;
+    upgrade-insecure-requests;
+`
+    .replace(/\s{2,}/g, " ")
+    .trim();
+  response.headers.set("Content-Security-Policy", cspHeader);
   if (pathname.startsWith("/naftalanPark")) {
     const token = request.cookies.get("admin_token")?.value;
     const isLoginPage = pathname === "/naftalanPark";
