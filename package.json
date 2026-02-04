@@ -19,7 +19,7 @@
     "react-date-range": "^2.0.1",
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.5",
-    "sass": "^1.89.2",
+    "sass": "^1.97.2",
     "swiper": "^11.2.9"
   },
   "devDependencies": {
